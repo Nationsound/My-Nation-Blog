@@ -1,0 +1,27 @@
+.my-header {
+    background-color:#fff;
+    color: rgb(149, 154, 74);
+
+}
+
+.my-Logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.my-header-a {
+    /* padding-top: 10px; */
+    border: none;
+    color: rgb(149, 154, 74);
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.my-header-a1 {
+    color: rgb(149, 154, 74);
+    font-style: italic;
+    font-size: x-small;
+
+}

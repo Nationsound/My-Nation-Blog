@@ -1,0 +1,41 @@
+.my-footer{
+    background-color: black;
+    min-height: 400px;
+}
+.my-footer-1{
+    display: flex;
+    justify-content: space-around;
+    font-size:large;
+    color: gray;
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.my-footer-1 h1{
+    cursor: pointer;
+}
+.my-footer-1 h1:hover{
+    color: rgb(245,245,245);
+}
+.my-footer-2{
+    display: flex;
+    justify-content: space-around;
+    font-size:small ;
+    color: grey;
+    font-weight: lighter;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.my-footer-2 li{
+    cursor: pointer;
+}
+.my-footer-2 li:hover{
+    color: rgb(245,245,245);
+}
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+    padding-top: 50px;
+}

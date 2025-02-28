@@ -1,0 +1,282 @@
+.about {
+    background-color: rgb(149, 154, 74);
+    height: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.about-a {
+    align-items: center;
+    color: #fff;
+}
+
+.about-a h1 {
+    font-size: xx-large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bolder;
+    padding-top: 100px;
+    animation-duration: 8s;
+    animation-name: slide-in;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    cursor: pointer;
+}
+@keyframes slide-in {
+    from {
+      translate: 5vw 0;
+      scale: 100% 1;
+    }
+  
+    to {
+      translate: 0 0;
+      scale: 100% 1;
+    }
+  }
+  /* @keyframes grow-shrink {
+    25%,
+    75% {
+      scale: 100%;
+    }
+  
+    50% {
+      scale: 200%;
+      color: magenta;
+    }
+  } */
+
+.about-b {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    background-size: cover;
+    height: 50px;
+    width: 180px;
+    text-align: center;
+    margin-top: 100px;
+    border: inset;
+    border-radius: 10px;
+    border-color: rgb(149, 154, 74);
+    align-items: center;
+    color: rgb(149, 154, 74);
+
+}
+
+.about-b-home {
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+}
+
+.about-b h6 {
+    font-size: smaller;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+
+.content {
+    background-color: #fff;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding-left: 50px;
+    align-items: center;
+    height: 500px;
+}
+
+.content h1 {
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    text-align: center;
+}
+
+.content-a {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap-reverse;
+}
+
+.content-a h4 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    font-size: x-large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: lighter;
+}
+
+.content-a p {
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.my-about {
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: white;
+    font-size: x-large;
+    justify-content: space-around;
+    font-family: sans-serif;
+    padding-left: 100px;
+}
+
+.my-about-a {
+    color: brown;
+    cursor: pointer;
+
+}
+
+.content-b {
+    background-color: rgb(59, 49, 76);
+    height: 600px;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.about-d-img {
+    padding-top: 80px;
+    height: 400px;
+    width: 600px;
+    padding-left: 50px;
+}
+
+.content-b h2 {
+    text-align: center;
+    padding-top: 50px;
+    color: lightgoldenrodyellow;
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.content-c {
+    display: flex;
+    justify-content: space-around;
+}
+
+.content-d {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 120px;
+    background-color: rgb(149, 154, 74);
+    height: 200px;
+    align-items: center;
+    width: 800px;
+    border: inset;
+    border-radius: 10px;
+    border-color: #fff;
+    animation-duration: 8s;
+    animation-name: slide-in-right;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    cursor: pointer;
+}
+@keyframes slide-in-right {
+    from {
+      translate: 1vw 0;
+      scale: 100% 1;
+    }
+  
+    to {
+      translate: 0 0;
+      scale: 100% 1;
+    }
+  }
+
+.content-d h3 {
+    color: #fff;
+    font-size: xx-large;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+}
+
+.content-d p {
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: larger;
+    font-weight: 800;
+}
+
+.content-e {
+    text-align: center;
+    padding-left: 250px;
+    color: #fff;
+    font-size: medium;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.my-image {
+    margin-top: 0;
+    height: 400px;
+    width: 450px;
+    cursor: pointer;
+}
+
+.my-about-b {
+    color: brown;
+    cursor: pointer;
+
+}
+
+.my-about-c {
+    color: brown;
+    cursor: pointer;
+
+}
+
+.my-about-d {
+    color: brown;
+    cursor: pointer;
+
+}
+
+.my-about p {
+    margin: 0;
+    font-size: small;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 400;
+    font-weight: bold;
+    padding-top: 5px;
+}
+
+.btn {
+    cursor: pointer;
+    padding-left: 20px;
+}
+.brand{
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    min-height: 400px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.brand-div{
+    height: 670px;
+    width: 500px;
+    background-image: url("../../assets/images/myNationImg114.jpeg");
+    background-size: cover;
+    margin-right: 200px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.brand-div h6{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.5rem;
+    text-align: center;
+    padding-top: 350px;
+}
+.brand-div-1 h1{
+    font-size: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    padding-top: 200px;
+    font-weight: bold;
+
+}
+.brand-div-1 p{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: large;
+    font-weight: lighter;
+    padding-left: 100px;
+    padding-top: 50px;
+}

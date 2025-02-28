@@ -1,0 +1,26 @@
+.service{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    padding-left: 50px;
+}
+.my-service{
+    font-size: x-large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    padding-top: 10px;
+}
+.my-service h1{
+    font-size: xx-large;
+    font-weight: bolder;
+}
+.my-service-categories{
+    font-family: sans-serif;
+    font-weight: bolder;
+    font-size: x-large;
+}
+.my-service-content{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: medium;
+    font-weight: lighter;
+}

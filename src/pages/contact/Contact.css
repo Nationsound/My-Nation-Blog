@@ -1,0 +1,33 @@
+.contact{
+    background-image: url("../../assets/images/myNationImg47.jpg");
+    background-size: cover;
+}
+/* #contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+#contact-form input,
+#contact-form textarea {
+    width: 60%;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding-left: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+#contact-form h1{
+   font-size: larger;
+   color: chocolate;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+   font-weight: bolder;
+} */
+
+.my-contact {
+    width: 250px;
+    height: 400px;
+}

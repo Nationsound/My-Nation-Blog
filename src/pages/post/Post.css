@@ -1,0 +1,17 @@
+.mypost {
+    margin: 0;
+    padding: 0;
+}
+
+.my-post h2 {
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    padding-left: 20px;
+}
+.my-post p{
+    font-size: small;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: lighter;
+    padding-left: 20px;
+}

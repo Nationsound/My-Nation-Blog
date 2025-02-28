@@ -1,0 +1,39 @@
+import React from 'react'
+import './Post.css'
+import {useState, useEffect} from 'react'
+export default function Post() {
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(()=>{
+        const fetchPosts = async ()=>{
+            try{
+           const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+           const data = await response.json()
+           setPosts(data)
+            }catch(error){
+                console.log(error);
+            }finally{
+              setLoading(false)
+            }
+        }
+        fetchPosts(); 
+    }, []);
+    if (loading){
+      return <p>loading...</p>
+    }
+    if (error){
+      return <p>{error}</p>
+    }
+  return (
+    <div>
+      {posts.map((post)=>(
+        <div key={post.id} className='my-post'>
+        <h2>{post.title}</h2>
+        <p>{post.body}</p>
+        </div>
+      ))}
+    </div>
+  )
+}
