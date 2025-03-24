@@ -12,10 +12,6 @@ export default function SignUp() {
           <input type="text" placeholder="Middle Name" optional />
           <input type="text" placeholder="Last Name" required />
           <input type="text" placeholder="Date of Birth" required />
-          <select name="sex" id="type" required>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
           <input type="text" placeholder="Email" required />
           <input type="text" placeholder="Password" required />
           <input type="text" placeholder="Nationality" />

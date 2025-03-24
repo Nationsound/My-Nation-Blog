@@ -98,6 +98,12 @@ body {
   background: rgb(60, 49, 77);
   height: 200px;
 }
+.header h6{
+  color: #fff;
+  font-size: medium;
+  letter-spacing: 0.5rem;
+  padding-top: 50px;
+}
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */

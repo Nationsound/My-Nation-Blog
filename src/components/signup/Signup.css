@@ -53,11 +53,3 @@
 .signup-form a {
   text-decoration: none;
 }
-
-select {
-  outline: none;
-  background-repeat: no-repeat;
-  background-size: auto;
-  box-sizing: border-box;
-  padding-right: 1.5em;
-}

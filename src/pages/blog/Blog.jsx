@@ -17,12 +17,6 @@ export default function Blog() {
         </div>
       </div>
 
-
-
-      <div className="header">
-        <h2>My Nation Blog</h2>
-      </div>
-
       <div className="row">
         {blogPosts.map((post) => (
           <div>
@@ -38,6 +32,7 @@ export default function Blog() {
                 <Link to={`/post/${post.id}`} className="bg-[#4527a0] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">View Details</Link>
               </div>
             </div>
+
             <div>
               <div className="rightcolumn">
                 <div className="card">
@@ -54,7 +49,10 @@ export default function Blog() {
           </div>
         ))}
       </div>
-
+      <div className="header">
+        <h2>My Nation Blog</h2>
+        <h6>News, style & Entertainment</h6>
+      </div>
 
     </div>
   )

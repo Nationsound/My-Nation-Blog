@@ -1,9 +1,7 @@
 .header-a{
-    display: flex;
-    max-height: 50px;
+    max-height: 80px;
     min-height: 45px;
-    align-items: center;
-    padding-left: 50px;
+    /* align-items: center; */
     background-color:rgb(149, 154, 74);
 }
 .header-a-1{
@@ -11,32 +9,27 @@
     justify-content: center;
     
 }
-.header-wat{
+.header-a-1 div{
+    margin-left: 10px;
+    color: #3B314C;
     font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-.header-mail{
-    font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding-left: 100px;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bolder;
+    cursor: pointer;
 }
 .header-a-2{
     display: flex;
     justify-content: center;
-    padding-left: 500px;
+    padding-left: 900px;
+    cursor: pointer;
 }
-.header-insta{
-    font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding-left: 100px;
+.header-a-2 div{
+    margin-left: 20px;
 }
-.header-face{
-    font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding-left: 100px;
-}
-.header-twit{
-    font-size: medium;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding-left: 100px;
-}
+
+@media (min-width: 600px) {
+    .header-a {
+      text-align: left;
+      padding: 20px 40px;
+    }
+  }

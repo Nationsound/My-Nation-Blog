@@ -6,7 +6,7 @@ export default function Header() {
     return (
         <header className="my-header">
 
-            <nav className=" mx-auto flex justify-between items-center p-4">
+            <nav className=" mx-auto flex justify-between items-center p-4  md:mt-0">
                 <Link to="/" className="text-2xl font-bold"><img src={myLogo} alt="" className="my-Logo" /></Link>
                 <p className="my-header-a1">Get familiar with</p>
                 <Link to="/" className="my-header-a">My Nation Blog</Link>
@@ -29,6 +29,9 @@ export default function Header() {
                     <li>
                         <Link to="/blog" className="hover:text-gray-300 transition duration-200">Blog</Link>
                     </li>
+                    {/* <li>
+                        <Link to="/admin" className="hover:text-gray-300 transition duration-200">Admin Dashboard</Link>
+                    </li> */}
                 </ul>
             </nav>
         </header>

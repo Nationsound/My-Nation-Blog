@@ -79,7 +79,7 @@ export default function Footer() {
       </div>
       <hr />
       <div>
-        <span class="text-sm text-gray-500 dark:text-gray-300 sm:text-center ml-20">© 2025 <a href="">My Nation Blog</a>. All Rights Reserved.
+        <span className="text-sm text-gray-500 dark:text-gray-300 sm:text-center ml-20">© 2025 <a href="">My Nation Blog</a>. All Rights Reserved.
 
         </span>
       </div>

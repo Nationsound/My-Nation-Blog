@@ -1,3 +1,86 @@
+.service-a {
+    background-color: rgb(149, 154, 74);
+    height: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.service-b {
+    align-items: center;
+    color: #fff;
+}
+
+.service-b h1 {
+    font-size: xx-large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bolder;
+    padding-top: 100px;
+    animation-duration: 8s;
+    animation-name: slide-in;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    cursor: pointer;
+}
+
+@keyframes slide-in {
+    from {
+        translate: 5vw 0;
+        scale: 100% 1;
+    }
+
+    to {
+        translate: 0 0;
+        scale: 100% 1;
+    }
+}
+
+.service-c {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    background-size: cover;
+    height: 50px;
+    width: 180px;
+    text-align: center;
+    margin-top: 100px;
+    border: inset;
+    border-radius: 10px;
+    border-color: rgb(149, 154, 74);
+    align-items: center;
+    color: rgb(149, 154, 74);
+
+}
+
+.service-c-home {
+    font-size: large;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+}
+
+.service-c h6 {
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+.header {
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background: rgb(60, 49, 77);
+    height: 350px;
+  }
+  .header h2{
+    padding-top: 50px;
+    font-size: 2.5rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: lightgoldenrodyellow;
+    text-align: center;
+  }
+  .header h6{
+    color: #fff;
+    font-size: medium;
+    letter-spacing: 0.5rem;
+    padding-top: 50px;
+  }
 .service{
     display: grid;
     grid-template-columns: auto;

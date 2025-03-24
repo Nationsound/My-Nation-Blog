@@ -14,7 +14,7 @@ export default function Service() {
           <Link to="/" className="service-c-home">Home</Link>
           <h6>Service</h6>
         </div>
-      </div>
+      </div> 
       <div className='service-d'>
         <div className='service-d-1'>
 

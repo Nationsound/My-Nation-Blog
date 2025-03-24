@@ -15,6 +15,9 @@ import Post from "./pages/post/Post";
 import ServiceDataDetails from "./pages/serviceDataDetails/ServiceDataDetails";
 import ContainerComponent from "./pages/containerComponent/ContainerComponent";
 import HeaderA from "./components/header1/HeaderA";
+import AdminDashboard from "./components/adminDashboard/AdminDashboard";
+import AdminLogin from "./components/auth/AdminLogin";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 // import HeroSection from "./components/herosection/HeroSection";
 
@@ -38,12 +41,23 @@ function App() {
           <Route path="/service/:id" element={<ServiceDataDetails/>}/>
           <Route path="/containercomponent/:id" element={<ContainerComponent/>}/>
           <Route path="/post" element={<Post />}/>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin-login" element={<AdminLogin />} />
+          <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
         </Routes>
         {/* <HeroSection /> */}
         <Footer />
       </Router>
     </div>
-  )
-}
+    
+  );
+};
 
 export default App

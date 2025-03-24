@@ -25,3 +25,32 @@
     font-size: x-small;
 
 }
+@media (min-width: 600px) {
+    .my-header {
+      text-align: left;
+      padding: 20px 40px;
+    }
+    .nav {
+      float: right;
+    }
+    .nav a {
+      font-size: 18px;
+    }
+  }
+  
+  /* Desktop (min-width: 900px) */
+  @media (min-width: 900px) {
+    .container {
+      display: flex;
+      justify-content: space-between;
+    }
+    .content {
+      flex: 2;
+      margin-right: 20px;
+    }
+    .sidebar {
+      flex: 1;
+      background-color: #f1f1f1;
+      padding: 20px;
+    }
+  }
