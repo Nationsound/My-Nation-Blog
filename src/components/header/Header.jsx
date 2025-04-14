@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css'
-import myLogo from '../../assets/images/myLogo.jpg'
+import MNBLogo1 from '../../assets/images/MNBLogo1.png';
 export default function Header() {
     return (
         <header className="my-header">
 
             <nav className=" mx-auto flex justify-between items-center p-4  md:mt-0">
-                <Link to="/" className="text-2xl font-bold"><img src={myLogo} alt="" className="my-Logo" /></Link>
+                <Link to="/" className="text-2xl font-bold"><img src={MNBLogo1} alt="" className="my-Logo" /></Link>
                 <p className="my-header-a1">Get familiar with</p>
                 <Link to="/" className="my-header-a">My Nation Blog</Link>
                 <ul className="flex space-x-6">

@@ -1,41 +1,51 @@
-.my-footer{
-    background-color: black;
-    min-height: 400px;
-}
-.my-footer-1{
+/* src/Footer.css */
+
+.my-footer {
+    background-color: #3B314C; /* Custom background color */
+  }
+  
+  .footer-logo {
+    text-align: center;
+  }
+  
+  .my-footer-1 {
+    padding: 2rem 0;
+  }
+  
+  .my-footer-2 {
+    background-color: #2D2D2D; /* Darker background for the bottom section */
+  }
+  
+  .footer-links h3 {
+    color: #FFFFFF;
+    margin-bottom: 10px;
+  }
+  
+  .footer-links a {
+    color: #B3B3B3; /* Light grey color for links */
+    transition: color 0.3s;
+  }
+  
+  .footer-links a:hover {
+    color: #FFFFFF; /* On hover, change link color to white */
+  }
+  
+  .footer-social ul {
     display: flex;
-    justify-content: space-around;
-    font-size:large;
-    color: gray;
-    font-weight: 600;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.my-footer-1 h1{
-    cursor: pointer;
-}
-.my-footer-1 h1:hover{
-    color: rgb(245,245,245);
-}
-.my-footer-2{
-    display: flex;
-    justify-content: space-around;
-    font-size:small ;
-    color: grey;
-    font-weight: lighter;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-.my-footer-2 li{
-    cursor: pointer;
-}
-.my-footer-2 li:hover{
-    color: rgb(245,245,245);
-}
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
-    padding-top: 50px;
-}
+    gap: 20px;
+  }
+  
+  .footer-social a {
+    color: white;
+    transition: color 0.3s;
+  }
+  
+  .footer-social a:hover {
+    color: #4CAF50; /* Green on hover for social media links */
+  }
+  
+  .footer-rights {
+    text-align: center;
+    margin-top: 10px;
+  }
+  

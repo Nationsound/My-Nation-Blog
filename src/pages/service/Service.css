@@ -1,3 +1,4 @@
+/* Service Section Styling */
 .service-a {
     background-color: rgb(149, 154, 74);
     height: 300px;
@@ -24,12 +25,11 @@
 
 @keyframes slide-in {
     from {
-        translate: 5vw 0;
+        transform: translateX(5vw);
         scale: 100% 1;
     }
-
     to {
-        translate: 0 0;
+        transform: translateX(0);
         scale: 100% 1;
     }
 }
@@ -48,7 +48,6 @@
     border-color: rgb(149, 154, 74);
     align-items: center;
     color: rgb(149, 154, 74);
-
 }
 
 .service-c-home {
@@ -63,6 +62,7 @@
     font-weight: bold;
 }
 
+/* Service Details */
 .service-d {
     margin-top: 100px;
     margin-bottom: 100px;
@@ -103,6 +103,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+/* Service E Section */
 .service-e {
     background-color: #fff;
     display: flex;
@@ -127,6 +128,8 @@
 }
 
 .service-e-1a {
+    display: flex;
+    justify-content: space-around;
     margin-top: 30px;
 }
 
@@ -135,10 +138,12 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5rem;
 }
-.front-1 li{
+
+.front-1 li {
     font-size: large;
     font-family: 'Courier New', Courier, monospace;
 }
+
 .service-e-1b {
     display: flex;
     justify-content: space-around;
@@ -169,7 +174,8 @@
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.5rem;
 }
-.back-1 li{
+
+.back-1 li {
     font-size: large;
     font-family: 'Courier New', Courier, monospace;
 }
@@ -191,6 +197,7 @@
     margin-top: 120px;
 }
 
+/* Service List */
 .service {
     display: grid;
     grid-template-columns: auto;
@@ -221,39 +228,50 @@
     font-size: medium;
     font-weight: lighter;
 }
-.service-f{
-    background-color: rgb(149, 154, 74); 
+
+/* Service Footer */
+.service-f {
+    background-color: rgb(149, 154, 74);
     margin-top: 100px;
     margin-bottom: 100px;
 }
-.service-f h1{
+
+.service-f h1 {
     text-align: center;
     font-size: 2.5rem;
     font-family: 'Times New Roman', Times, serif;
     padding-top: 50px;
 }
-.service-f h6{
+
+.service-f h6 {
     text-align: center;
     font-size: 1.5rem;
     font-family: 'Times New Roman', Times, serif;
     padding-top: 50px;
 }
-.service-f-1{
+
+.service-f-a {
+    margin-left: 300px;
+}
+
+.service-f-1 {
     padding-top: 50px;
     margin-left: 350px;
     background-image: url("../../assets/images/myNationImg116.jpeg");
+    background-position: center;
     background-size: cover;
-    width: 800px;
+    width: 600px;
     height: 400px;
-
 }
-.service-f-1 h3{
+
+.service-f-1 h3 {
     color: #fff;
     text-align: center;
     font-size: larger;
     font-family: 'Times New Roman', Times, serif;
 }
-.service-f-1 p{
+
+.service-f-1 p {
     padding-top: 50px;
     letter-spacing: 0.3rem;
     color: #fff;
@@ -262,7 +280,27 @@
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
 }
-.service-f h5{
+
+.service-f h5 {
     padding-top: 30px;
     text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .service-e-1b,
+    .service-e-1c {
+        flex-direction: column;
+    }
+    .service-f-1 {
+        width: 100%;
+        margin-left: 0;
+    }
+    .service-c {
+        width: 100%;
+        flex-direction: column;
+    }
+    .service-d-3 {
+        grid-template-columns: 1fr;
+    }
 }

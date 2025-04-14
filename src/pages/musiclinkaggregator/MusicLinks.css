@@ -1,0 +1,147 @@
+.music-link-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #1f2937;
+}
+
+.description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  background: #f1f5f9;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+  font-size: 22px;
+  margin-right: 10px;
+}
+
+.youtube {
+  color: #ff0000;
+}
+
+.spotify {
+  color: #1db954;
+}
+
+.boomplay {
+  color: #0066cc;
+}
+
+.appleMusic {
+  color: #fa233b;
+}
+
+.audiomack {
+  color: #ff9900;
+}
+
+.music-input {
+  width: 100%;
+  padding: 8px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+}
+
+.generate-btn {
+  margin-top: 20px;
+  padding: 12px 18px;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.generate-btn:hover {
+  background-color: #1e4bb5;
+}
+
+/* Styles for the generated link */
+.generated-link-container {
+  margin-top: 20px;
+  padding: 15px;
+  background: #e0f7fa;
+  border-radius: 8px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-message {
+  color: #1db954;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.generated-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.generated-link a {
+  color: #007bff;
+  text-decoration: none;
+  flex-grow: 1;
+}
+
+.generated-link a:hover {
+  text-decoration: underline;
+}
+
+.copy-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.copy-btn:hover {
+  background: #1e4bb5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

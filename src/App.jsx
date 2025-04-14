@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, } from "react-router-dom";
 import './App.css'
 import Header from './components/header/Header'
 import Home from "./pages/home/Home";
@@ -18,6 +18,18 @@ import HeaderA from "./components/header1/HeaderA";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import AdminLogin from "./components/auth/AdminLogin";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import MusicLinkAggregator from "./pages/musiclinkaggregator/MusicLinkAggregator";
+import SmartLinkPage from "./pages/smartlink/SmartLinkPage";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import BrandGuideline from "./pages/brandGuidline/BrandGuideline";
+import License from "./pages/license/License";
+import PrivacyPolicy from "./pages/privacyPolicy/Privacypolicy";
+import TermsAndConditions from "./pages/termsAndConditions/TermsAndconditions";
+import ResetPassword from "./components/resetPassword/ResetPassword";
+import Profile from "./components/userProfile/Profile";
+import Booking from "./pages/bookings/Booking";
+import BookingSuccess from "./pages/bookingSuccess/BookingSuccess";
+import StyleSpotlight from "./pages/styleSpotlight/StyleSpotlight";
 
 // import HeroSection from "./components/herosection/HeroSection";
 
@@ -43,7 +55,21 @@ function App() {
           <Route path="/post" element={<Post />}/>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin-login" element={<AdminLogin />} />
+          <Route path="/music-links" element={<MusicLinkAggregator />} />
+          <Route path="/smartlink/:id" element={<SmartLinkPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/license" element={<License />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/brand-guideline" element={<BrandGuideline />} />
+          <Route path="/reset-password/:resetToken" element={<ResetPassword />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/booking-success" element={<BookingSuccess />} />
+          <Route path="/style-spotlight" element={<StyleSpotlight />} />
+          
           <Route
+          
           path="/admin-dashboard"
           element={
             <ProtectedRoute>
