@@ -1,3 +1,4 @@
+/* General Styles for About Section */
 .about {
     background-color: rgb(149, 154, 74);
     height: 300px;
@@ -15,40 +16,26 @@
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-weight: bolder;
     padding-top: 100px;
-    animation-duration: 8s;
-    animation-name: slide-in;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation: slide-in 8s alternate infinite;
     cursor: pointer;
 }
+
 @keyframes slide-in {
     from {
-      translate: 5vw 0;
-      scale: 100% 1;
+        transform: translate(5vw, 0);
+        scale: 100% 1;
     }
-  
     to {
-      translate: 0 0;
-      scale: 100% 1;
+        transform: translate(0, 0);
+        scale: 100% 1;
     }
-  }
-  /* @keyframes grow-shrink {
-    25%,
-    75% {
-      scale: 100%;
-    }
-  
-    50% {
-      scale: 200%;
-      color: magenta;
-    }
-  } */
+}
 
+/* About Section Bottom Navigation */
 .about-b {
     display: flex;
     justify-content: space-between;
     background-color: #fff;
-    background-size: cover;
     height: 50px;
     width: 180px;
     text-align: center;
@@ -58,7 +45,6 @@
     border-color: rgb(149, 154, 74);
     align-items: center;
     color: rgb(149, 154, 74);
-
 }
 
 .about-b-home {
@@ -73,12 +59,12 @@
     font-weight: bold;
 }
 
+/* Content Section */
 .content {
     background-color: #fff;
     margin-top: 100px;
     margin-bottom: 100px;
     padding-left: 50px;
-    align-items: center;
     height: 500px;
 }
 
@@ -108,6 +94,7 @@
     font-family: 'Times New Roman', Times, serif;
 }
 
+/* My About Section */
 .my-about {
     margin: 0;
     display: flex;
@@ -119,12 +106,15 @@
     padding-left: 100px;
 }
 
-.my-about-a {
-    color: brown;
-    cursor: pointer;
-
+.my-about p {
+    margin: 0;
+    font-size: small;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    padding-top: 5px;
 }
 
+/* Content Section B */
 .content-b {
     background-color: rgb(59, 49, 76);
     height: 600px;
@@ -147,6 +137,7 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Content Stats Section */
 .content-c {
     display: flex;
     justify-content: space-around;
@@ -163,23 +154,20 @@
     border: inset;
     border-radius: 10px;
     border-color: #fff;
-    animation-duration: 8s;
-    animation-name: slide-in-right;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation: slide-in-right 8s alternate infinite;
     cursor: pointer;
 }
+
 @keyframes slide-in-right {
     from {
-      translate: 1vw 0;
-      scale: 100% 1;
+        transform: translate(1vw, 0);
+        scale: 100% 1;
     }
-  
     to {
-      translate: 0 0;
-      scale: 100% 1;
+        transform: translate(0, 0);
+        scale: 100% 1;
     }
-  }
+}
 
 .content-d h3 {
     color: #fff;
@@ -195,6 +183,7 @@
     font-weight: 800;
 }
 
+/* Content Section E */
 .content-e {
     text-align: center;
     padding-left: 250px;
@@ -204,45 +193,22 @@
     font-weight: bold;
 }
 
-.my-image {
-    margin-top: 0;
-    height: 400px;
-    width: 450px;
-    cursor: pointer;
+/* Nationsound Section */
+.nationsound {
+    padding-left: 400px;
+    margin-bottom: 100px;
+    background-color: #fff;
 }
 
-.my-about-b {
-    color: brown;
-    cursor: pointer;
-
+.nationsound-img {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 1050px;
+    height: 800px;
 }
 
-.my-about-c {
-    color: brown;
-    cursor: pointer;
-
-}
-
-.my-about-d {
-    color: brown;
-    cursor: pointer;
-
-}
-
-.my-about p {
-    margin: 0;
-    font-size: small;
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 400;
-    font-weight: bold;
-    padding-top: 5px;
-}
-
-.btn {
-    cursor: pointer;
-    padding-left: 20px;
-}
-.brand{
+/* Brand Section */
+.brand {
     display: flex;
     justify-content: space-between;
     background-color: #fff;
@@ -250,7 +216,8 @@
     margin-top: 100px;
     margin-bottom: 100px;
 }
-.brand-div{
+
+.brand-div {
     height: 670px;
     width: 500px;
     background-image: url("../../assets/images/myNationImg114.jpeg");
@@ -259,24 +226,43 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
-.brand-div h6{
+
+.brand-div h6 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 1.5rem;
     text-align: center;
     padding-top: 350px;
 }
-.brand-div-1 h1{
+
+.brand-div-1 h1 {
     font-size: 2rem;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
     padding-top: 200px;
     font-weight: bold;
-
 }
-.brand-div-1 p{
+
+.brand-div-1 p {
     font-family: 'Courier New', Courier, monospace;
     font-size: large;
     font-weight: lighter;
     padding-left: 100px;
     padding-top: 50px;
+}
+
+/* Buttons */
+.bg-[#4527a0] {
+    background-color: #4527a0;
+    color: #ffffff;
+    width: 32px;
+    font-size: small;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.bg-[#4527a0]:hover {
+    background-color: #5a37b6;
 }

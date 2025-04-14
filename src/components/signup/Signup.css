@@ -1,6 +1,8 @@
+/* SignUp.css */
+
 .signup-container {
   width: 100%;
-  min-width: 100vh;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +28,8 @@
 }
 
 .signup-form input[type="text"],
-.signup-form input[type="password"] {
+.signup-form input[type="password"],
+.signup-form input[type="email"] {
   width: 100%;
   height: 40px;
   margin-bottom: 20px;
@@ -50,6 +53,40 @@
   background-color: #3e8e41;
 }
 
+.signup-form p {
+  text-align: center;
+}
+
 .signup-form a {
   text-decoration: none;
+}
+
+/* Success Message Styling */
+.signup-success {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signup-success h2 {
+  font-size: 24px;
+  color: #2d3748;
+}
+
+.signup-success p {
+  font-size: 18px;
+  color: #4a5568;
+  margin-bottom: 20px;
+}
+
+.signup-success a {
+  font-size: 16px;
+  color: #3182ce;
+  text-decoration: none;
+}
+
+.signup-success a:hover {
+  text-decoration: underline;
 }

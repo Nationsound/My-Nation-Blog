@@ -1,6 +1,7 @@
 import React from 'react'
 import './Home.css'
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import myNationimg38 from '../../assets/images/myNationimg38.jpg'
 import myNationimg74 from '../../assets/images/myNationimg74.jpeg'
 import myNationimg75 from '../../assets/images/myNationimg75.jpeg'
@@ -10,6 +11,11 @@ import myNationimg43 from '../../assets/images/myNationimg43.jpg'
 import myNationimg40 from '../../assets/images/myNationimg40.jpg'
 import myNationimg35 from '../../assets/images/myNationimg35.jpg'
 import myNationimg49 from '../../assets/images/myNationimg49.jpg'
+import { SiYoutube, SiSpotify, SiApplemusic, SiAudiomack } from "react-icons/si";
+import { FaMusic } from "react-icons/fa";
+
+
+
 export default function Home() {
   return (
     <div className="home">
@@ -93,6 +99,24 @@ export default function Home() {
             <br />MNB creates a door for collaboration and networking <br /> with professionals of the same field.</p>
           <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
         </div>
+
+        <div className="home-container">
+      <h1 className="home-title">My Nation Blog: News, Style And Entertainment</h1>
+      <p className="home-description">
+        Generate a single smart link for your music from different platforms like:
+      </p>
+      <div className="icon-group">
+        <SiYoutube className="icon youtube" />
+        <SiSpotify className="icon spotify" />
+        <FaMusic className="icon boomplay" />
+        <SiApplemusic className="icon appleMusic" />
+        <SiAudiomack className="icon audiomack" />
+      </div>
+      <Link to="/music-links" className="music-link-button">
+        Go to Music Link Generator
+      </Link>
+    </div>
+
       </div>
       <div className='my-home-6'>
         <div className='my-home-6a'>
@@ -143,6 +167,34 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="bg-gradient-to-r from-black via-gray-900 to-black text-white py-24 px-6 text-center relative overflow-hidden"
+    >
+      <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
+        WORK WITH <span className="text-[#959A4A]">NATIONSOUND</span><br />
+        AND GET THE BEST <span className="text-yellow-400">AFROSOUND</span>
+      </h1>
+      <p className="text-lg md:text-xl text-gray-300 mt-4 mb-8">
+        Top-notch production, mixing, and mastering services tailored for Afrobeat artists.
+      </p>
+
+      <Link
+        to="/booking"
+        className="inline-block bg-[#959A4A] hover:bg-violet-600 text-white px-8 py-3 rounded-full text-lg shadow-lg transition"
+      >
+        Book Now
+      </Link>
+
+      {/* Background Bubbles */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <div className="absolute w-40 h-40 bg-[#959A4A] opacity-20 rounded-full top-10 left-10 animate-pulse"></div>
+        <div className="absolute w-32 h-32 bg-violet-600 opacity-10 rounded-full bottom-10 right-10 animate-ping"></div>
+      </div>
+    </motion.div>
       <div className='why'>
         <div>
           <h1>Why My Nation Blog?</h1>
@@ -168,6 +220,29 @@ export default function Home() {
           <h6>We give your product a definte selling point</h6>
         </div>
       </div>
+
+      <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-r from-[#2f2f2f] to-[#000000] text-white px-6">
+      <div className="max-w-3xl text-center space-y-6">
+        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+          Welcome to <span className="text-[#959A4A]">My Nation Blog</span>
+        </h1>
+        <p className="text-lg md:text-xl text-gray-300">
+          Dive into a world of news, entertainment, fashion, and more. Discover the weekly <strong>Style Spotlight</strong> and get inspired.
+        </p>
+
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+        >
+          <Link to="/style-spotlight">
+            <button className="px-6 py-3 text-lg font-semibold rounded-2xl bg-[#959A4A] hover:bg-violet-600 transition-colors duration-300 shadow-lg">
+              Explore Style Spotlight
+            </button>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
 
       <div className='products'>
         <h1>We Drive Website Traffic</h1>
@@ -245,8 +320,7 @@ export default function Home() {
         </div>
       </div>
 
+      
     </div>
-
-
   )
 }

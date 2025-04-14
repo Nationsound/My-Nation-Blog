@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { aboutDatas } from '../../dommyData/aboutData';
 import myNationimg100 from '../../assets/images/myNationimg100.jpeg'
+
+
 export default function AboutDataDetails() {
   const { id } = useParams();
   const aboutDataDetail = aboutDatas.find((p) => p.id === parseInt(id));
