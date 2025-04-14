@@ -53,7 +53,7 @@ export default function Home() {
               <li>Agriculture</li>
               <li>Technology</li>
             </ul>
-            <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+            <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
           </div>
         </div>
       </div>
@@ -92,12 +92,12 @@ export default function Home() {
             around efficient brand. We provide valuable information <br />and insights to readers, <br />
             and promote your products and services in a more natural and informative way.
           </p>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
           <p className='my-home-3d'>My Nation Blog creates a unique <br />and knowledgeable content <br />
             that has all the ingredients to build trust <br />with potential customers. <br />
             We help to humanize your brand and connect <br />you with customers on deeper level.
             <br />MNB creates a door for collaboration and networking <br /> with professionals of the same field.</p>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
         </div>
 
         <div className="home-container">
@@ -125,7 +125,7 @@ export default function Home() {
           <div className='my-home-6b'>
             <img src={myNationimg49} alt="" className="my-home-6-img " />
           </div>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
         </div>
       </div>
       <div className='brand'>
@@ -133,7 +133,7 @@ export default function Home() {
           <h1>Ready To Promote Your Brand?</h1>
           <p>Reach out to us today and let's get started</p>
           <div className='brand-btn'>
-            <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Get Started</Link>
+            <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Get Started</Link>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ export default function Home() {
       className="bg-gradient-to-r from-black via-gray-900 to-black text-white py-24 px-6 text-center relative overflow-hidden"
     >
       <h1 className="text-4xl md:text-5xl font-extrabold mb-4">
-        WORK WITH <span className="text-[#959A4A]">NATIONSOUND</span><br />
+        WORK WITH <span className="text-primary">NATIONSOUND</span><br />
         AND GET THE BEST <span className="text-yellow-400">AFROSOUND</span>
       </h1>
       <p className="text-lg md:text-xl text-gray-300 mt-4 mb-8">
@@ -184,14 +184,14 @@ export default function Home() {
 
       <Link
         to="/booking"
-        className="inline-block bg-[#959A4A] hover:bg-violet-600 text-white px-8 py-3 rounded-full text-lg shadow-lg transition"
+        className="inline-block bg-primary hover:bg-violet-600 text-white px-8 py-3 rounded-full text-lg shadow-lg transition"
       >
         Book Now
       </Link>
 
       {/* Background Bubbles */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        <div className="absolute w-40 h-40 bg-[#959A4A] opacity-20 rounded-full top-10 left-10 animate-pulse"></div>
+        <div className="absolute w-40 h-40 bg-primary opacity-20 rounded-full top-10 left-10 animate-pulse"></div>
         <div className="absolute w-32 h-32 bg-violet-600 opacity-10 rounded-full bottom-10 right-10 animate-ping"></div>
       </div>
     </motion.div>
@@ -224,7 +224,7 @@ export default function Home() {
       <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-r from-[#2f2f2f] to-[#000000] text-white px-6">
       <div className="max-w-3xl text-center space-y-6">
         <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-          Welcome to <span className="text-[#959A4A]">My Nation Blog</span>
+          Welcome to <span className="text-primary">My Nation Blog</span>
         </h1>
         <p className="text-lg md:text-xl text-gray-300">
           Dive into a world of news, entertainment, fashion, and more. Discover the weekly <strong>Style Spotlight</strong> and get inspired.
@@ -266,7 +266,7 @@ export default function Home() {
         </div>
         <div className='products-b'>
           <p>We give your product an awareness that ensures steady demands and unlimited growth</p>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
         </div>
         <div className='products-div-2'>
           <div className='div-a'>
@@ -274,7 +274,7 @@ export default function Home() {
             <h6>We deliver projects quickly</h6>
             <p>We maintain speedy progress</p>
           </div>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
           <div className='div-b'>
             <h1>10+ MNB Partnership</h1>
             <h6>We establish partnership</h6>
@@ -294,7 +294,7 @@ export default function Home() {
           <img src={myNationimg74} alt="" className="tech-img rounded lg overflow-hidden hover:shadow-lg hover:scale-110 hover:rotate-3" />
           <h3>My Nation Blog is inclined with varieties of technical skills as it profers <br />
             sense of direction, while the life struggles continue.</h3>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
           <hr />
           <img src={myNationimg77} alt="" className="tech-img rounded lg overflow-hidden hover:shadow-lg hover:scale-110 hover:rotate-3" />
           <ul>
@@ -316,7 +316,7 @@ export default function Home() {
             For instance, many entry-level positions across industries require cloud computing in Google Drive <br />
             or spreadsheets like Excel or Google Sheets. Examples of more advanced technical skills that a job <br />
             might require include programming languages, technical writing, or data analysis.</p>
-          <Link to={'/about'} className="bg-[#959A4A] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
+          <Link to={'/about'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg  text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">Learn More</Link>
         </div>
       </div>
 

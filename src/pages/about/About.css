@@ -251,7 +251,7 @@
 }
 
 /* Buttons */
-.bg-[#4527a0] {
+.bg-primarHover {
     background-color: #4527a0;
     color: #ffffff;
     width: 32px;
@@ -263,6 +263,6 @@
     border-radius: 5px;
 }
 
-.bg-[#4527a0]:hover {
+.bg-primarHover:hover {
     background-color: #5a37b6;
 }

@@ -92,13 +92,13 @@ export default function About() {
               <img src={aboutData.image} alt={aboutData.title} className="my-image" />
               <h5>{aboutData.categories}</h5>
               <p className='my-about'>{truncatedContent}...</p>
-              <div className='bg-[#4527a0] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700'>
+              <div className='bg-primaryHover text-[#ffffff] w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700'>
                 <Link to={`/about/${aboutData.id}`}>Learn More</Link>
               </div>
             </div>
           );
         })}
-      </div>
+      </div> 
 
       {/* Brand Section */}
       <div className='brand'>
