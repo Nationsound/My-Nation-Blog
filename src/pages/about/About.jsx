@@ -1,10 +1,13 @@
 import React from 'react';
 import './About.css';
 import { Link } from 'react-router-dom';
-import truncate from 'truncate';
 import { aboutDatas } from '../../dommyData/aboutData';
 import myNationimg96 from '../../assets/images/myNationimg96.jpeg';
 import Nationsound from '../../assets/images/Nationsound.png';
+
+const truncate = (str, length) => {
+  return str.length > length ? str.substring(0, length) + "..." : str;
+};
 
 export default function About() {
   return (
