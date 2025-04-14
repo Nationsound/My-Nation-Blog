@@ -25,6 +25,7 @@
     font-size: x-small;
 
 }
+
 @media (min-width: 600px) {
     .my-header {
       text-align: left;
