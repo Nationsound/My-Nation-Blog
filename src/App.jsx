@@ -8,7 +8,6 @@ import About from "./pages/about/About";
 import Login from "./pages/login/Login";
 import Footer from "./components/footer/Footer";
 import Blog from "./pages/blog/Blog";
-import SignUp from "./components/signup/SignUp";
 import BlogDetails from "./pages/blogDetails/BlogDetails";
 import AboutDataDetails from "./pages/aboutDataDetails/AboutDataDetails";
 import Post from "./pages/post/Post";
@@ -32,6 +31,7 @@ import BookingSuccess from "./pages/bookingSuccess/BookingSuccess";
 import StyleSpotlight from "./pages/styleSpotlight/StyleSpotlight";
 import PreHome from "./components/preHome/PreHome";
 import Payment from "./pages/payment/Payment";
+import SignUp from "./components/signup/Signup";
 
 // import HeroSection from "./components/herosection/HeroSection";
 
