@@ -1,57 +1,55 @@
 .my-header {
-    background-color:#fff;
-    color: rgb(149, 154, 74);
-
+  background-color: #fff;
+  color: rgb(149, 154, 74);
+  width: 100%;
 }
 
 .my-Logo {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Text beside logo */
+.my-header-a1 {
+  font-size: 12px;
+  font-style: italic;
+  color: rgb(149, 154, 74);
+  margin-bottom: -2px;
 }
 
 .my-header-a {
-    /* padding-top: 10px; */
-    border: none;
-    color: rgb(149, 154, 74);
-    font-size: xx-large;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: bold;
+  font-size: 22px;
+  font-weight: bold;
+  font-family: 'Times New Roman', Times, serif;
+  color: rgb(149, 154, 74);
+  text-decoration: none;
 }
 
-.my-header-a1 {
-    color: rgb(149, 154, 74);
-    font-style: italic;
-    font-size: x-small;
-
+/* Responsiveness */
+@media (max-width: 768px) {
+  .my-Logo {
+    width: 40px;
+    height: 40px;
+  }
+  .my-header-a {
+    font-size: 18px;
+  }
+  .my-header-a1 {
+    font-size: 10px;
+  }
 }
 
-@media (min-width: 600px) {
-    .my-header {
-      text-align: left;
-      padding: 20px 40px;
-    }
-    .nav {
-      float: right;
-    }
-    .nav a {
-      font-size: 18px;
-    }
+@media (max-width: 480px) {
+  .my-Logo {
+    width: 35px;
+    height: 35px;
   }
-  
-  /* Desktop (min-width: 900px) */
-  @media (min-width: 900px) {
-    .container {
-      display: flex;
-      justify-content: space-between;
-    }
-    .content {
-      flex: 2;
-      margin-right: 20px;
-    }
-    .sidebar {
-      flex: 1;
-      background-color: #f1f1f1;
-      padding: 20px;
-    }
+  .my-header-a {
+    font-size: 16px;
   }
+  .my-header-a1 {
+    font-size: 9px;
+  }
+}

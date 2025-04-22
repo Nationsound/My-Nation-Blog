@@ -26,10 +26,29 @@
 .header-a-2 div{
     margin-left: 20px;
 }
-
-@media (min-width: 600px) {
+/* Mobile responsiveness: stack the header sections */
+@media (max-width: 768px) {
     .header-a {
-      text-align: left;
-      padding: 20px 40px;
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: center; /* Center the items horizontally */
+        padding: 10px 15px;
     }
-  }
+
+    .header-a-1,
+    .header-a-2 {
+        width: 100%; /* Ensure both sections take up full width */
+        justify-content: center; /* Center content horizontally */
+        text-align: center;
+    }
+
+    .header-a-2 {
+        margin-top: 10px; /* Space between sections when stacked */
+    }
+}
+
+/* Larger screen (Desktop) adjustments */
+@media (min-width: 900px) {
+    .header-a {
+        padding: 15px 30px; /* Adjust padding for large screens */
+    }
+}

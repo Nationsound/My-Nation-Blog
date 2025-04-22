@@ -30,6 +30,8 @@ import Profile from "./components/userProfile/Profile";
 import Booking from "./pages/bookings/Booking";
 import BookingSuccess from "./pages/bookingSuccess/BookingSuccess";
 import StyleSpotlight from "./pages/styleSpotlight/StyleSpotlight";
+import PreHome from "./components/preHome/PreHome";
+import Payment from "./pages/payment/Payment";
 
 // import HeroSection from "./components/herosection/HeroSection";
 
@@ -66,8 +68,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/booking" element={<Booking />} />
           <Route path="/booking-success" element={<BookingSuccess />} />
-          <Route path="/style-spotlight" element={<StyleSpotlight />} />
-          
+          <Route path="/style-spotlight" element={<StyleSpotlight />} /> 
+          <Route path="/pre-home" element={<PreHome />} /> 
+          <Route path="/payment" element={<Payment />} />
           <Route
           
           path="/admin-dashboard"

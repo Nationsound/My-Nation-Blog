@@ -6,6 +6,12 @@ const Profile = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);  // To handle the edit mode state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: ''
+  });  // To manage form data when editing
+  const [error, setError] = useState(null);  // To capture and display errors
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -19,38 +25,30 @@ const Profile = () => {
           },
           credentials: 'include',  // Ensure cookies are included with the request
         });
-    
+
         if (!response.ok) {
           throw new Error('Unauthorized or invalid token');
         }
-    
+
         data = await response.json();
+        setProfile(data);  // Update profile state with the fetched data
+        setFormData({ name: data.name, email: data.email });  // Populate form data with profile info
         console.log('User Profile:', data);  // Log profile data
-    
+
       } catch (error) {
         console.error('Error fetching profile:', error);
+        setError(error.message);
       } finally {
-        setProfile(data);
-        setLoading(false);
+        setLoading(false);  // Set loading to false when fetching is done
       }
     };
-    
-    
-    
+
     fetchProfile();
-  }, [navigate]); // Empty dependency array to run the effect once when the component mounts
-
-  if (loading) {
-    return <div>Loading...</div>; // Show a loading message or spinner while fetching data
-  }
-
-  if (!profile) {
-    return <div>No profile found</div>; // Handle case when no profile data is returned
-  }
+  }, []); // Empty dependency array to run only once on mount
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));  // Update the formData state
   };
 
   const updateProfile = async () => {
@@ -59,13 +57,13 @@ const Profile = () => {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(formData),  // Send updated profile data
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Update failed");
       alert("Profile updated!");
       setEditMode(false);
-      fetchProfile();
+      setProfile(data);  // Update profile with the new data
     } catch (err) {
       console.error("Update error:", err);
       setError(err.message);
@@ -83,7 +81,7 @@ const Profile = () => {
       if (!res.ok) throw new Error("Failed to delete profile.");
       alert("Profile deleted.");
       localStorage.clear();
-      navigate("/login");
+      navigate("/login");  // Redirect to login page after deletion
     } catch (err) {
       console.error("Delete error:", err);
       setError(err.message);
@@ -99,16 +97,16 @@ const Profile = () => {
       if (!res.ok) throw new Error("Signout failed");
       alert("Signed out.");
       localStorage.clear();
-      navigate("/login");
+      navigate("/login");  // Redirect to login page after signout
     } catch (err) {
       console.error("Signout error:", err);
       setError(err.message);
     }
   };
 
-  if (loading) return <p>Loading profile...</p>; // Show loading message
+  if (loading) return <p>Loading profile...</p>;  // Show loading message while fetching
 
-  if (!profile) return <p>Profile not found</p>; // If profile is not available, show an error
+  if (!profile) return <p>Profile not found</p>;  // Show error if no profile is available
 
   return (
     <div className="profile-container">
@@ -116,8 +114,18 @@ const Profile = () => {
 
       {editMode ? (
         <>
-          <input name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-          <input name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+          <input
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Name"
+          />
+          <input
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+          />
           <button onClick={updateProfile}>Save</button>
           <button onClick={() => setEditMode(false)}>Cancel</button>
         </>
@@ -134,6 +142,6 @@ const Profile = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
-}
+};
 
 export default Profile;
