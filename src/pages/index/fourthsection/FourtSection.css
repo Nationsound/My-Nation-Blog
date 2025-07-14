@@ -1,0 +1,99 @@
+
+/* Styling for .my-home-6 */
+.my-home-six {
+    margin-top: 100px;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgb(149, 154, 74);
+    height: 600px;
+    flex-wrap: wrap; /* Ensure content wraps on smaller screens */
+  }
+  
+  /* Styling for .my-home6a-1 */
+  .my-home-six-one {
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+  }
+  
+  /* Home page section d1 styling */
+  .my-home-six-two{
+    color: #fff;
+    font-size: xx-large;
+    font-style: normal;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bolder;
+    margin-top: 50px;
+    text-align: center;
+  }
+  
+  .my-home-six-two h1 {
+    font-size: large;
+    font-weight: 700;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+  
+  /* Home page section d2 styling */
+  .my-home-six-three {
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  /* Styling for .my-home-6b */
+  .my-home-six-four {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  /* Styling for images inside .my-home-6 */
+  .my-home-six-img {
+    width: 600px;
+    height: 300px;
+  }
+  /* Medium to large screens (1024px and below) */
+  @media (max-width: 1024px) {
+    .my-home-six {
+      flex-direction: column;
+      height: auto;
+      padding: 20px;
+    }
+  
+    .my-home-six-img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  }
+  
+  /* Small screens (768px and below) */
+  @media (max-width: 768px) {
+    .my-home-six {
+      flex-direction: column;
+      height: auto;
+      padding: 20px;
+    }
+  
+    .my-home-six-img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  
+  }
+  
+  /* Mobile screens (480px and below) */
+  @media (max-width: 480px) {
+    .my-home-six {
+      flex-direction: column;
+      height: auto;
+      padding: 15px;
+    }
+  
+    .my-home-six-img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+  }

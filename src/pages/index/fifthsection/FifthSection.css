@@ -1,0 +1,120 @@
+/* Styling for .brand */
+.brand {
+    min-height: 400px;
+  }
+  
+  /* Brand section with background image */
+  .brand-phase {
+    background-image: url("../../../assets/images/myNationImg42.jpg");
+    background-size: cover;
+    margin-top: 200px;
+    margin-bottom: 30px;
+    margin-left: 100px;
+    width: 1300px;
+    height: 450px;
+  }
+  
+  .brand-phase h1 {
+    padding-top: 50px;
+    color: #fff;
+    font-family: fantasy;
+    font-size: 6rem;
+    text-align: center;
+  }
+  
+  .brand-phase p {
+    color: #fff;
+    text-align: center;
+    padding-top: 50px;
+    letter-spacing: 0.5rem;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+  }
+  
+  .brand-btn {
+    margin-top: 100px; 
+    margin-left: 550px;
+  }
+  /* Medium to large screens (1024px and below) */
+  @media (max-width: 1024px) {
+  
+    .brand-phase {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 50px;
+      height: 300px;
+    }
+  
+    .brand-phase h1 {
+      font-size: 4rem;
+    }
+  
+    .brand-phase p {
+      font-size: 1.5rem;
+    }
+  
+    .brand-btn {
+      margin-left: 0;
+      margin-top: 30px;
+    }
+  }
+  
+  /* Small screens (768px and below) */
+  @media (max-width: 768px) {
+  
+    .brand-phase {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 50px;
+      height: 250px;
+    }
+  
+    .brand-phase h1 {
+      font-size: 3rem;
+    }
+  
+    .brand-phase p {
+      font-size: 1.2rem;
+    }
+  
+    .brand-btn {
+      margin-left: 0;
+      margin-top: 30px;
+    }
+  }
+  
+  /* Mobile screens (480px and below) */
+  @media (max-width: 480px) {
+     .brand-phase {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 30px;
+      height: 200px;
+    }
+  
+    .brand-phase h1 {
+      font-size: 2.5rem;
+    }
+  
+    .brand-phase p {
+      font-size: 1rem;
+    }
+  
+    .brand-btn {
+      margin-left: 0;
+      margin-top: 20px;
+    }
+  }
+  
+/* Animation keyframes */
+@keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }

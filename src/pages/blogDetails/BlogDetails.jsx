@@ -4,9 +4,11 @@ import { Link, useParams } from 'react-router-dom';
 import { blogPosts } from '../../dommyData/blogData';
 import { motion } from 'framer-motion';
 
-export default function BlogDetails() {
+const BlogDetails = () => {
   const { id } = useParams();
-  const blogDetail = blogPosts.find((p) => p.id === parseInt(id));
+  const [blogDetail, setBlogDetail] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const [comments, setComments] = useState([]);
   const [formData, setFormData] = useState({
@@ -15,6 +17,28 @@ export default function BlogDetails() {
     email: '',
     saveInfo: false,
   });
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`http://localhost:1990/mnb/api/getPost/${id}`);
+        if (!res.ok) throw new Error('Failed to fetch from backend');
+        const data = await res.json();
+        setBlogDetail(data);
+      } catch (err) {
+        console.warn('Backend fetch failed, using dummy:', err.message);
+        const dummy = blogPosts.find((p) => String(p.id) === id);
+        if (dummy) {
+          setBlogDetail(dummy);
+        } else {
+          setError('Blog post not found.');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBlog();
+  }, [id]);
 
   useEffect(() => {
     const savedName = localStorage.getItem('name');
@@ -42,7 +66,6 @@ export default function BlogDetails() {
       localStorage.setItem('name', formData.name);
       localStorage.setItem('email', formData.email);
     }
-
     const newComment = {
       id: Date.now(),
       text: formData.comment,
@@ -52,9 +75,7 @@ export default function BlogDetails() {
       dislikes: 0,
       rating: 0,
     };
-
     setComments((prev) => [newComment, ...prev]);
-
     setFormData({
       comment: '',
       name: formData.saveInfo ? formData.name : '',
@@ -81,7 +102,16 @@ export default function BlogDetails() {
     );
   };
 
-  if (!blogDetail) return <div>Blog details not found</div>;
+  if (loading) return <p className="text-center">Loading...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (!blogDetail) return <p>Blog post not found</p>;
+
+  // ✅ smart image logic
+  const imageSrc = blogDetail.image
+    ? typeof blogDetail.image === 'string' && !blogDetail.image.startsWith('http') && !blogDetail.image.includes('/')
+      ? `http://localhost:1990/uploads/${blogDetail.image}`
+      : blogDetail.image
+    : '';
 
   return (
     <motion.div
@@ -110,11 +140,26 @@ export default function BlogDetails() {
 
       <div className="card">
         <h2>{blogDetail.title}</h2>
-        <img src={blogDetail.image} alt={blogDetail.title} className="fakeimg1" />
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt={blogDetail.title}
+            className="fakeimg1"
+          />
+        )}
         <h5>{blogDetail.slug}</h5>
         <h1>{blogDetail.author}</h1>
-        <h2>{blogDetail.date}</h2>
-        <h5>{blogDetail.categories}</h5>
+        <h2>
+          {blogDetail.date ||
+            (blogDetail.createdAt
+              ? new Date(blogDetail.createdAt).toLocaleDateString()
+              : 'Unknown date')}
+        </h2>
+        <h5>
+          {Array.isArray(blogDetail.categories)
+            ? blogDetail.categories.join(', ')
+            : blogDetail.categories}
+        </h5>
         <p>{blogDetail.content}</p>
       </div>
 
@@ -132,7 +177,7 @@ export default function BlogDetails() {
           </div>
         </form>
 
-        {/* Comments Display Section */}
+        {/* Comments Display */}
         <div className='comments-display mt-10 text-white'>
           <h2 className="text-lg font-semibold underline text-white mb-5">Comments</h2>
           {comments.map((c) => (
@@ -158,4 +203,6 @@ export default function BlogDetails() {
       </div>
     </motion.div>
   );
-}
+};
+
+export default BlogDetails;

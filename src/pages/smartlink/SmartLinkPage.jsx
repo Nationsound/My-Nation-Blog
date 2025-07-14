@@ -1,64 +1,82 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // If using React Router
+import { useParams, useNavigate } from "react-router-dom";
 import { SiYoutube, SiSpotify, SiApplemusic, SiAudiomack } from "react-icons/si";
-import { FaMusic } from "react-icons/fa"; // Boomplay icon replacement
-import "./SmartLinkPage.css"; // External CSS
-
-const fakeDatabase = {
-  abc123: {
-    youtube: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-    spotify: "https://open.spotify.com/track/7GhIk7Il098yCjg4BQjzvb",
-    boomplay: "https://www.boomplay.com/songs/12345678",
-    appleMusic: "https://music.apple.com/us/album/song-name/1552035769",
-    audiomack: "https://audiomack.com/artist/song-name",
-  },
-};
+import { FaMusic } from "react-icons/fa";
+import "./SmartLinkPage.css"; // your custom CSS
 
 const SmartLinkPage = () => {
-  const { id } = useParams(); // Get the link ID from URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [musicLinks, setMusicLinks] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching from a database
-    if (fakeDatabase[id]) {
-      setMusicLinks(fakeDatabase[id]);
-    } else {
-      navigate("/404"); // Redirect if link not found
-    }
+    const fetchSmartLink = async () => {
+      try {
+        const res = await fetch(`http://localhost:1990/mnb/api/getSmartLink/${id}`);
+        if (!res.ok) throw new Error("Smart link not found");
+        const data = await res.json();
+        setMusicLinks(data);
+      } catch (error) {
+        console.error("Error:", error.message);
+        navigate("/404");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSmartLink();
   }, [id, navigate]);
 
-  if (!musicLinks) return <p>Loading...</p>;
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
   return (
-    <div className="smart-link-container">
-      <h2>Choose Your Music Platform</h2>
-      <p>Listen to the song on your favorite platform:</p>
+    <div className="smart-link-container mx-auto max-w-xl mt-10 p-4 bg-white shadow rounded text-center">
+      {/* ✅ Show cover image if it exists */}
+      {musicLinks.coverImage && (
+        <img 
+          src={`http://localhost:1990/uploads/${musicLinks.coverImage}`} 
+          alt="Cover artwork" 
+          className="w-48 h-48 object-cover mx-auto rounded mb-4 shadow" 
+        />
+      )}
 
-      <div className="platform-buttons">
+      {/* ✅ Show song title if it exists */}
+      {musicLinks.title && (
+        <h2 className="text-2xl font-bold mb-2">{musicLinks.title}</h2>
+      )}
+
+      <p className="mb-6">Listen to the song on your favorite platform:</p>
+
+      <div className="platform-buttons grid grid-cols-1 gap-4">
         {musicLinks.youtube && (
-          <a href={musicLinks.youtube} target="_blank" rel="noopener noreferrer" className="platform youtube">
-            <SiYoutube className="icon" /> YouTube
+          <a href={musicLinks.youtube} target="_blank" rel="noopener noreferrer"
+             className="flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded hover:bg-red-700 transition">
+            <SiYoutube className="text-2xl" /> YouTube
           </a>
         )}
         {musicLinks.spotify && (
-          <a href={musicLinks.spotify} target="_blank" rel="noopener noreferrer" className="platform spotify">
-            <SiSpotify className="icon" /> Spotify
+          <a href={musicLinks.spotify} target="_blank" rel="noopener noreferrer"
+             className="flex items-center justify-center gap-2 p-3 bg-green-600 text-white rounded hover:bg-green-700 transition">
+            <SiSpotify className="text-2xl" /> Spotify
           </a>
         )}
         {musicLinks.boomplay && (
-          <a href={musicLinks.boomplay} target="_blank" rel="noopener noreferrer" className="platform boomplay">
-            <FaMusic className="icon" /> Boomplay
+          <a href={musicLinks.boomplay} target="_blank" rel="noopener noreferrer"
+             className="flex items-center justify-center gap-2 p-3 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition">
+            <FaMusic className="text-2xl" /> Boomplay
           </a>
         )}
         {musicLinks.appleMusic && (
-          <a href={musicLinks.appleMusic} target="_blank" rel="noopener noreferrer" className="platform appleMusic">
-            <SiApplemusic className="icon" /> Apple Music
+          <a href={musicLinks.appleMusic} target="_blank" rel="noopener noreferrer"
+             className="flex items-center justify-center gap-2 p-3 bg-black text-white rounded hover:bg-gray-800 transition">
+            <SiApplemusic className="text-2xl" /> Apple Music
           </a>
         )}
         {musicLinks.audiomack && (
-          <a href={musicLinks.audiomack} target="_blank" rel="noopener noreferrer" className="platform audiomack">
-            <SiAudiomack className="icon" /> Audiomack
+          <a href={musicLinks.audiomack} target="_blank" rel="noopener noreferrer"
+             className="flex items-center justify-center gap-2 p-3 bg-orange-500 text-white rounded hover:bg-orange-600 transition">
+            <SiAudiomack className="text-2xl" /> Audiomack
           </a>
         )}
       </div>

@@ -2,6 +2,7 @@ import image1 from '../assets/images/myNationImg52.jpeg'
 import image2 from '../assets/images/myNationImg53.jpeg'
 import image3 from '../assets/images/myNationImg16.jpg'
 
+
 export const serviceDatas = [
     {
         id: 1,
@@ -23,5 +24,6 @@ export const serviceDatas = [
         image: image3,
         content: "We offer a blog service that enables you to share more information about your business as well as to air your views, thoughts and opinion about certain topics.",
         categories: ["Entertainment"]
-    }
+    },
+    
 ]

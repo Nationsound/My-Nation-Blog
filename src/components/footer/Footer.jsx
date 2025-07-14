@@ -2,7 +2,7 @@ import React from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
 
-export default function Footer() {
+const Footer = ()=> {
   return (
     <div className="my-footer bg-[#3B314C] text-white">
       <div className="my-footer-1 container mx-auto px-6 py-12 flex flex-wrap justify-between">
@@ -60,3 +60,4 @@ export default function Footer() {
     </div>
   );
 }
+export default Footer;

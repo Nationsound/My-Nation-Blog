@@ -81,32 +81,64 @@
     letter-spacing: 0.5rem;
     padding-top: 50px;
   }
-.service{
+  .service {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
     grid-template-rows: auto;
-    padding-left: 50px;
-}
-.my-service{
-    font-size: x-large;
+    padding: 2rem 50px;
+    gap: 1.5rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .my-service {
+    font-size: 2rem;
     font-family: 'Courier New', Courier, monospace;
     font-weight: bolder;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
     padding-top: 10px;
-}
-.my-service h1{
-    font-size: xx-large;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .my-service h1 {
+    font-size: 2.5rem;
     font-weight: bolder;
-}
-.my-service-categories{
+  }
+  
+  .my-service-categories {
     font-family: sans-serif;
     font-weight: bolder;
-    font-size: x-large;
-}
-.my-service-content{
+    font-size: 1.5rem;
+    color: #6c757d;
+  }
+  
+  .my-service-content {
     font-family: 'Courier New', Courier, monospace;
-    font-size: medium;
+    font-size: 1.125rem;
     font-weight: lighter;
-}
+    color: #555;
+    line-height: 1.6;
+    padding: 10px 0;
+  }
+  
+  .my-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .my-image:hover {
+    transform: scale(1.05);
+  }
+  
 /* ManagementTeam.css */
 .management-section {
     padding: 3rem 1rem;

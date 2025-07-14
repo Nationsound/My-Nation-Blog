@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import theBestImg from '../../assets/images/theBestImg.png'
 
 
-const ServiceCard = ({ title, content, categories, image, id }) => (
+const ServiceCard = ({ title, content, categories, image, id }) => ( 
   <motion.div 
     className="service-card"
     whileHover={{ scale: 1.03 }}
@@ -33,17 +33,29 @@ const ServiceCard = ({ title, content, categories, image, id }) => (
   </motion.div>
 );
 
-export default function Service() {
+const Service = ()=> {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     if (!name || !email || !message) {
       toast.error('Please fill in all fields!');
       return;
     }
+    try {
+      const response = await fetch('api/mnb/partnership', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'Application/json',
+        },
+        body: JSON.stringify({name, email, message})
+      });
+      if(!response.ok) {
+        throw new Error('Failed to submit partnership request')
+      }
+    
     toast.success('Request submitted successfully!');
 
     // Reset form
@@ -51,6 +63,10 @@ export default function Service() {
     setEmail('');
     setMessage('');
     setShowModal(false);
+    } catch(error){
+      toast.error('something went wrong, please try again later');
+      console.error(error);
+    }
   };
 
   const containerVariants = {
@@ -77,7 +93,7 @@ export default function Service() {
           transition={{ duration: 1 }}
         >
           <h1 className="hero-title">Our Services</h1>
-          <p className="hero-subtitle">Explore what we offer at My Nation Blog</p>
+          <p className="hero-subtitle">Explore what we offer at My Nation Blog</p>  
         </motion.div>
       </section>
 
@@ -87,17 +103,95 @@ export default function Service() {
           animate={{ x: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          We Build Fast and Scalable Solutions
+          Creativity, Culture and Cutting-Edge
         </motion.h2>
         <p>
-          At MNB, we design and build stunning user interfaces and robust backend systems to give your audience a seamless digital experience. From content automation to full-stack development, marketing, and UI/UX design — we've got you covered.
+          At MNB (My Nation Blog), we blend creativity, culture, and cutting-edge digital 
+          innovation to deliver an unmatched experience in news, style, and entertainment. Here’s what we bring to your world:
         </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Timely And Trusted Updates
+        </motion.h2>
+        <p>
+          We stay ahead with real-time updates, in-depth reports, and exclusive interviews covering national and global stories. 
+          From politics to lifestyle trends, our editorial team keeps you informed with accuracy and insight.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Styles That Inspires
+        </motion.h2>
+        <p>
+          Explore the best of fashion, beauty, and design. We spotlight emerging talents, iconic designers, and street style, 
+          providing readers with trend forecasts, styling tips, and visual inspiration.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Entertainment Like Never Before
+        </motion.h2>
+        <p>
+          Immerse yourself in celebrity features, music spotlights, film reviews, and behind-the-scenes exclusives. 
+          We keep you connected to the pulse of the entertainment world, both locally and internationally.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Spotlight Features And Cultural Commentary
+        </motion.h2>
+        <p>
+          Dive deeper with feature stories that explore the cultural heartbeat of society — from Afrobeats’ global rise to the evolution of modern style and creative expression.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Interactive Media And Digital Story-Telling
+        </motion.h2>
+        <p>
+          Experience news and stories through rich multimedia content: videos, podcasts, live event coverage, and interactive graphics crafted to engage and captivate.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Community Driven Content
+        </motion.h2>
+        <p>
+         MNB is more than media — it’s a community. Share opinions, join discussions, participate in polls, and engage directly with the stories that matter to you.
+        </p>
+        <motion.h2
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Personalized Experience
+        </motion.h2>
+        <p>
+          Powered by smart recommendations and user-friendly design, MNB delivers content curated to your interests, making your journey through news, style, and entertainment seamless and unique.
+        </p>
+        
+        <Link to={'/'} className="bg-primary text-[#ffffff] w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2">
+          Return Home
+        </Link>
       </section>
 
       <section className="service-list">
         {serviceDatas.map((data) => (
           <ServiceCard key={data.id} {...data} />
-        ))}
+        ))} 
       </section>
 
       <section className="service-promo">
@@ -233,7 +327,7 @@ export default function Service() {
     transition={{ delay: 0.8, duration: 1 }}
   >
     Dive into the exclusive world of powerful lyrics and melodies that mark
-    my songwriting signature. “The Best That Is Coming” isn’t just a jingle—it's
+    our songwriting signature. “The Best That Is Coming” isn’t just a jingle—it's
     a statement of inspiration, hope, and creativity. Featured in iconic sessions,
     it is the soul of many unforgettable records. Stay tuned for what's next.
   </motion.p>
@@ -269,3 +363,4 @@ export default function Service() {
     </div>
   );
 }
+export default Service;

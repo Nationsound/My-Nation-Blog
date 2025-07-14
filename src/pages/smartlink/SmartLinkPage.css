@@ -44,13 +44,6 @@
     font-size: 22px;
   }
   
-  /* Platform-Specific Colors */
-  .youtube { background: #ff0000; }
-  .spotify { background: #1db954; }
-  .boomplay { background: #0066cc; }
-  .appleMusic { background: #fa233b; }
-  .audiomack { background: #ff9900; }
-  
   .platform:hover {
     opacity: 0.8;
   }

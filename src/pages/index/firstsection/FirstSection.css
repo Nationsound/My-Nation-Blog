@@ -1,0 +1,143 @@
+/* === Base Layout === */
+.class-one {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+    padding: 0 20px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* === Typography === */
+  .class-two h1 {
+    color: var(--primary-color);
+    font-size: x-large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .class-two p {
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: justify;
+    max-width: 457px;
+  }
+  
+  .class-two li:hover {
+    color: rgb(52, 89, 66);
+  }
+  
+  /* === Images === */
+  .my-image-1 {
+    height: 120px;
+    width: 180px;
+  }
+  
+  .my-image-1a {
+    border-radius: 5%;
+    padding-top: 20px;
+  }
+  
+  .home-image {
+    height: 500px;
+    width: auto;
+    max-width: 100%;
+    padding-top: 40px;
+    border-bottom-right-radius: 2rem;
+    border-bottom-left-radius: 2rem;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .home-image:hover {
+    border-top-left-radius: 25%;
+    border-bottom-right-radius: 25%;
+    background-color: rgb(22, 48, 61);
+  }
+  
+  /* === Text Highlights === */
+  .class-three {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .class-four {
+    font-size: medium;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: justify;
+  }
+  
+  /* === Responsive Breakpoints === */
+  @media (max-width: 1024px) {
+    .class-one{
+      flex-direction: row;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+  
+    .my-image {
+      height: 250px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .class-one {
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px;
+    }
+  
+    .class-two h1 {
+      font-size: 1.5rem;
+    }
+  
+    .class-two p {
+      font-size: 1rem;
+    }
+  
+    .my-image {
+      height: 200px;
+    }
+  
+    .my-image-1 {
+      height: 100px;
+      width: 150px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .class-two h1 {
+      font-size: 1.2rem;
+    }
+  
+    .class-two p {
+      font-size: 0.9rem;
+    }
+  
+    .class-three {
+      font-size: 1.5rem;
+    }
+  
+    .class-three{
+      font-size: 0.9rem;
+    }
+  
+    .home-image {
+      height: 180px;
+    }
+  
+    .my-image-1 {
+      height: 80px;
+      width: 120px;
+    }
+  }
+  

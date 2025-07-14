@@ -14,7 +14,7 @@ const PreHome = () => {
         if (prev < 100) return prev + 1;
         clearInterval(interval);
         setTimeout(() => setFadeOut(true), 300); // slight pause before fade
-        setTimeout(() => navigate('/'), 1500); // redirect after fade
+        setTimeout(() => navigate('/home'), 1500); // redirect after fade
         return 100;
       });
     }, 30);
@@ -30,34 +30,46 @@ const PreHome = () => {
     { left: '80%', size: 10, delay: 2.5 },
   ];
 
+  const handleSkip = () => {
+    setFadeOut(true);
+    setTimeout(() => {
+      if (!redirectedRef.current) {
+        redirectedRef.current = true;
+        navigate("/");
+      }
+    }, 700);
+  };
+
   return (
-    <div className="pre-home-container">
+    <div className="pre-home-container"> 
       {/* Bubbles */}
       <div className="bubbles-container">
-        {bubbles.map((bubble, index) => (
-          <motion.div
-            key={index}
-            className="bubble"
-            style={{
-              left: bubble.left,
-              width: bubble.size,
-              height: bubble.size,
-              background: 'rgba(255, 255, 255, 0.05)',
-              borderRadius: '50%',
-              position: 'absolute',
-              bottom: '-100px',
-            }}
-            initial={{ y: 0, opacity: 0.1, scale: 1 }}
-            animate={{ y: -1000, opacity: 0.3, scale: 1.3 }}
-            transition={{
-              duration: 15,
-              delay: bubble.delay,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        ))}
-      </div>
+  {bubbles.map((bubble, index) => (
+    <motion.div
+      key={index}
+      className="bubble"
+      style={{
+        left: bubble.left,
+        width: `${bubble.size}px`,
+        height: `${bubble.size}px`,
+        background: 'rgba(255, 255, 255, 0.2)',
+        borderRadius: '50%',
+        position: 'absolute',
+        bottom: '-60px',
+        zIndex: 0,
+      }}
+      initial={{ y: 0, opacity: 0.3, scale: 1 }}
+      animate={{ y: -900, opacity: 0.6, scale: 1.1 }}
+      transition={{
+        duration: 14,
+        delay: bubble.delay,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      }}
+    />
+  ))}
+</div>
+
 
       {/* MNB Logo */}
       <motion.div
@@ -87,6 +99,22 @@ const PreHome = () => {
       </motion.div>
 
       {/* Fade Transition Overlay */}
+      <motion.div
+        className="fade-overlay"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: fadeOut ? 1 : 0 }}
+        transition={{ duration: 1.2 }}
+      />
+       <motion.button
+        onClick={handleSkip}
+        className="skip-button"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
+        Skip
+      </motion.button>
+
       <motion.div
         className="fade-overlay"
         initial={{ opacity: 0 }}

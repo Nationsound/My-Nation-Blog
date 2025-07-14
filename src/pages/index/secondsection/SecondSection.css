@@ -1,0 +1,135 @@
+/* Layout */
+.top-artists-section {
+  padding: 40px 16px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.top-artists-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Genre Filter */
+.genre-filter {
+  margin-bottom: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.genre-filter select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Artist Carousel */
+.artist-carousel {
+  display: flex;
+  flex-wrap: wrap; /* 👈 allows items to wrap to the next line */
+  gap: 20px;
+  justify-content: center;
+  padding: 10px 0;
+  overflow: visible; /* removes horizontal scroll */
+}
+
+.artist-card {
+  flex: 0 0 auto;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.artist-card:hover {
+  transform: scale(1.05);
+}
+.artist-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+.artist-name {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Modal */
+.artist-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+.artist-modal {
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.modal-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .top-artists-title {
+    font-size: 1.5rem;
+  }
+
+  .artist-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .modal-image {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .artist-name {
+    font-size: 0.8rem;
+  }
+
+  .genre-filter label {
+    font-size: 0.9rem;
+  }
+
+  .genre-filter select {
+    font-size: 13px;
+  }
+}

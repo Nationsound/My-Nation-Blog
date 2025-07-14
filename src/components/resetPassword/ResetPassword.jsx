@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Change useHistory to useNavigate
 import axios from 'axios';
 
-export default function ResetPassword() {
+const ResetPassword = ()=> {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -76,3 +76,4 @@ export default function ResetPassword() {
     </div>
   );
 }
+export default ResetPassword;

@@ -2,7 +2,7 @@ import React from 'react'
 import './Contact.css'
 import ContactForm from '../../components/formValidation/FormValidation'
 
-export default function Contact() {
+const Contact = ()=> {
   return (
     <div className='contact'>
       <ContactForm/>
@@ -12,3 +12,4 @@ export default function Contact() {
     </div>
   )
 }
+export default Contact;

@@ -7,4 +7,4 @@ const ProtectedRoute = ({ children }) => {
     return isAdmin ? children : <Navigate to="/login" />;
   };
 
-export default ProtectedRoute
+export default ProtectedRoute;

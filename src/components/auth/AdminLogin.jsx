@@ -12,23 +12,28 @@ const AdminLogin = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    // Dummy admin credentials
-    const adminUsername = "admin";
-    const adminPassword = "password123";
-
-    if (
-      formData.username === adminUsername &&
-      formData.password === adminPassword
-    ) {
-      localStorage.setItem("isAdmin", "true");
-      navigate("/admin-dashboard"); // Navigate to dashboard
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const res = await fetch('http://localhost:1990/mnb/api/admin-login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem('token', data.token);      // ✅ save the token
+      console.log('Saved token:', data.token);        // 🪄 add this console.log to confirm
+      navigate("/admin-dashboard");
     } else {
-      setError("Invalid username or password!");
+      setError(data.message || 'Login failed');
     }
-  };
+  } catch (err) {
+    console.error(err);
+    setError('Something went wrong');
+  }
+};
+
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">

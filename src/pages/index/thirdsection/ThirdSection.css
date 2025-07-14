@@ -1,0 +1,149 @@
+/* Container for .my-home-biz */
+.my-home-biz {
+    margin-top: 50px;
+    background-color: #fff;
+  }
+  .my-home-biz-one {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #959A4A;
+    padding-top: 10px;
+  }
+  
+  /* Styling for .my-home-3 */
+  .my-home-biz-three {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: medium;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  
+  /* Heading styling for .my-home-biz-two h1 */
+  .my-home-biz-two h1 {
+    font-size: 3.5rem;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bolder;
+    padding-left: 20px;
+    text-align: justify;
+    padding-top: 40px;
+  }
+  
+  /* Center-aligned text for .my-home-biz-one */
+  .my-home-biz-two h3{
+    font-size: xx-large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: justify;
+    padding-top: 40px;
+    padding-left: 20px;
+  }
+  
+  /* Flex container for .my-homebiz */
+  .my-homebiz {
+    display: flex;
+    justify-content: space-around;
+    padding-left: 20px; 
+    margin-top: 40px;
+  }
+
+  .my-home-biz-four {
+    width: 380px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-content: center;
+  }
+  .my-home-biz-four p{
+    font-family: 'Courier New', Courier, monospace;
+    padding-left: 5px;
+    text-align: justify; 
+  }
+  
+  /* Styling for .my-home-3d */
+  .my-home-biz-five {
+    width: 380px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    align-content: center;
+  }
+  .my-home-biz-five p{
+    font-family: 'Courier New', Courier, monospace;
+    padding: 5px;
+    padding-left: 5px;
+    text-align: justify;
+  }
+  
+  /* Media Queries for responsiveness */
+  
+  /* Medium to large screens (1024px and below) */
+  @media (max-width: 1024px) {
+    .my-home-biz-three {
+      font-size: 1rem;
+    }
+  
+    .my-home-biz-two h1 {
+      font-size: 2rem;
+      text-align: justify;
+    }
+  
+    .my-home-biz-one {
+      font-size: 2rem;
+      text-align: justify;
+      padding-left: 20px;
+    }
+  
+    .my-home-biz-four {
+      justify-content: center; /* Center content on smaller screens */
+    }
+  }
+  
+  /* Smaller screens (768px and below) */
+  @media (max-width: 768px) {
+    .my-home-biz-three {
+      font-size: 0.9rem;
+    }
+  
+    .my-home-biz-two h1 {
+      font-size: 1.8rem;
+    }
+  
+    .my-home-biz-one {
+      font-size: 1.8rem;
+    }
+    .my-homebiz {
+      display: grid;
+    }
+  
+    .my-home-biz-four {
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center content */
+    }
+  
+    .my-home-biz-five {
+      font-size: 0.9rem;
+      padding-top: 10px;
+    }
+  }
+  
+  /* Mobile screens (480px and below) */
+  @media (max-width: 480px) {
+    .my-home-biz-three {
+      font-size: 0.8rem;
+    }
+  
+    .my-home-biz-two h1 {
+      font-size: 1.5rem;
+    }
+  
+    .my-home-biz-one {
+      font-size: 1.5rem;
+    }
+  
+    .my-home-biz-four {
+      flex-direction: column; /* Stack items vertically */
+      align-items: center; /* Center content */
+    }
+  
+    .my-home-biz-five {
+      font-size: 0.8rem;
+    }
+  }
+   

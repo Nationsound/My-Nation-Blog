@@ -1,0 +1,155 @@
+.home-service {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(149, 154, 74);
+    background-size: cover;
+    height: auto;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    padding: 30px 15px;
+    animation: fadeInUp 1s ease-in-out;
+    transition: background-color 0.5s ease;
+  }
+  
+  .home-service:hover {
+    background-color: rgb(91, 56, 137);
+  }
+  
+  .home-service h1 {
+    font-size: 2rem;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .home-service h1:hover {
+    color: lightgoldenrodyellow;
+    cursor: pointer;
+  }
+  
+  /* Service cards container */
+  .home-service-one {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    animation: fadeInUp 1.5s ease-in-out;
+  }
+  
+  /* Individual card base style */
+  .home-service-two,
+  .home-service-three,
+  .home-service-four {
+    background-size: cover;
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    padding-bottom: 15px;
+    transition: transform 0.3s ease;
+  }
+  
+  .home-service-two:hover,
+  .home-service-three:hover,
+  .home-service-four:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Header images */
+  .home-service-two h4,
+  .home-service-three h4,
+  .home-service-four h4 {
+    width: 100%;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-size: large;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    text-align: center;
+    padding-top: 20px;
+    transition: color 0.3s ease;
+  }
+  
+  .home-service-two h4 {
+    background-image: url("../../../assets/images/myNationImg70.jpeg");
+  }
+  
+  .home-service-three h4 {
+    background-image: url("../../../assets/images/myNationImg30.jpg");
+  }
+  
+  .home-service-four h4 {
+    background-image: url("../../../assets/images/myNationImg16.jpg");
+  }
+  
+  .home-service-one h4:hover {
+    color: brown;
+    cursor: pointer;
+  }
+  
+  .ul {
+    font-size: 1rem;
+    font-family: system-ui, sans-serif;
+    color: #000;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    transition: all 0.3s ease;
+  }
+  
+  .ul:hover {
+    cursor: pointer;
+    color: rgb(59, 49, 76);
+    background-color: rgb(149, 154, 74);
+    color: #fff;
+  }
+  
+  /* Responsive tweaks */
+  @media (min-width: 768px) {
+    .home-service {
+      flex-direction: column;
+      padding: 50px 30px;
+    }
+  
+    .home-service h1 {
+      font-size: 2.5rem;
+    }
+  
+    .home-service-one {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .home-service {
+      height: auto;
+      padding: 80px 60px;
+    }
+  
+    .home-service h1 {
+      font-size: 3rem;
+    }
+  }
+  
+/* Keyframe for fade-in and slide-up */
+@keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

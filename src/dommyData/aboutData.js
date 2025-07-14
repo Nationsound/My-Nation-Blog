@@ -2,6 +2,7 @@ import image1 from '../assets/images/myNationImg13.jpeg';
 import image2 from '../assets/images/myNationImg50.jpg';
 import image3 from '../assets/images/myNationImg41.jpg';
 import image4 from '../assets/images/myNationImg33.jpg';
+
 export const aboutDatas = [
     {
         id: 1,

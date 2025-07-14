@@ -3,7 +3,7 @@ import './HeaderA.css'
 import SocialMediaLinks from '../socialmedia/SocialMediaLinks'
 import ContactInfo from '../socialmedia/ContactInfo'
 
-export default function HeaderA() {
+const HeaderA = ()=> {
   return (
     <div className='header-a'>
       <div className="flex justify-between items-center p-4 pb-6 max-w-9xl mx-auto">
@@ -16,3 +16,4 @@ export default function HeaderA() {
     </div>
   );
 };
+export default HeaderA;

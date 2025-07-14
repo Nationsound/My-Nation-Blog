@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function License() {
+const License = ()=> {
   return (
     <div className="max-w-3xl mx-auto px-6 py-12">
       <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">License</h1>
@@ -65,3 +65,4 @@ export default function License() {
     </div>
   );
 }
+export default License;

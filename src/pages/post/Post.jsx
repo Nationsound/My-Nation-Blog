@@ -1,7 +1,10 @@
 import React from 'react'
 import './Post.css'
 import {useState, useEffect} from 'react'
-export default function Post() {
+
+
+
+const Post = ()=> {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -9,7 +12,7 @@ export default function Post() {
     useEffect(()=>{
         const fetchPosts = async ()=>{
             try{
-           const response = await fetch('http://localhost:1990/api/posts', {
+           const response = await fetch('http://localhost:1990/mnb/api/posts', {
             credentials: 'include',
            });
            const data = await response.json()
@@ -39,3 +42,4 @@ export default function Post() {
     </div>
   )
 }
+export default Post;

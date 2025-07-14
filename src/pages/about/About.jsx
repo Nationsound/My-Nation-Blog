@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import { aboutDatas } from '../../dommyData/aboutData';
-import myNationimg96 from '../../assets/images/myNationimg96.jpeg';
+import myNationimg34 from '../../assets/images/myNationimg34.jpg';
 import Nationsound from '../../assets/images/Nationsound.png';
 import { FaUsers, FaCheckCircle, FaUserTie, FaClock, FaLightbulb, FaBullhorn, FaChartLine,FaRocket  } from 'react-icons/fa';
 
@@ -12,7 +12,7 @@ const truncate = (str, length) => {
   return str.length > length ? str.substring(0, length) + "..." : str;
 };
 
-export default function About() {
+const About = ()=> {
   return (
     <div>
       {/* About Header Section */}
@@ -79,7 +79,7 @@ export default function About() {
     </motion.div>
 
     <div className="content-b">
-      <h2>My Nation Blog: News, Style and Entertainment</h2>
+      <h2>My Nation Blog: News, Style and Entertainment</h2> 
       
       <div className="content-c">
         {/* Animated Image */}
@@ -89,7 +89,7 @@ export default function About() {
           whileInView={{ x: 0, opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <img src={myNationimg96} alt="My Nation Blog" className="about-d-img" />
+          <img src={myNationimg34} alt="My Nation Blog" className="about-d-img" />
         </motion.div>
 
         {/* Stats Section */}
@@ -155,7 +155,7 @@ export default function About() {
       {/* Blog Data Section */}
       <div>
         {aboutDatas.map((aboutData) => {
-          const truncatedContent = truncate(aboutData.content, 200);
+          const truncatedContent = truncate(aboutData.content, 75);
           return (
             <motion.div
         key={aboutData.id}
@@ -201,7 +201,7 @@ export default function About() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.9 }}
         >
-          {aboutData.content}
+          {truncatedContent}
         </motion.p>
 
         <motion.div
@@ -245,3 +245,4 @@ export default function About() {
     </div> 
   );
 }
+export default About;

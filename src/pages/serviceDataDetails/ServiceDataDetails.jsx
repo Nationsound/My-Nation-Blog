@@ -49,7 +49,7 @@ const teamMembers = [
   };
   
 
-export default function ServiceDataDetails() {
+    const ServiceDataDetails = ()=> {
     const { id } = useParams();
     const serviceDataDetail = serviceDatas.find((p) => p.id === parseInt(id));
 
@@ -67,12 +67,45 @@ export default function ServiceDataDetails() {
             </div>
 
 
-            <div className="service">
-                <h2 className='my-service'>{serviceDataDetail.title}</h2>
-                <img src={serviceDataDetail.image} alt={serviceDataDetail.i} className="my-image" />
-                <h5 className='my-service-categories'>{serviceDataDetail.categories}</h5>
-                <p className='my-service-content'>{serviceDataDetail.content}</p>
-            </div>
+            <motion.div
+      className="service"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <motion.h2
+        className="my-service"
+        initial={{ x: -100 }}
+        animate={{ x: 0 }}
+        transition={{ duration: 1 }}
+      >
+        {serviceDataDetail.title}
+      </motion.h2>
+      <motion.img
+        src={serviceDataDetail.image}
+        alt={serviceDataDetail.i}
+        className="my-image"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 1 }}
+      />
+      <motion.h5
+        className="my-service-categories"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.5 }}
+      >
+        {serviceDataDetail.categories}
+      </motion.h5>
+      <motion.p
+        className="my-service-content"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.7 }}
+      >
+        {serviceDataDetail.content}
+      </motion.p>
+      </motion.div>
             <div>
             <motion.div
              initial={{ opacity: 0, y: 40 }}
@@ -143,3 +176,4 @@ export default function ServiceDataDetails() {
         </div>
     )
 }
+export default ServiceDataDetails;

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Header.css';
 import MNBLogo1 from '../../assets/images/MNBLogo1.png';
 
-export default function Header() {
+const Header = ()=> {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -55,3 +55,4 @@ export default function Header() {
     </header>
   );
 }
+export default Header;

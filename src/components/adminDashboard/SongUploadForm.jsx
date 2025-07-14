@@ -2,135 +2,131 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const SongUploadForm = () => {
-  const [formData, setFormData] = useState({
-    artistName: "",
-    title: "",
-    descriptionTitle: "",
-    description: "",
-    graphicFile: null,
-    audioFile: null,
-  });
-
+  const [title, setTitle] = useState('');
+  const [artist, setArtist] = useState('');
+  const [description, setDescription] = useState('');
+  const [image, setImage] = useState(null);        // ✅ added
+  const [audio, setAudio] = useState(null);        // ✅ added
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({ ...formData, [name]: files ? files[0] : value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleUpload = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
-    const data = new FormData();
-    data.append("artistName", formData.artistName);
-    data.append("title", formData.title);
-    data.append("descriptionTitle", formData.descriptionTitle);
-    data.append("description", formData.description);
-    data.append("graphicFile", formData.graphicFile);
-    data.append("audioFile", formData.audioFile);
+    if (!title || !artist || !audio) {
+      alert('Please provide title, artist and audio file.');
+      return;
+    }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/songs", data);
-      setMessage(response.data.message || "Song uploaded successfully!");
-      setFormData({
-        artistName: "",
-        title: "",
-        descriptionTitle: "",
-        description: "",
-        graphicFile: null,
-        audioFile: null,
+      setLoading(true);
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('artist', artist);
+      formData.append('description', description);
+      formData.append('audio', audio);
+      if (image) formData.append('image', image);
+
+      const res = await axios.post('http://localhost:1990/mnb/api/createSong', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
-    } catch (error) {
-      setMessage("Error uploading song. Please try again.");
+
+      console.log('Song uploaded:', res.data);
+      alert('Song uploaded successfully!');
+
+      // Clear form
+      setTitle('');
+      setArtist('');
+      setDescription('');
+      setImage(null);
+      setAudio(null);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to upload song.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Artist Name */}
+    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded space-y-4">
+  <h2 className="text-2xl font-bold text-center text-gray-700">Upload New Song</h2>
+  
+  <form onSubmit={handleUpload} className="space-y-4">
+    <div>
+      <label className="block text-sm font-medium text-gray-600 mb-1">Song Title*</label>
       <input
         type="text"
-        name="artistName"
-        placeholder="Artist Name"
-        value={formData.artistName}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
+        placeholder="e.g. My New Track"
+        className="border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#959A4A]"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
         required
       />
+    </div>
 
-      {/* Song Title */}
+    <div>
+      <label className="block text-sm font-medium text-gray-600 mb-1">Artist*</label>
       <input
         type="text"
-        name="title"
-        placeholder="Song Title"
-        value={formData.title}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
+        placeholder="e.g. Olusola"
+        className="border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#959A4A]"
+        value={artist}
+        onChange={(e) => setArtist(e.target.value)}
         required
       />
+    </div>
 
-      {/* Description Title */}
-      <input
-        type="text"
-        name="descriptionTitle"
-        placeholder="Description Title"
-        value={formData.descriptionTitle}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        required
-      />
-
-      {/* Song Description */}
+    <div>
+      <label className="block text-sm font-medium text-gray-600 mb-1">Description</label>
       <textarea
-        name="description"
-        placeholder="Song Description"
-        value={formData.description}
-        onChange={handleChange}
-        className="w-full border p-2 rounded"
-        rows="4"
+        placeholder="Short description about the song"
+        className="border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#959A4A]"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        rows={3}
+      ></textarea>
+    </div>
+
+    <div>
+      <label className="block text-sm font-medium text-gray-600 mb-1">Audio File*</label>
+      <input
+        type="file"
+        accept="audio/*"
+        className="border rounded w-full p-2 file:mr-2 file:py-1 file:px-3 file:border-none file:bg-[#959A4A] file:text-white file:cursor-pointer"
+        onChange={(e) => setAudio(e.target.files[0])}
+        required
       />
+    </div>
 
-      {/* Song Graphic Upload */}
-      <div>
-        <label className="block text-sm font-medium">Upload Song Graphic (Image)</label>
-        <input
-          type="file"
-          name="graphicFile"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          accept="image/*"
-          required
+    <div>
+      <label className="block text-sm font-medium text-gray-600 mb-1">Cover Image</label>
+      <input
+        type="file"
+        accept="image/*"
+        className="border rounded w-full p-2 file:mr-2 file:py-1 file:px-3 file:border-none file:bg-[#959A4A] file:text-white file:cursor-pointer"
+        onChange={(e) => setImage(e.target.files[0])}
+      />
+    </div>
+
+    {image && (
+      <div className="mt-2">
+        <img
+          src={URL.createObjectURL(image)}
+          alt="Cover Preview"
+          className="w-full h-48 object-cover rounded-lg border"
         />
       </div>
+    )}
 
-      {/* Audio File Upload */}
-      <div>
-        <label className="block text-sm font-medium">Upload Audio File (MP3, WAV)</label>
-        <input
-          type="file"
-          name="audioFile"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-          accept="audio/*"
-          required
-        />
-      </div>
+    <button
+      type="submit"
+      className="w-full bg-[#959A4A] text-white py-2 rounded hover:bg-violet-600 transition duration-200"
+      disabled={loading}
+    >
+      {loading ? 'Uploading...' : 'Upload Song'}
+    </button>
+  </form>
+</div>
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-        disabled={loading}
-      >
-        {loading ? "Uploading..." : "Upload Song"}
-      </button>
-
-      {message && <p className="mt-4">{message}</p>}
-    </form>
   );
 };
 
