@@ -1,0 +1,27 @@
+.admin-form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-form-container input[type="text"],
+.admin-form-container input[type="email"],
+.admin-form-container input[type="password"],
+.admin-form-container input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-form-container button {
+  background-color: #959A4A;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.admin-form-container button:hover {
+  background-color: #5b3889;
+}

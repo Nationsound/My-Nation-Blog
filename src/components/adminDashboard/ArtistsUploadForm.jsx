@@ -1,42 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ArtistUploadForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    genre: "",
-    image: null,
-  });
-
+  const [formData, setFormData] = useState({ name: "", genre: "", image: null });
+  const [artists, setArtists] = useState([]);
+  const [editArtistId, setEditArtistId] = useState(null);
+  const [editFormData, setEditFormData] = useState({ name: "", genre: "", image: null });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
+  useEffect(() => {
+    fetchArtists();
+  }, []);
+
+  const fetchArtists = async () => {
+    try {
+      const res = await axios.get("http://localhost:1990/mnb/api/getAllArtist");
+      setArtists(res.data);
+    } catch (error) {
+      console.error("Error fetching artists:", error);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
+    setFormData({ ...formData, [name]: files ? files[0] : value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
     const data = new FormData();
     data.append("name", formData.name);
     data.append("genre", formData.genre);
     data.append("image", formData.image);
 
     try {
-      const response = await axios.post("http://localhost:5000/api/artists", data); // Replace with your actual backend route
-      setMessage(response.data.message || "Artist uploaded successfully!");
-
-      setFormData({
-        name: "",
-        genre: "",
-        image: null,
-      });
+      const res = await axios.post("http://localhost:1990/mnb/api/addArtist", data);
+      setMessage(res.data.message || "Artist uploaded successfully!");
+      setFormData({ name: "", genre: "", image: null });
+      fetchArtists();
     } catch (error) {
       console.error(error);
       setMessage("Error uploading artist. Please try again.");
@@ -45,57 +48,168 @@ const ArtistUploadForm = () => {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:1990/mnb/api/deleteArtist/${id}`);
+      setMessage("Artist deleted successfully!");
+      fetchArtists();
+    } catch (error) {
+      console.error(error);
+      setMessage("Error deleting artist.");
+    }
+  };
+
+  const handleEditChange = (e) => {
+    const { name, value, files } = e.target;
+    setEditFormData({ ...editFormData, [name]: files ? files[0] : value });
+  };
+
+  const handleEditSubmit = async (id) => {
+    const data = new FormData();
+    data.append("name", editFormData.name);
+    data.append("genre", editFormData.genre);
+    if (editFormData.image) data.append("image", editFormData.image);
+
+    try {
+      await axios.put(`http://localhost:1990/mnb/api/updateArtist/${id}`, data);
+      setMessage("Artist updated successfully!");
+      setEditArtistId(null);
+      fetchArtists();
+    } catch (error) {
+      console.error(error);
+      setMessage("Error updating artist.");
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Artist Name */}
-      <input
-        type="text"
-        name="name"
-        placeholder="Artist Name"
-        value={formData.name}
-        onChange={handleChange}
-        className="w-[540px] border p-2 rounded"
-        required
-      />
-
-      {/* Genre Select */}
-      <select
-        name="genre"
-        value={formData.genre}
-        onChange={handleChange}
-        className="w-[540px] border p-2 rounded"
-        required
-      >
-        <option value="">Select Genre</option>
-        <option value="Afrobeats">Afrobeats</option>
-        <option value="Alté">Alté</option>
-        <option value="Afro-fusion">Afro-fusion</option>
-      </select>
-
-      {/* Image Upload */}
-      <div>
-        <label className="block text-sm font-medium">Upload Artist Image</label>
+    <div className="space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
-          type="file"
-          name="image"
+          type="text"
+          name="name"
+          placeholder="Artist Name"
+          value={formData.name}
           onChange={handleChange}
           className="w-[540px] border p-2 rounded"
-          accept="image/*"
           required
         />
-      </div>
+        <select
+          name="genre"
+          value={formData.genre}
+          onChange={handleChange}
+          className="w-[540px] border p-2 rounded"
+          required
+        >
+          <option value="">Select Genre</option>
+          <option value="Afrobeats">Afrobeats</option>
+          <option value="Alté">Alté</option>
+          <option value="Afro-fusion">Afro-fusion</option>
+          <option value="Hip-Pop/Rap">Hip-Pop/Rap</option>
+          <option value="Ragae">Ragae</option>
+          <option value="Hardcore-Rap">Hardcore-Rap</option>
+          <option value="R & B">R & B</option>
+        </select>
+        <div>
+          <label className="block text-sm font-medium">Upload Artist Image</label>
+          <input
+            type="file"
+            name="image"
+            onChange={handleChange}
+            className="w-[540px] border p-2 rounded"
+            accept="image/*"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          className="bg-[#959A4A] text-white py-2 px-4 rounded hover:bg-green-700"
+          disabled={loading}
+        >
+          {loading ? "Uploading..." : "Upload Artist"}
+        </button>
+        {message && <p className="mt-4">{message}</p>}
+      </form>
 
-      {/* Submit Button */}
-      <button
-        type="submit"
-        className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
-        disabled={loading}
-      >
-        {loading ? "Uploading..." : "Upload Artist"}
-      </button>
-
-      {message && <p className="mt-4">{message}</p>}
-    </form>
+      <h2 className="text-xl font-semibold">Artists</h2>
+      <ul className="space-y-4">
+        {artists.map((artist) => (
+          <li key={artist._id} className="border p-4 rounded">
+            {editArtistId === artist._id ? (
+              <div className="space-y-2">
+                <input
+                  type="text"
+                  name="name"
+                  value={editFormData.name}
+                  onChange={handleEditChange}
+                  className="border p-1 rounded w-full"
+                />
+                <select
+                  name="genre"
+                  value={editFormData.genre}
+                  onChange={handleEditChange}
+                  className="border p-1 rounded w-full"
+                >
+                  <option value="">Select Genre</option>
+                  <option value="Afrobeats">Afrobeats</option>
+                  <option value="Alté">Alté</option>
+                  <option value="Afro-fusion">Afro-fusion</option>
+                </select>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleEditChange}
+                  className="border p-1 rounded w-full"
+                />
+                <button
+                  onClick={() => handleEditSubmit(artist._id)}
+                  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setEditArtistId(null)}
+                  className="ml-2 text-gray-500"
+                >
+                  Cancel
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium">{artist.name}</p>
+                  <p className="text-sm text-gray-600">{artist.genre}</p>
+                  {artist.imageUrl && (
+                    <img
+                      src={`http://localhost:1990/${artist.imageUrl}`}
+                      alt={artist.name}
+                      className="w-24 h-24 object-cover mt-2"
+                    />
+                  )}
+                </div>
+                <div className="space-x-2">
+                  <button
+                    onClick={() => {
+                      setEditArtistId(artist._id);
+                      setEditFormData({ name: artist.name, genre: artist.genre, image: null });
+                    }}
+                    className="text-blue-500"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(artist._id)}
+                    className="text-red-500"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 };
 

@@ -1,0 +1,37 @@
+.admin-container {
+  padding: 2rem;
+}
+.admin-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+.partners-list {
+  display: grid;
+  gap: 1rem;
+}
+.partner-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.partner-card input, .partner-card textarea {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.4rem;
+}
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.edit-btn, .delete-btn, .update-btn, .cancel-btn {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: #fff;
+}
+.edit-btn { background: #4CAF50; }
+.delete-btn { background: #f44336; }
+.update-btn { background: #2196F3; }
+.cancel-btn { background: gray; }

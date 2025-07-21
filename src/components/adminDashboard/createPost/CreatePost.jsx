@@ -32,7 +32,7 @@ const CreatePost = ({ onAddPost }) => {
     try {
       const formData = new FormData();
       formData.append('title', title);
-      formData.append('content', content);
+      formData.append('content', content); 
       formData.append('author', author);
 
       // Always send categories as comma-separated string; backend handles array conversion
@@ -88,7 +88,7 @@ const CreatePost = ({ onAddPost }) => {
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow rounded space-y-4">
-      <h2 className="text-xl font-semibold">Create New Post</h2>
+      <h2 className="text-2xl font-semibold">Create New Post</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           type="text"

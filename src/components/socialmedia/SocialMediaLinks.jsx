@@ -22,7 +22,7 @@ const SocialMediaLinks = () => {
         {link.icon}
       </a>
     ))}
-  </div>
+  </div> 
   );
 };
 

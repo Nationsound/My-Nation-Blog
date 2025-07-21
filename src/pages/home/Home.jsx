@@ -14,6 +14,7 @@ import SectionEleven from '../index/sectioneleven/SectionEleven';
 import Slideshow from '../index/slideshow/Slideshow';
 import MusicLink from '../index/musicLink/MusicLink';
 import SongsUpload from '../index/songsUpload/SongsUpload';
+import Partnership from '../index/partnership/Partnership';
 
 
 
@@ -74,6 +75,9 @@ const Home =()=> {
 
           <div>
             <SectionEleven />
+          </div>
+          <div>
+            <Partnership />
           </div>
          
     </div>

@@ -1,11 +1,10 @@
-import React from 'react'
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
-    const [formData, setFormData] = useState({ username: "", password: "" });
-  const [error, setError] = useState("");
+  // ✅ use email + password to match backend
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -13,27 +12,35 @@ const AdminLogin = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const res = await fetch('http://localhost:1990/mnb/api/admin-login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
-    });
-    const data = await res.json();
-    if (res.ok) {
-      localStorage.setItem('token', data.token);      // ✅ save the token
-      console.log('Saved token:', data.token);        // 🪄 add this console.log to confirm
-      navigate("/admin-dashboard");
-    } else {
-      setError(data.message || 'Login failed');
-    }
-  } catch (err) {
-    console.error(err);
-    setError('Something went wrong');
-  }
-};
+    e.preventDefault();
+    setError('');
 
+    try {
+      const res = await fetch('http://localhost:1990/mnb/api/admins-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        localStorage.setItem('token', data.token);
+        console.log('Saved token:', data.token);
+
+        // (Optional) decode and log for debug
+        const decoded = JSON.parse(atob(data.token.split('.')[1]));
+        console.log('Decoded token:', decoded);
+
+        navigate('/admin-dashboard');
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Something went wrong');
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
@@ -46,11 +53,11 @@ const AdminLogin = () => {
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
         <div className="mb-4">
-          <label className="block text-sm font-medium">Username</label>
+          <label className="block text-sm font-medium">Email</label>
           <input
-            type="text"
-            name="username"
-            value={formData.username}
+            type="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
             className="w-full border p-2 rounded"
             required

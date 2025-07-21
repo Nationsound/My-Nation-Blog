@@ -1,0 +1,140 @@
+/* Container & Layout */
+.dashboard-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Search */
+.search-pagination-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.search-input {
+  padding: 8px 12px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Team List */
+.team-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.team-item {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 10px;
+  text-align: center;
+}
+
+.team-item-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Info text */
+.team-item-info h3 {
+  margin: 10px 0 5px;
+  font-size: 1.1rem;
+}
+
+.team-item-info p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.team-item-info small {
+  display: block;
+  font-size: 0.8rem;
+  color: #999;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.team-item button {
+  margin: 6px 4px 0;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #fff;
+  transition: background 0.2s ease;
+}
+
+/* Edit button */
+.team-item button:first-of-type {
+  background: #959A4A;
+}
+
+.team-item button:first-of-type:hover {
+  background: #7c813c;
+}
+
+/* Delete button */
+.delete-btn {
+  background: #d9534f;
+}
+
+.delete-btn:hover {
+  background: #c9302c;
+}
+
+/* Pagination */
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+}
+
+.pagination-controls button {
+  padding: 6px 12px;
+  border: none;
+  background: #959A4A;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+  background: #aaa;
+}
+
+.pagination-controls span {
+  font-size: 0.95rem;
+}
+
+/* Edit form buttons */
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-buttons button {
+  flex: 1;
+}
+
+/* Cancel button */
+.cancel-btn {
+  background: #999;
+}
+
+.cancel-btn:hover {
+  background: #777;
+}

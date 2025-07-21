@@ -7,14 +7,14 @@ const FifthSection = () => {
   return (
     <div>
         <motion.div 
-      className='brand'
+      className='brandnew'
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.8, ease: 'easeOut' }}
     >
       <motion.div 
-        className='brand-phase'
+        className='brand-phase' 
         initial={{ scale: 0.95 }}
         whileHover={{ scale: 1 }}
         transition={{ duration: 0.3 }}

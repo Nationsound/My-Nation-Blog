@@ -60,7 +60,6 @@
 }
 
 .content {
-    background: url('../../assets/bg-abstract.svg') no-repeat center center/cover;
     margin: 80px auto;
     padding: 60px 20px;
     text-align: center;
@@ -473,96 +472,86 @@
 
 /* Brand Section */
 .brand {
-    display: flex;
-    justify-content: space-between;
-    background-color: #fff;
-    min-height: 400px;
-    margin-top: 100px;
-    margin-bottom: 100px;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.brand-div {
-    height: 600px;
-    width: 500px;
-    background-image: url("../../assets/images/myNationImg114.jpeg");
+    background-image: url('../../assets/images/cover29.jpg');
     background-size: cover;
     background-position: center;
-    border-radius: 10px;
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-    margin-right: 30px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease-in-out;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    min-height: 600px; /* adjust to reasonable minimum height */
+    width: 100%; /* take full width of container */
+    max-width: 1400px; /* optional: limit max width on large screens */
+    margin: 100px auto; /* center horizontally and space vertically */
+    padding: 40px 20px;
+    border-radius: 12px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow:
+        0 0 10px rgba(149,154,74,0.6),
+        0 0 20px rgba(149,154,74,0.4);
 }
 
-.brand-div:hover {
-    transform: scale(1.05);
+.brand-div-1 {
+    max-width: 1000px; /* keep text area from becoming too wide */
+    text-align: center; /* center text on all sizes */
 }
 
-.brand-div h6 {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1.5rem;
-    text-align: center;
-    padding-top: 250px;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Brand Text */
 .brand-div-1 h1 {
-    font-size: 2rem;
+    font-size: 3rem;
     font-family: 'Times New Roman', Times, serif;
-    text-align: center;
-    padding-top: 100px;
     font-weight: bold;
-    color: #333;
+    color: #959a4a;
     margin-bottom: 20px;
+    padding-top: 150px; /* adjust for better balance */
 }
 
 .brand-div-1 p {
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.1rem;
-    font-weight: lighter;
-    text-align: center;
-    margin: 0 50px;
-    color: #555;
+    font-weight: bolder;
+    color: #333;
     line-height: 1.8;
+    margin: 0 30px;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .brand {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 0 10px;
-    }
-
-    .brand-div {
-        width: 100%;
-        max-width: 500px;
-        height: 300px;
-        margin: 20px 0;
-    }
-
+/* Tablets */
+@media (max-width: 992px) {
     .brand-div-1 h1 {
-        font-size: 1.5rem;
+        font-size: 2.2rem;
+        padding-top: 120px;
     }
-
     .brand-div-1 p {
         font-size: 1rem;
         margin: 0 20px;
     }
 }
 
-@media (max-width: 480px) {
-    .brand-div-1 h1 {
-        font-size: 1.3rem;
+/* Small tablets & large phones */
+@media (max-width: 768px) {
+    .brand {
+        padding: 30px 15px;
+        min-height: 500px;
     }
+    .brand-div-1 h1 {
+        font-size: 1.8rem;
+        padding-top: 100px;
+    }
+    .brand-div-1 p {
+        font-size: 0.95rem;
+        margin: 0 15px;
+    }
+}
 
+/* Mobile phones */
+@media (max-width: 480px) {
+    .brand {
+        padding: 20px 10px;
+        min-height: 400px;
+    }
+    .brand-div-1 h1 {
+        font-size: 1.5rem;
+        padding-top: 80px;
+    }
     .brand-div-1 p {
         font-size: 0.9rem;
         margin: 0 10px;
@@ -585,10 +574,4 @@
 
 .bg-primarHover:hover {
     background-color: #5a37b6;
-}
-
-/* Hover Effects for Brand Div */
-.brand-div:hover {
-    transform: scale(1.05); /* Subtle hover scale effect */
-    box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.15); /* Enhance shadow */
 }

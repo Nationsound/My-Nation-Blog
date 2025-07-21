@@ -1,0 +1,11 @@
+.admin-list-container table {
+  margin-top: 20px;
+}
+
+.admin-list-container th, .admin-list-container td {
+  padding: 10px;
+}
+
+.admin-list-container img {
+  object-fit: cover;
+}

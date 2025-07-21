@@ -27,7 +27,7 @@ const About = ()=> {
       </div>
 
       <motion.div 
-      className="content"
+      className="content" 
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
@@ -152,10 +152,25 @@ const About = ()=> {
     whileHover={{ scale: 1.05, transition: { duration: 0.3 } }}
   />
 </div>
+<div className='brand'>
+            <motion.div 
+                className='brand-div-1'
+                initial={{ opacity: 0, y: 50 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <h1>We Write Blog Posts To Educate Our Audience And Promote Your Brand</h1>
+                <p>
+                    We use social media platforms to engage with followers, share content, and run contests,
+                    creating shareable content to reach a wider audience and maintain a consistent customer
+                    experience across all touchpoints.
+                </p>
+            </motion.div>
+        </div>
       {/* Blog Data Section */}
       <div>
         {aboutDatas.map((aboutData) => {
-          const truncatedContent = truncate(aboutData.content, 75);
+          const truncatedContent = truncate(aboutData.content, 75); 
           return (
             <motion.div
         key={aboutData.id}
@@ -218,30 +233,6 @@ const About = ()=> {
           );
         })}
       </div> 
-
-      <div className='brand'>
-            <motion.div 
-                className='brand-div-1'
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-            >
-                <h1>We Write Blog Posts To Educate Your Audience And Promote Your Brand</h1>
-                <p>
-                    We use social media platforms to engage with followers, share content, and run contests,
-                    creating shareable content to reach a wider audience and maintain a consistent customer
-                    experience across all touchpoints.
-                </p>
-            </motion.div>
-            <motion.div 
-                className='brand-div'
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.5 }}
-            >
-                <h6>We give your product a definite selling point</h6>
-            </motion.div>
-        </div>
     </div> 
   );
 }

@@ -1,119 +1,80 @@
 import React, { useState } from 'react';
+import { PaystackButton } from 'react-paystack';
 import { toast } from 'react-toastify';
 
+// ✅ Use correct Vite env
+const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+
 const Payment = () => {
-  const [isVerified, setIsVerified] = useState(false);
-  const [cardDetails, setCardDetails] = useState({
-    cardNumber: '',
-    cardExpiry: '',
-    cardCVC: '',
-  });
-  const [proofOfPayment, setProofOfPayment] = useState(null);
+  const [email, setEmail] = useState('');
+  const [amount, setAmount] = useState(''); // in naira
+  const [name, setName] = useState('');
+  const [bookingMessage, setBookingMessage] = useState('');
 
-  const handleCardChange = (e) => {
-    setCardDetails({ ...cardDetails, [e.target.name]: e.target.value });
-  };
+  const amountInKobo = parseInt(amount, 10) * 100; // Paystack expects amount in kobo
 
-  const handleProofUpload = (e) => {
-    if (e.target.files) {
-      setProofOfPayment(e.target.files[0]);
-    }
-  };
+  // Debug: check publicKey is loaded
+  console.log('publicKey:', publicKey);
 
-  const handlePaymentVerification = () => {
-    // Simulating payment verification
-    setTimeout(() => {
-      setIsVerified(true);
-      toast.success('Payment successfully verified!');
-    }, 2000);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Simulate a payment processing delay
-    setTimeout(() => {
-      if (isVerified) {
-        toast.success('Booking successful!');
-      } else {
-        toast.error('Payment verification failed, please try again.');
-      }
-    }, 2000);
+  const componentProps = {
+    email,
+    amount: amountInKobo,
+    metadata: {
+      name,
+      bookingMessage,
+    },
+    publicKey,
+    text: "Pay Now",
+    onSuccess: () => {
+      toast.success('Payment successful!');
+    },
+    onClose: () => toast.info('Payment closed'),
   };
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <h1 className="text-4xl font-bold text-center mb-8 text-[#959A4A]">Payment</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4 bg-white max-w-2xl mx-auto p-6 rounded-xl shadow-lg">
-        <h2 className="text-xl font-semibold mb-4">Enter Payment Details</h2>
-        
-        <div className="mb-4">
-          <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">Card Number</label>
-          <input
-            type="text"
-            id="cardNumber"
-            name="cardNumber"
-            value={cardDetails.cardNumber}
-            onChange={handleCardChange}
-            className="w-full border p-2 rounded"
-            required
-          />
-        </div>
+      <form 
+        className="space-y-4 bg-white max-w-2xl mx-auto p-6 rounded-xl shadow-lg"
+        onSubmit={(e) => e.preventDefault()} // ✅ prevent form submit refresh
+      >
+        <input
+          type="text"
+          placeholder="Full Name"
+          className="w-full border p-2 rounded"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <input
+          type="email"
+          placeholder="Email Address"
+          className="w-full border p-2 rounded"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          placeholder="Amount (₦)"
+          className="w-full border p-2 rounded"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="Booking message (optional)"
+          className="w-full border p-2 rounded"
+          value={bookingMessage}
+          onChange={(e) => setBookingMessage(e.target.value)}
+          rows={3}
+        />
 
-        <div className="mb-4">
-          <label htmlFor="cardExpiry" className="block text-sm font-medium text-gray-700">Expiry Date</label>
-          <input
-            type="text"
-            id="cardExpiry"
-            name="cardExpiry"
-            value={cardDetails.cardExpiry}
-            onChange={handleCardChange}
-            className="w-full border p-2 rounded"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="cardCVC" className="block text-sm font-medium text-gray-700">CVC</label>
-          <input
-            type="text"
-            id="cardCVC"
-            name="cardCVC"
-            value={cardDetails.cardCVC}
-            onChange={handleCardChange}
-            className="w-full border p-2 rounded"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="proofOfPayment" className="block text-sm font-medium text-gray-700">Upload Proof of Payment</label>
-          <input
-            type="file"
-            id="proofOfPayment"
-            onChange={handleProofUpload}
-            className="w-full border p-2 rounded"
-            accept="image/*"
-            required
-          />
-        </div>
-
-        <button
-          type="button"
-          onClick={handlePaymentVerification}
-          className="w-full bg-blue-500 text-white py-2 rounded mt-4"
-        >
-          Verify Payment
-        </button>
-
-        {isVerified && (
-          <button
-            type="submit"
-            className="w-full bg-green-500 text-white py-2 rounded mt-4"
-          >
-            Submit Booking
-          </button>
-        )}
+        <PaystackButton
+          {...componentProps}
+          className="w-full bg-[#959A4A] text-white py-2 rounded hover:bg-violet-600"
+        />
       </form>
     </div>
   );

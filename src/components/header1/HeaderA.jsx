@@ -6,7 +6,7 @@ import ContactInfo from '../socialmedia/ContactInfo'
 const HeaderA = ()=> {
   return (
     <div className='header-a'>
-      <div className="flex justify-between items-center p-4 pb-6 max-w-9xl mx-auto">
+      <div className="flex justify-between items-center p-4 pb-6 max-w-9xl mx-auto"> 
         {/* Social Media Links (Left side) */}
         <SocialMediaLinks />
         

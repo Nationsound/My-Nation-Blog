@@ -25,9 +25,9 @@ const ResetPassword = ()=> {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api/auth/reset-password',
+        'http://localhost:1990/mnb/api/reset-password',
         {
-          resetToken,
+          token: resetToken,
           newPassword: password,
         }
       );
@@ -76,4 +76,4 @@ const ResetPassword = ()=> {
     </div>
   );
 }
-export default ResetPassword;
+export default ResetPassword; 

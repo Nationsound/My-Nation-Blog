@@ -24,7 +24,7 @@ const SixthSection = () => {
               <li>Featuring</li>
             </ul>
           </div>
-          <div className='home-service-four'>
+          <div className='home-service-four'> 
             <h4>Blog</h4>
             <ul className='ul'>
               <li>News</li>

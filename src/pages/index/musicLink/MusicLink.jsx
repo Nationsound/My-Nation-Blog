@@ -13,7 +13,7 @@ const MusicLink = () => {
         Generate a single smart link for your music from different platforms like:
       </p>
       <div className="icon-group">
-        <SiYoutube className="icon youtube" />
+        <SiYoutube className="icon youtube" /> 
         <SiSpotify className="icon spotify" />
         <FaMusic className="icon boomplay" />
         <SiApplemusic className="icon appleMusic" />
