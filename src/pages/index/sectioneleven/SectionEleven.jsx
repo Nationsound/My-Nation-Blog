@@ -3,8 +3,8 @@ import './SectionEleven.css'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import olatinn1 from '../../../assets/images/olatinn1.jpeg'
-import myNationimg75 from '../../../assets/images/myNationimg75.jpeg'
-import myNationimg77 from '../../../assets/images/myNationimg77.jpeg'
+import myNationimg75 from '../../../assets/images/myNationImg75.jpeg'
+import myNationimg77 from '../../../assets/images/myNationImg77.jpeg'
 
 const SectionEleven = () => {
   return (
