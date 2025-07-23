@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { aboutDatas } from '../../dommyData/aboutData';
-import myNationimg100 from '../../assets/images/myNationimg100.jpeg'
+import myNationimg100 from '../../assets/images/myNationImg100.jpeg'
 
 
 export default function AboutDataDetails() {
