@@ -11,10 +11,10 @@ import EightSection from '../index/eigthsection/EightSection';
 import NinthSection from '../index/ninthsection/NinthSection';
 import SectionTen from '../index/sectionten/SectionTen';
 import SectionEleven from '../index/sectioneleven/SectionEleven';
-import Slideshow from '../index/slideshow/Slideshow';
 import MusicLink from '../index/musicLink/MusicLink';
 import SongsUpload from '../index/songsUpload/SongsUpload';
 import Partnership from '../index/partnership/Partnership';
+import Slideshow from '../index/slideshow/SlideShow';
 
 
 
