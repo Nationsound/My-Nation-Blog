@@ -36,7 +36,7 @@ import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import UploadedSongs from "./components/adminDashboard/UploadedSongs";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
-import TermsAndConditions from "./pages/termsAndConditions/TermsAndconditions";
+import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
 
 
 function App() {
