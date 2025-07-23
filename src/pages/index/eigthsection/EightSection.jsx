@@ -1,6 +1,6 @@
 import React from 'react'
 import './EightSection.css'
-import myNationimg35 from '../../../assets/images/myNationimg35.jpg'
+import myNationimg35 from '../../../assets/images/myNationImg35.jpg'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 

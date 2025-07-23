@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './FourtSection.css';
-import myNationimg49 from '../../../assets/images/myNationimg49.jpg';
+import myNationimg49 from '../../../assets/images/myNationImg49.jpg';
 
 const FourthSection = () => {
   return (
