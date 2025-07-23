@@ -38,6 +38,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndconditions";
 
+
 function App() {
   return (
     <div>
@@ -80,7 +81,7 @@ function App() {
           <Route path="/license" element={<License />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/brand-guideline" element={<BrandGuideline />} />
+          <Route path="/brand-guideline" element={<BrandGuideline />} /> 
 
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/songs" element={<UploadedSongs />} />
