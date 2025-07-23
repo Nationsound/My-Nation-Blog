@@ -1,5 +1,5 @@
 import React from 'react'
-import './Slideshow.css'
+import './SlideShow.css'
 import {Typewriter} from "react-simple-typewriter"
 
 const Slideshow = () => {
