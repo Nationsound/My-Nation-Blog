@@ -31,12 +31,12 @@ import MusicLinkAggregator from "./pages/musiclinkaggregator/MusicLinkAggregator
 import SmartLinkPage from "./pages/smartlink/SmartLinkPage";
 import BrandGuideline from "./pages/brandGuidline/BrandGuideline";
 import License from "./pages/license/License";
-import TermsAndConditions from "./pages/termsAndConditions/TermsAndconditions";
 import AdminLogin from "./components/auth/AdminLogin";
 import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 import UploadedSongs from "./components/adminDashboard/UploadedSongs";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
+import TermsAndConditions from "./pages/termsAndConditions/TermsAndconditions";
 
 function App() {
   return (
