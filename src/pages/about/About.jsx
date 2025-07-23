@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import CountUp from 'react-countup';
 import { aboutDatas } from '../../dommyData/aboutData';
-import myNationimg34 from '../../assets/images/myNationimg34.jpg';
+import myNationimg34 from '../../assets/images/myNationImg34.jpg';
 import Nationsound from '../../assets/images/Nationsound.png';
 import { FaUsers, FaCheckCircle, FaUserTie, FaClock, FaLightbulb, FaBullhorn, FaChartLine,FaRocket  } from 'react-icons/fa';
 
