@@ -15,6 +15,7 @@ import MusicLink from '../index/musicLink/MusicLink';
 import SongsUpload from '../index/songsUpload/SongsUpload';
 import Partnership from '../index/partnership/Partnership';
 import Slideshow from '../index/slideshow/SlideShow';
+import SubscribeSection from '../index/subscribeSection/SubscribeSection';
 
 
 
@@ -79,7 +80,9 @@ const Home =()=> {
           <div>
             <Partnership />
           </div>
-         
+         <div>
+          <SubscribeSection />
+         </div>
     </div>
   )
 }

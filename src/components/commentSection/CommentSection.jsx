@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../utils/axios";
 import { FaRegThumbsUp } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,7 +12,7 @@ const UploadedSongs = () => {
   const fetchSongs = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:1990/mnb/api/getAllSongs");
+      const res = await api.get("/mnb/api/getAllSongs");
       setSongs(res.data);
     } catch (err) {
       console.error("Failed to fetch songs:", err);
@@ -28,7 +28,7 @@ const UploadedSongs = () => {
 
   const handleLike = async (song) => {
     try {
-      await axios.put(`http://localhost:1990/mnb/api/updateSong/${song._id}`, {
+      await api.put(`/mnb/api/updateSong/${song._id}`, {
         likes: song.likes + 1,
       });
       toast.success("Liked!");
@@ -53,7 +53,7 @@ const UploadedSongs = () => {
           {songs.map((song) => (
             <div key={song._id} className="border rounded shadow bg-white p-3 space-y-2">
               <img
-                src={song.coverImage ? `http://localhost:1990/${song.coverImage}` : "/default-cover.jpg"}
+                src={song.coverImage ? `https://app.mynationblog.fun/${song.coverImage}` : "/default-cover.jpg"}
                 alt="Cover"
                 className="w-full h-48 object-cover rounded"
               />
@@ -65,7 +65,7 @@ const UploadedSongs = () => {
               </p>
               {song.audioUrl && (
                 <audio controls className="w-full">
-                  <source src={`http://localhost:1990/${song.audioUrl}`} type="audio/mpeg" />
+                  <source src={`https://app.mynationblog.fun/${song.audioUrl}`} type="audio/mpeg" />
                 </audio>
               )}
               <div className="flex justify-between text-sm text-gray-600">

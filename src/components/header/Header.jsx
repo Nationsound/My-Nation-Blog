@@ -35,7 +35,7 @@ const Header = ()=> {
           <li><Link to="/" className="hover:text-[#959A4A]">Home</Link></li>
           <li><Link to="/about" className="hover:text-[#959A4A]">About</Link></li>
           <li><Link to="/service" className="hover:text-[#959A4A]">Service</Link></li>
-          <li><Link to="/contact" className="hover:text-[#959A4A]">Contact</Link></li>
+          <li><Link to="/contact" className="hover:text-[#959A4A]">Review</Link></li>
           <li><Link to="/signup" className="hover:text-[#959A4A]">SignUp</Link></li>
           <li><Link to="/blog" className="hover:text-[#959A4A]">Blog</Link></li>
         </ul>

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../utils/axios';
 import { toast } from 'react-toastify';
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -18,7 +20,7 @@ const AdminBookings = () => {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get('http://localhost:1990/mnb/api/getAllBookings');
+      const res = await api.get('/mnb/api/getAllBookings');
       setBookings(res.data);
       toast.success('Bookings fetched successfully!');
     } catch (err) {
@@ -32,7 +34,7 @@ const AdminBookings = () => {
   const deleteBooking = async (id) => {
     try {
       setActionLoading(true);
-      await axios.delete(`http://localhost:1990/mnb/api/deleteBooking/${id}`);
+      await api.delete(`/mnb/api/deleteBooking/${id}`);
       setBookings(bookings.filter(b => b._id !== id));
       toast.success('Booking deleted successfully!');
     } catch (err) {
@@ -51,7 +53,7 @@ const AdminBookings = () => {
   const updateBooking = async () => {
     try {
       setActionLoading(true);
-      await axios.put(`http://localhost:1990/mnb/api/updateBooking/${editingId}`, {
+      await api.put(`/mnb/api/updateBooking/${editingId}`, {
         message: editMessage,
       });
       setBookings(bookings.map(b => b._id === editingId ? { ...b, message: editMessage } : b));
@@ -135,7 +137,7 @@ const AdminBookings = () => {
                   <td className="py-2 px-4">
                     {b.fileUrl ? (
                       <a
-                        href={`http://localhost:1990/${b.fileUrl}`}
+                        href={`${baseURL}/uploads/${b.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-blue-600 underline"

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../../../utils/axios';   // ✅ use your axios instance
 import TeamMemberForm from '../TeamMemberForm';
 import './TeamDashboard.css';
 
-const API_URL = 'http://localhost:1990/mnb/api';
+const baseURL = import.meta.env.VITE_API_BASE_URL; // ✅ get from .env
 
 const TeamDashboard = () => {
   const [teamMembers, setTeamMembers] = useState([]);
-  const [selectedMember, setSelectedMember] = useState(null); // for editing
-  const [editForm, setEditForm] = useState(null);             // edit form state
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [editForm, setEditForm] = useState(null);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
@@ -18,7 +18,7 @@ const TeamDashboard = () => {
   const fetchTeam = async () => {
     setLoading(true);
     try {
-      const res = await axios.get(`${API_URL}/teamMembers`, {
+      const res = await api.get('/mnb/api/teamMembers', {
         params: { page, limit, search }
       });
       setTeamMembers(res.data.members || res.data);
@@ -35,7 +35,6 @@ const TeamDashboard = () => {
     fetchTeam();
   }, [page, search]);
 
-  // When edit button clicked: populate editForm state
   const startEdit = (member) => {
     setSelectedMember(member);
     setEditForm({
@@ -45,17 +44,16 @@ const TeamDashboard = () => {
       linkedin: member.linkedin,
       twitter: member.twitter,
       instagram: member.instagram,
-      image: null // keep existing unless user uploads new
+      image: null
     });
   };
 
   const handleEditChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'image') {
-      setEditForm({ ...editForm, image: files[0] });
-    } else {
-      setEditForm({ ...editForm, [name]: value });
-    }
+    setEditForm((prev) => ({
+      ...prev,
+      [name]: name === 'image' ? files[0] : value
+    }));
   };
 
   const handleUpdateSubmit = async (e) => {
@@ -68,8 +66,8 @@ const TeamDashboard = () => {
         if (editForm[key]) formData.append(key, editForm[key]);
       });
 
-      await axios.put(`${API_URL}/teamMember/${selectedMember._id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
+      await api.put(`/mnb/api/teamMember/${selectedMember._id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
 
       alert('Team member updated successfully!');
@@ -84,9 +82,8 @@ const TeamDashboard = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
-
     try {
-      await axios.delete(`${API_URL}/teamMember/${id}`);
+      await api.delete(`/mnb/api/teamMember/${id}`);
       alert('Team member deleted successfully!');
       fetchTeam();
     } catch (error) {
@@ -101,7 +98,6 @@ const TeamDashboard = () => {
     <div className="dashboard-container">
       <h1>Team Management Dashboard</h1>
 
-      {/* Form to add new member */}
       <TeamMemberForm
         onSuccess={() => {
           fetchTeam();
@@ -110,11 +106,9 @@ const TeamDashboard = () => {
         onCancel={() => setSelectedMember(null)}
       />
 
-      {/* Form to edit existing member */}
       {selectedMember && editForm && (
         <form className="team-form" onSubmit={handleUpdateSubmit}>
           <h2>Edit Team Member</h2>
-
           <input
             type="text"
             name="name"
@@ -164,7 +158,6 @@ const TeamDashboard = () => {
             accept="image/*"
             onChange={handleEditChange}
           />
-
           <div className="form-buttons">
             <button type="submit">Update Member</button>
             <button type="button" className="cancel-btn" onClick={() => setSelectedMember(null)}>Cancel</button>
@@ -187,25 +180,31 @@ const TeamDashboard = () => {
         <p>Loading team members...</p>
       ) : (
         <div className="team-list">
-          {teamMembers.map((member) => (
-            <div key={member._id} className="team-item">
-              <img
-                src={member.image?.startsWith('/uploads')
-                  ? `${API_URL.replace('/mnb/api', '')}${member.image}`
-                  : member.image}
-                alt={member.name}
-                className="team-item-image"
-              />
-              <div className="team-item-info">
-                <h3>{member.name}</h3>
-                <p>{member.role}</p>
-                <small>{member.quote}</small>
-              </div>
-              <button onClick={() => startEdit(member)}>Edit</button>
-              <button onClick={() => handleDelete(member._id)} className="delete-btn">Delete</button>
-            </div>
-          ))}
-        </div>
+  {teamMembers.map((member) => {
+  const imageUrl = member.image?.startsWith('/uploads')
+    ? `${baseURL}${member.image}`
+    : member.image;
+
+  return (
+    <div key={member._id} className="team-item">
+      <img
+        src={imageUrl}
+        alt={member.name}
+        className="team-item-image"
+      />
+      <div className="team-item-info">
+        <h3>{member.name}</h3>
+        <p>{member.role}</p>
+        <small>{member.quote}</small>
+      </div>
+      <button onClick={() => startEdit(member)}>Edit</button>
+      <button onClick={() => handleDelete(member._id)} className="delete-btn">Delete</button>
+    </div>
+  );
+})}
+
+</div>
+
       )}
 
       <div className="pagination-controls">

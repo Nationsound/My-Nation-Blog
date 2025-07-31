@@ -6,14 +6,16 @@ import ContactInfo from '../socialmedia/ContactInfo'
 const HeaderA = ()=> {
   return (
     <div className='header-a'>
-      <div className="flex justify-between items-center p-4 pb-6 max-w-9xl mx-auto"> 
-        {/* Social Media Links (Left side) */}
-        <SocialMediaLinks />
-        
-        {/* Contact Info (Right side) */}
-        <ContactInfo />
-      </div>
-    </div>
+  <div className="flex flex-col sm:flex-row justify-between items-center px-4 py-2 max-w-9xl mx-auto gap-2 sm:gap-0">
+    {/* Social Media Links (Left side) */}
+    <SocialMediaLinks />
+    
+    {/* Contact Info (Right side) */}
+    <ContactInfo />
+  </div>
+</div>
+
+
   );
 };
 export default HeaderA;

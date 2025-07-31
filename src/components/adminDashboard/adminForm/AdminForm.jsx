@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../utils/axios'
 
 const AdminForm = () => {
   const [formData, setFormData] = useState({
@@ -33,9 +33,7 @@ const AdminForm = () => {
     }
 
     try {
-      await axios.post('http://localhost:1990/mnb/api/admins', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+  await api.post('/mnb/api/admins', data);
       setMessage('✅ Admin created successfully!');
       setIsSuccess(true);
       // Reset form

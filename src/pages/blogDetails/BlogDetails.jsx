@@ -3,6 +3,9 @@ import './BlogDetails.css';
 import { Link, useParams } from 'react-router-dom';
 import { blogPosts } from '../../dommyData/blogData';
 import { motion } from 'framer-motion';
+import api from '../../utils/axios';
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -21,10 +24,8 @@ const BlogDetails = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const res = await fetch(`http://localhost:1990/mnb/api/getPost/${id}`);
-        if (!res.ok) throw new Error('Failed to fetch from backend');
-        const data = await res.json();
-        setBlogDetail(data);
+        const res = await api.get(`/mnb/api/getPost/${id}`);
+        setBlogDetail(res.data);
       } catch (err) {
         console.warn('Backend fetch failed, using dummy:', err.message);
         const dummy = blogPosts.find((p) => String(p.id) === id);
@@ -106,12 +107,11 @@ const BlogDetails = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!blogDetail) return <p>Blog post not found</p>;
 
-  // ✅ smart image logic
-  const imageSrc = blogDetail.image
-    ? typeof blogDetail.image === 'string' && !blogDetail.image.startsWith('http') && !blogDetail.image.includes('/')
-      ? `http://localhost:1990/uploads/${blogDetail.image}`
-      : blogDetail.image
-    : '';
+  // ✅ Proper image URL
+  const imageSrc =
+    blogDetail.image && !blogDetail.image.startsWith('http') && !blogDetail.image.includes('/')
+      ? `${baseURL}/uploads/${blogDetail.image}`
+      : blogDetail.image;
 
   return (
     <motion.div

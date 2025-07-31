@@ -1,6 +1,6 @@
 // src/pages/NominateArtist.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../utils/axios';
 import { toast } from 'react-toastify';
 
 const NominateArtist = () => {
@@ -22,7 +22,7 @@ const NominateArtist = () => {
       data.append('description', formData.description);
       if (formData.image) data.append('image', formData.image);
 
-      await axios.post('http://localhost:1990/mnb/api/spotlights', data, {
+      await api.post('/mnb/api/spotlights', data, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 

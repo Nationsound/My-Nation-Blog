@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ServiceDataDetails.css';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../utils/axios';
 import { serviceDatas } from '../../dommyData/serviceData';
 import mbbImage from '../../assets/images/mbbImage.jpg';
 import { FaLinkedin, FaTwitter, FaInstagram } from 'react-icons/fa';
@@ -16,6 +16,8 @@ const cardVariant = {
   }),
 };
 
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 const ServiceDataDetails = () => {
   const { id } = useParams();
   const [teamMembers, setTeamMembers] = useState([]);
@@ -25,7 +27,7 @@ const ServiceDataDetails = () => {
   useEffect(() => {
     const fetchTeam = async () => {
       try {
-        const res = await axios.get('http://localhost:1990/mnb/api/teamMembers');
+        const res = await api.get('/mnb/api/teamMembers');
         console.log('Fetched team members:', res.data);
         setTeamMembers(res.data.members); // adjust based on actual backend response shape
       } catch (err) {
@@ -88,7 +90,7 @@ const ServiceDataDetails = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.7 }}
         >
-          {serviceDataDetail.content}
+          {serviceDataDetail.content} 
         </motion.p>
       </motion.div>
 
@@ -126,39 +128,48 @@ const ServiceDataDetails = () => {
       <section className="management-section">
         <h2 className="management-title">Meet Our Management Team</h2>
         <div className="team-grid">
-          {teamMembers.map((member, index) => (
-            <motion.div
-              className="team-card"
-              key={member._id || index}
-              variants={cardVariant}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              custom={index}
-            >
-              <img src={`http://localhost:1990${member.image}`} alt={member.name} className="team-image" />
-              <h3 className="team-name">{member.name}</h3>
-              <p className="team-role">{member.role}</p>
-              <div className="social-links">
-                <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-                  <FaLinkedin className="social-icon" />
-                </a>
-                <a href={member.twitter} target="_blank" rel="noopener noreferrer">
-                  <FaTwitter className="social-icon" />
-                </a>
-                <a href={member.instagram} target="_blank" rel="noopener noreferrer">
-                  <FaInstagram className="social-icon" />
-                </a>
-              </div>
-              {/* Overlay content */}
-              <div className="card-overlay">
-                <p className="overlay-text">
-                  {member.quote || "Leading with passion, driven by innovation."}
-                </p>
-              </div>
-            </motion.div>
-          ))}
+  {teamMembers.map((member, index) => {
+    // Normalize image path: replace backslashes & remove leading slash
+    const normalizedPath = member.image?.replace(/\\/g, '/').replace(/^\//, '');
+    const imageUrl = normalizedPath
+      ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
+      : '';
+
+    return (
+      <motion.div
+        className="team-card"
+        key={member._id || index}
+        variants={cardVariant}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        custom={index}
+      >
+        <img src={imageUrl} alt={member.name} className="team-image" />
+        <h3 className="team-name">{member.name}</h3>
+        <p className="team-role">{member.role}</p>
+        <div className="social-links">
+          <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+            <FaLinkedin className="social-icon" />
+          </a>
+          <a href={member.twitter} target="_blank" rel="noopener noreferrer">
+            <FaTwitter className="social-icon" />
+          </a>
+          <a href={member.instagram} target="_blank" rel="noopener noreferrer">
+            <FaInstagram className="social-icon" />
+          </a>
         </div>
+        {/* Overlay content */}
+        <div className="card-overlay">
+          <p className="overlay-text">
+            {member.quote || "Leading with passion, driven by innovation."}
+          </p>
+        </div>
+      </motion.div>
+    );
+  })}
+</div>
+
       </section>
     </div>
   );

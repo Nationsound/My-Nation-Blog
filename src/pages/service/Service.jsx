@@ -3,6 +3,7 @@ import { motion,} from 'framer-motion';
 import { serviceDatas } from '../../dommyData/serviceData';
 import './Service.css';
 import theBestImg from '../../assets/images/theBestImg.png'
+import Reviews from '../../components/review/Reviews';
 
 
 const ServiceCard = ({ title, content, categories, image, id }) => ( 
@@ -181,7 +182,7 @@ const Service = ()=> {
   </motion.p>
 
   <motion.div
-    className="best-coming-graphic"
+    className="best-coming-graphic" 
     whileHover={{ scale: 1.05, rotate: 1 }}
     transition={{ type: "spring", stiffness: 300 }}
   >
@@ -206,6 +207,10 @@ const Service = ()=> {
         </Link>
 
   <div className="background-animation"></div>
+</div>
+
+<div>
+  <Reviews />
 </div>
 
     </div>

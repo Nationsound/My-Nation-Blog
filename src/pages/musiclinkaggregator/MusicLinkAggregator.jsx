@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./MusicLinks.css"; // External CSS
 import { SiYoutube, SiSpotify, SiAudiomack } from "react-icons/si";
 import { FaApple, FaMusic } from "react-icons/fa";
+import api from "../../utils/axios"; // ✅ import configured axios instance
 
 const MusicLinkAggregator = () => {
   const [links, setLinks] = useState({
@@ -36,17 +37,15 @@ const MusicLinkAggregator = () => {
         formData.append(key, value);
       });
 
-      const res = await fetch("http://localhost:1990/mnb/api/smart-link", {
-        method: "POST",
-        body: formData,
-      });
+      // ✅ use api.post instead of fetch
+      const res = await api.post("/mnb/api/smart-link", formData);
 
-      const data = await res.json();
-      if (res.ok && data.id) {
-        setGeneratedLink(`http://localhost:5173/smartlink/${data.id}`);
+      if (res.data && res.data.id) {
+        // ⚠️ Replace localhost:5173 with your actual frontend URL in production
+        setGeneratedLink(`http://mynationblog.fun/smartlink/${res.data.id}`);
         setCopied(false);
       } else {
-        alert(data.message || "Failed to create smart link");
+        alert(res.data.message || "Failed to create smart link");
       }
     } catch (error) {
       console.error("Error creating smart link:", error);
@@ -108,7 +107,11 @@ const MusicLinkAggregator = () => {
         ))}
       </div>
 
-      <button className="generate-btn" onClick={handleGenerateLink} disabled={loading}>
+      <button
+        className="generate-btn"
+        onClick={handleGenerateLink}
+        disabled={loading}
+      >
         {loading ? "Generating..." : "Generate Link"}
       </button>
 

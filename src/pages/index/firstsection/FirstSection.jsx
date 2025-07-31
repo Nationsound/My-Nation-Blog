@@ -59,13 +59,27 @@ const FirstSection = () => {
             <h1 className="section-title">My Nation Blog: News, Style and Entertainment</h1>
             <p className="section-text">We provide you with updated news across all segments:</p>
             <ul className="section-list">
-              <li>Education</li>
-              <li>Politics</li>
-              <li>Sport</li>
-              <li>Entertainment</li>
-              <li>Finance</li>
-              <li>Agriculture</li>
-              <li>Technology</li>
+              <li>
+                <Link to={'/about'}>Education</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Politics</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Sport</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Entertainment</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Finance</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Agriculture</Link>
+              </li>
+              <li>
+                <Link to={'/about'}>Technology</Link>
+              </li>
             </ul>
             <div className="button-on-border">
               <Link to="/about" className="border-button">

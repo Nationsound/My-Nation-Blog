@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../utils/axios';
 import './TeamMemberForm.css'; 
 
 const TeamMemberForm = ({ onSuccess }) => {
@@ -34,7 +34,7 @@ const TeamMemberForm = ({ onSuccess }) => {
         if (form[key]) formData.append(key, form[key]);
       });
 
-      const res = await axios.post('http://localhost:1990/mnb/api/teamMember', formData, {
+      const res = await api.post('/mnb/api/teamMember', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

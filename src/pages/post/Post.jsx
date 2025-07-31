@@ -1,45 +1,48 @@
-import React from 'react'
-import './Post.css'
-import {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
+import './Post.css';
+import api from '../../utils/axios'; // ✅ import your configured axios instance
 
+const Post = () => {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await api.get('/mnb/api/posts', {
+          withCredentials: true, // ✅ keep credentials if needed
+        });
+        setPosts(res.data);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load posts'); // ✅ set error message
+      } finally {
+        setLoading(false);
+      }
+    };
 
-const Post = ()=> {
-    const [posts, setPosts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    fetchPosts();
+  }, []);
 
-    useEffect(()=>{
-        const fetchPosts = async ()=>{
-            try{
-           const response = await fetch('http://localhost:1990/mnb/api/posts', {
-            credentials: 'include',
-           });
-           const data = await response.json()
-           setPosts(data)
-            }catch(error){
-                console.log(error);
-            }finally{
-              setLoading(false)
-            }
-        }
-        fetchPosts(); 
-    }, []);
-    if (loading){
-      return <p>loading...</p>
-    }
-    if (error){
-      return <p>{error}</p>
-    }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
   return (
     <div>
-      {posts.map((post)=>(
-        <div key={post.id} className='my-post'>
-        <h2>{post.title}</h2>
-        <p>{post.body}</p>
+      {posts.map((post) => (
+        <div key={post.id} className="my-post">
+          <h2>{post.title}</h2>
+          <p>{post.body}</p>
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
+
 export default Post;

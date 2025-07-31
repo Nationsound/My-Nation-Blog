@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom'; // Change useHistory to useNavigate
-import axios from 'axios';
+import api from '../../utils/axios';
 
 const ResetPassword = ()=> {
   const [password, setPassword] = useState('');
@@ -24,8 +24,8 @@ const ResetPassword = ()=> {
     }
 
     try {
-      const response = await axios.post(
-        'http://localhost:1990/mnb/api/reset-password',
+      const response = await api.post(
+        '/mnb/api/reset-password',
         {
           token: resetToken,
           newPassword: password,

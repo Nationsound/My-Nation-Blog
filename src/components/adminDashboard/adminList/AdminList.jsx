@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './AdminList.css'; // optional if you have extra CSS
+import api from '../../../utils/axios';
+import './AdminList.css';
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const AdminList = () => {
   const [admins, setAdmins] = useState([]);
@@ -12,10 +14,11 @@ const AdminList = () => {
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
-        const res = await axios.get('http://localhost:1990/mnb/api/admins');
+        const res = await api.get('/mnb/api/admins');
         setAdmins(res.data);
       } catch (error) {
         console.error('Failed to fetch admins', error);
+        setMessage('❌ Failed to fetch admins');
       }
     };
     fetchAdmins();
@@ -25,7 +28,7 @@ const AdminList = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this admin?')) return;
     try {
-      await axios.delete(`http://localhost:1990/mnb/api/admins/${id}`);
+      await api.delete(`/mnb/api/admins/${id}`);
       setAdmins(prev => prev.filter(admin => admin._id !== id));
       setMessage('✅ Admin deleted successfully');
     } catch (error) {
@@ -43,11 +46,10 @@ const AdminList = () => {
   // Handle edit form change
   const handleEditChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === 'image') {
-      setEditForm({ ...editForm, image: files[0] });
-    } else {
-      setEditForm({ ...editForm, [name]: value });
-    }
+    setEditForm(prev => ({
+      ...prev,
+      [name]: name === 'image' ? files[0] : value
+    }));
   };
 
   // Submit edit
@@ -59,15 +61,12 @@ const AdminList = () => {
       formData.append('email', editForm.email);
       if (editForm.image) formData.append('image', editForm.image);
 
-      const res = await axios.put(
-        `http://localhost:1990/mnb/api/admins/${editAdmin._id}`,
-        formData,
-        { headers: { 'Content-Type': 'multipart/form-data' } }
-      );
+      const res = await api.put(`/mnb/api/admins/${editAdmin._id}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
 
-      // update local list
       setAdmins(prev =>
-        prev.map(a => (a._id === editAdmin._id ? res.data : a))
+        prev.map(admin => (admin._id === editAdmin._id ? res.data : admin))
       );
       setMessage('✅ Admin updated successfully');
       setEditAdmin(null);
@@ -91,37 +90,44 @@ const AdminList = () => {
           </tr>
         </thead>
         <tbody>
-          {admins.map(admin => (
-            <tr key={admin._id} className="text-center border-b">
-              <td className="p-2">{admin.name}</td>
-              <td className="p-2">{admin.email}</td>
-              <td className="p-2">
-                {admin.image ? (
-                  <img
-                    src={`http://localhost:1990/uploads/${admin.image}`}
-                    alt={admin.name}
-                    width="40"
-                    height="40"
-                    className="rounded-full mx-auto"
-                  />
-                ) : 'No image'}
-              </td>
-              <td className="p-2 flex justify-center gap-2">
-                <button
-                  onClick={() => openEditModal(admin)}
-                  className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(admin._id)}
-                  className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
+          {admins.map((admin) => {
+           const imageUrl = admin.image
+  ? `${baseURL.replace(/\/$/, '')}/uploads/${admin.image}`
+  : '';
+
+
+            return (
+              <tr key={admin._id} className="text-center border-b">
+                <td className="p-2">{admin.name}</td>
+                <td className="p-2">{admin.email}</td>
+                <td className="p-2">
+                  {admin.image ? (
+                    <img
+                      src={imageUrl}
+                      alt={admin.name}
+                      width="40"
+                      height="40"
+                      className="rounded-full mx-auto"
+                    />
+                  ) : 'No image'}
+                </td>
+                <td className="p-2 flex justify-center gap-2">
+                  <button
+                    onClick={() => openEditModal(admin)}
+                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(admin._id)}
+                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
 

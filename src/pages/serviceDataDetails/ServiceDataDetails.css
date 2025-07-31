@@ -125,6 +125,7 @@
     font-weight: lighter;
     color: #555;
     line-height: 1.6;
+    text-align: justify;
     padding: 10px 0;
   }
   
@@ -282,7 +283,7 @@
   
   .mbb-text-content {
     max-width: 600px;
-    text-align: center;
+    text-align: justify;
   }
   
   .mbb-title {

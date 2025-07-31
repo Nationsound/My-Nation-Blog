@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import api from '../../utils/axios';
 
 const AdminLogin = () => {
-  // ✅ use email + password to match backend
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
@@ -16,29 +16,24 @@ const AdminLogin = () => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:1990/mnb/api/admins-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      // ✅ use api.post to call backend
+      const res = await api.post('/mnb/api/admins-login', formData);
 
-      const data = await res.json();
+      localStorage.setItem('token', res.data.token);
+      console.log('Saved token:', res.data.token);
 
-      if (res.ok) {
-        localStorage.setItem('token', data.token);
-        console.log('Saved token:', data.token);
+      // Optional: decode token for debug
+      const decoded = JSON.parse(atob(res.data.token.split('.')[1]));
+      console.log('Decoded token:', decoded);
 
-        // (Optional) decode and log for debug
-        const decoded = JSON.parse(atob(data.token.split('.')[1]));
-        console.log('Decoded token:', decoded);
-
-        navigate('/admin-dashboard');
-      } else {
-        setError(data.message || 'Login failed');
-      }
+      navigate('/admin-dashboard');
     } catch (err) {
-      console.error(err);
-      setError('Something went wrong');
+      console.error('Login error:', err);
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError('Something went wrong');
+      }
     }
   };
 

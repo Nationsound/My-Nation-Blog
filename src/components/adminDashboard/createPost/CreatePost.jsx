@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CreatePost.css';
+import api from '../../../utils/axios'
 
 const CreatePost = ({ onAddPost }) => {
   const [title, setTitle] = useState('');
@@ -21,70 +22,70 @@ const CreatePost = ({ onAddPost }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!title || !content || !author) {
-      alert('Please fill in all required fields.');
-      return;
+  if (!title || !content || !author) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const token = localStorage.getItem('token'); // get token
+
+  if (!token) {
+    alert('⚠ No token found. Please log in.');
+    return;
+  }
+
+  setLoading(true);
+  try {
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('author', author);
+    formData.append('categories', categories); // backend will split to array
+
+    if (imageFile) {
+      formData.append('image', imageFile);
     }
 
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append('title', title);
-      formData.append('content', content); 
-      formData.append('author', author);
-
-      // Always send categories as comma-separated string; backend handles array conversion
-      formData.append('categories', categories);
-
-      if (imageFile) {
-        formData.append('image', imageFile);
+    const response = await api.post('/mnb/api/addPost', formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        // ⚠ Do NOT add 'Content-Type': 'multipart/form-data'
+        // Axios + FormData: it sets correct boundary automatically
       }
+    });
 
-      const token = localStorage.getItem('token');
+    const data = response.data;
+    console.log('Response', data);
 
-      const response = await fetch('http://localhost:1990/mnb/api/addPost', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        body: formData
-      });
+    onAddPost && onAddPost({
+      id: Date.now(),
+      title,
+      content,
+      author,
+      categories: categories.split(',').map(c => c.trim()),
+      imageUrl: imagePreview,
+      date: new Date().toISOString().split('T')[0],
+      slug: title.toLowerCase().replace(/\s+/g, '-')
+    });
 
-      const data = await response.json();
+    alert('✅ Post added successfully!');
+    setTitle('');
+    setContent('');
+    setAuthor('');
+    setCategories('');
+    setImageFile(null);
+    setImagePreview('');
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to add post');
-      }
+  } catch (error) {
+    console.error(error);
+    alert(`❌ ${error.response?.data?.message || error.message}`);
+  } finally {
+    setLoading(false);
+  }
+};
 
-      // add locally to preview if needed
-      onAddPost && onAddPost({
-        id: Date.now(),
-        title,
-        content,
-        author,
-        categories: categories.split(',').map(c => c.trim()),
-        imageUrl: imagePreview,
-        date: new Date().toISOString().split('T')[0],
-        slug: title.toLowerCase().replace(/\s+/g, '-')
-      });
-
-      alert('✅ Post added successfully!');
-      setTitle('');
-      setContent('');
-      setAuthor('');
-      setCategories('');
-      setImageFile(null);
-      setImagePreview('');
-
-    } catch (error) {
-      console.error(error);
-      alert(`❌ ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white shadow rounded space-y-4">

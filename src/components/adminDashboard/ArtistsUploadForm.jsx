@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../../utils/axios";
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const ArtistUploadForm = () => {
   const [formData, setFormData] = useState({ name: "", genre: "", image: null });
@@ -15,7 +17,7 @@ const ArtistUploadForm = () => {
 
   const fetchArtists = async () => {
     try {
-      const res = await axios.get("http://localhost:1990/mnb/api/getAllArtist");
+      const res = await api.get("/mnb/api/getAllArtist");
       setArtists(res.data);
     } catch (error) {
       console.error("Error fetching artists:", error);
@@ -36,7 +38,7 @@ const ArtistUploadForm = () => {
     data.append("image", formData.image);
 
     try {
-      const res = await axios.post("http://localhost:1990/mnb/api/addArtist", data);
+      const res = await api.post("/mnb/api/addArtist", data);
       setMessage(res.data.message || "Artist uploaded successfully!");
       setFormData({ name: "", genre: "", image: null });
       fetchArtists();
@@ -50,7 +52,7 @@ const ArtistUploadForm = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:1990/mnb/api/deleteArtist/${id}`);
+      await api.delete(`/mnb/api/deleteArtist/${id}`);
       setMessage("Artist deleted successfully!");
       fetchArtists();
     } catch (error) {
@@ -71,7 +73,7 @@ const ArtistUploadForm = () => {
     if (editFormData.image) data.append("image", editFormData.image);
 
     try {
-      await axios.put(`http://localhost:1990/mnb/api/updateArtist/${id}`, data);
+      await api.put(`/mnb/api/updateArtist/${id}`, data);
       setMessage("Artist updated successfully!");
       setEditArtistId(null);
       fetchArtists();
@@ -131,84 +133,93 @@ const ArtistUploadForm = () => {
       </form>
 
       <h2 className="text-xl font-semibold">Artists</h2>
-      <ul className="space-y-4">
-        {artists.map((artist) => (
-          <li key={artist._id} className="border p-4 rounded">
-            {editArtistId === artist._id ? (
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  name="name"
-                  value={editFormData.name}
-                  onChange={handleEditChange}
-                  className="border p-1 rounded w-full"
+<ul className="space-y-4">
+  {artists.map((artist) => {
+    // Normalize backslashes and build image URL
+    const normalizedPath = artist.imageUrl?.replace(/\\/g, '/');
+    const imageUrl = normalizedPath?.startsWith('uploads')
+      ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
+      : normalizedPath;
+
+    return (
+      <li key={artist._id} className="border p-4 rounded">
+        {editArtistId === artist._id ? (
+          <div className="space-y-2">
+            <input
+              type="text"
+              name="name"
+              value={editFormData.name}
+              onChange={handleEditChange}
+              className="border p-1 rounded w-full"
+            />
+            <select
+              name="genre"
+              value={editFormData.genre}
+              onChange={handleEditChange}
+              className="border p-1 rounded w-full"
+            >
+              <option value="">Select Genre</option>
+              <option value="Afrobeats">Afrobeats</option>
+              <option value="Alté">Alté</option>
+              <option value="Afro-fusion">Afro-fusion</option>
+            </select>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleEditChange}
+              className="border p-1 rounded w-full"
+            />
+            <button
+              onClick={() => handleEditSubmit(artist._id)}
+              className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setEditArtistId(null)}
+              className="ml-2 text-gray-500"
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="font-medium">{artist.name}</p>
+              <p className="text-sm text-gray-600">{artist.genre}</p>
+              {artist.imageUrl && (
+                <img
+                  src={imageUrl}
+                  alt={artist.name}
+                  className="w-24 h-24 object-cover mt-2"
                 />
-                <select
-                  name="genre"
-                  value={editFormData.genre}
-                  onChange={handleEditChange}
-                  className="border p-1 rounded w-full"
-                >
-                  <option value="">Select Genre</option>
-                  <option value="Afrobeats">Afrobeats</option>
-                  <option value="Alté">Alté</option>
-                  <option value="Afro-fusion">Afro-fusion</option>
-                </select>
-                <input
-                  type="file"
-                  name="image"
-                  accept="image/*"
-                  onChange={handleEditChange}
-                  className="border p-1 rounded w-full"
-                />
-                <button
-                  onClick={() => handleEditSubmit(artist._id)}
-                  className="bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={() => setEditArtistId(null)}
-                  className="ml-2 text-gray-500"
-                >
-                  Cancel
-                </button>
-              </div>
-            ) : (
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">{artist.name}</p>
-                  <p className="text-sm text-gray-600">{artist.genre}</p>
-                  {artist.imageUrl && (
-                    <img
-                      src={`http://localhost:1990/${artist.imageUrl}`}
-                      alt={artist.name}
-                      className="w-24 h-24 object-cover mt-2"
-                    />
-                  )}
-                </div>
-                <div className="space-x-2">
-                  <button
-                    onClick={() => {
-                      setEditArtistId(artist._id);
-                      setEditFormData({ name: artist.name, genre: artist.genre, image: null });
-                    }}
-                    className="text-blue-500"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(artist._id)}
-                    className="text-red-500"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+              )}
+            </div>
+            <div className="space-x-2">
+              <button
+                onClick={() => {
+                  setEditArtistId(artist._id);
+                  setEditFormData({ name: artist.name, genre: artist.genre, image: null });
+                }}
+                className="text-blue-500"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(artist._id)}
+                className="text-red-500"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
+      </li>
+    );
+  })}
+</ul>
+
     </div>
   );
 };

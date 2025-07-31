@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Signup.css';
+import api from '../../utils/axios'; // ✅ import your axios instance
 
-const SignUp = ()=> {
-  // Define success state
+const SignUp = () => {
   const [success, setSuccess] = useState(false);
-
   const [formData, setFormData] = useState({
     username: '',
     firstName: '',
@@ -14,7 +13,7 @@ const SignUp = ()=> {
     age: '',
     email: '',
     password: ''
-  }); 
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,27 +27,17 @@ const SignUp = ()=> {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:1990/mnb/api/signUp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
+      const res = await api.post('/mnb/api/signUp', formData);
+      console.log('Signup result:', res.data);
 
-      const result = await response.json();
-      console.log('Signup result:', result);
-      
-      if (response.status === 409) {
-        alert('Email already exists. Please use a different one.');
-      } else if (response.ok) {
-        setSuccess(true); // Show success message
-      } else {
-        alert(result.message || 'Signup failed');
-      }
+      setSuccess(true); // Show success message
     } catch (error) {
       console.error('Signup error:', error);
-      alert('Something went wrong');
+      if (error.response?.status === 409) {
+        alert('Email already exists. Please use a different one.');
+      } else {
+        alert(error.response?.data?.message || 'Signup failed');
+      }
     }
   };
 
@@ -124,5 +113,6 @@ const SignUp = ()=> {
       )}
     </div>
   );
-}
+};
+
 export default SignUp;

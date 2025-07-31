@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import api from '../../utils/axios';
 import './Blog.css';
 import { blogPosts } from '../../dommyData/blogData';
 
+// Define baseURL once
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
 const Blog = () => {
-  const [posts, setPosts] = useState([]);       // backend posts
+  const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -15,10 +19,8 @@ const Blog = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const res = await fetch('http://localhost:1990/mnb/api/getAllPosts');
-        if (!res.ok) throw new Error('Failed to fetch posts');
-        const data = await res.json();
-        setPosts(data);
+        const res = await api.get(`/mnb/api/getAllPosts`);
+        setPosts(res.data || []);
         setError('');
       } catch (err) {
         console.error(err);
@@ -30,7 +32,7 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
-  // merge backend posts + dummy posts (new first)
+  // merge backend + dummy posts (backend first)
   const combinedPosts = [...posts, ...blogPosts];
 
   return (
@@ -50,26 +52,27 @@ const Blog = () => {
 
       <div className="row">
         {combinedPosts.map((post) => {
-          // image logic
+          // Build imageSrc:
           const imageSrc =
-            post._id && post.image               // backend post: has _id and filename
-              ? `http://localhost:1990/uploads/${post.image}`
-              : post.image || post.imageUrl;     // dummy post: imported image
+            post._id && post.image                       // backend post
+              ? `${baseURL}/uploads/${post.image}`
+              : post.image || post.imageUrl;              // dummy data
+
+          const postDate = post.date || (post.createdAt && new Date(post.createdAt).toLocaleDateString());
+          const categories = Array.isArray(post.categories)
+            ? post.categories.join(", ")
+            : post.categories;
 
           return (
             <div key={post._id || post.id}>
               <div className="leftcolumn">
                 <div className="card">
                   <h2>{post.title}</h2>
-                  <img
-                    src={imageSrc}
-                    alt={post.title}
-                    className="fakeimg1"
-                  />
+                  <img src={imageSrc} alt={post.title} className="fakeimg1" />
                   <h5>{post.slug}</h5>
                   <h1>{post.author}</h1>
-                  <h4>{post.date || (post.createdAt && new Date(post.createdAt).toLocaleDateString())}</h4>
-                  <h5>{Array.isArray(post.categories) ? post.categories.join(", ") : post.categories}</h5>
+                  <h4>{postDate}</h4>
+                  <h5>{categories}</h5>
                   <p>{truncateText(post.content, 75)}</p>
                   <Link
                     to={`/post/${post._id || post.id}`}
@@ -83,15 +86,11 @@ const Blog = () => {
               <div className="rightcolumn">
                 <div className="card">
                   <h2>{post.title}</h2>
-                  <img
-                    src={imageSrc}
-                    alt={post.title}
-                    className="fakeimg"
-                  />
+                  <img src={imageSrc} alt={post.title} className="fakeimg" />
                   <h5>{post.slug}</h5>
                   <h1>{post.author}</h1>
-                  <h4>{post.date || (post.createdAt && new Date(post.createdAt).toLocaleDateString())}</h4>
-                  <h5>{Array.isArray(post.categories) ? post.categories.join(", ") : post.categories}</h5>
+                  <h4>{postDate}</h4>
+                  <h5>{categories}</h5>
                   <p>{truncateText(post.content, 75)}</p>
                 </div>
               </div>

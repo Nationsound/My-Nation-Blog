@@ -125,6 +125,7 @@
     color: #666;
     max-width: 700px;
     margin: 0 auto;
+    text-align: justify;
   }
 
   .best-coming-section {
@@ -158,6 +159,7 @@
     max-width: 850px;
     margin: 0 auto 2rem auto;
     font-size: 1.2rem;
+    text-align: justify;
     line-height: 1.9;
     color: #ddd;
     position: relative;
@@ -165,14 +167,18 @@
   }
   
   .best-coming-graphic img {
-    max-width: 520px;
-    margin: 2rem auto;
-    border-radius: 24px;
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
-    transition: transform 0.5s ease;
-    z-index: 3;
-    position: relative;
-  }
+  width: 100%;                    /* make image scale down on small screens */
+  max-width: 520px;               /* never go beyond this width on large screens */
+  height: auto;                   /* keep aspect ratio */
+  display: block;                 /* remove inline spacing */
+  margin: 2rem auto;              /* center horizontally with top/bottom margin */
+  border-radius: 24px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease;
+  z-index: 3;
+  position: relative;
+}
+
   
   /* Wave Background Animation */
   .background-animation {

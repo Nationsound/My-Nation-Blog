@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ContactForm from "../../components/formValidation/FormValidation";
-import DisplayData from "../../components/contactMessages/ContactMessages";
 
  const ContainerComponent = () => {
   const [submittedData, setSubmittedData] = useState([]);
@@ -8,15 +7,13 @@ import DisplayData from "../../components/contactMessages/ContactMessages";
   const handleData = (data) => {
     setSubmittedData([...submittedData, data]);
   };
+  console.log('submittedData:', submittedData);
+
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Contact Form</h1>
-      <ContactForm onFormSubmit={handleData} />
-      <div className="mt-6">
-        <h2 className="text-xl font-semibold">Submitted Data:</h2>
-        <DisplayData data={submittedData} />
-      </div>
+      <h1 className="text-2xl font-bold mb-4 text-center text-[#959A4A]">Leave Us Your Review Here:</h1>
+      <ContactForm onFormSubmit={handleData} /> 
     </div>
   );
 };

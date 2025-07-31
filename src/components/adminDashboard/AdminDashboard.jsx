@@ -11,6 +11,7 @@ import PartnershipAdmin from "./ourPartners/PartnershipAdmin";
 import AdminForm from "./adminForm/AdminForm";
 import AdminList from "./adminList/AdminList";
 import TeamDashboard from "./teamMembers/teamDashboard/TeamDashboard";
+import SubscribersList from "./subscribersList/SubscribersList";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -84,6 +85,20 @@ const AdminDashboard = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TeamDashboard />
+        </div>
+      </motion.div>
+      <motion.div 
+        className="mt-8 bg-white rounded-xl shadow p-6 max-w-7xl mx-auto hover:shadow-md transition"
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.25 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <FaUsers className="text-[#959A4A]" title="Manage Admins" />
+          <h2 className="text-xl font-semibold text-[#959A4A]">View Our Subscribers</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SubscribersList />
         </div>
       </motion.div>
       <motion.div 

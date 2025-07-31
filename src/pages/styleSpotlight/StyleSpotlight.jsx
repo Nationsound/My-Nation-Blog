@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../utils/axios';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const StyleSpotlight = () => {
   const [spotlights, setSpotlights] = useState([]);
@@ -16,7 +18,7 @@ const StyleSpotlight = () => {
 
   const fetchSpotlights = async () => {
     try {
-      const res = await axios.get('http://localhost:1990/mnb/api/getAllSpotlights');
+      const res = await api.get('/mnb/api/getAllSpotlights');
       setSpotlights(res.data);
     } catch (err) {
       console.error('Fetch error:', err);
@@ -56,7 +58,7 @@ const StyleSpotlight = () => {
             className="bg-white rounded-2xl shadow-md overflow-hidden"
           >
             <img
-              src={`http://localhost:1990/${artist.image}`}
+              src={`${baseURL}/${artist.image}`}
               alt={artist.name}
               className="w-full h-96 object-cover"
             />

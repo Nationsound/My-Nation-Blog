@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import './Login.css';
+import api from '../../utils/axios'; // ✅ import your configured axios instance
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -26,19 +27,11 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:1990/mnb/api/signIn', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify(credentials),
+      const res = await api.post('/mnb/api/signIn', credentials, {
+        withCredentials: true
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.message || 'Login failed');
-        return;
-      }
+      const data = res.data;
 
       if (data.token) {
         localStorage.setItem('accessToken', data.token);
@@ -48,10 +41,9 @@ const Login = () => {
       localStorage.setItem('email', data.email);
 
       navigate(data.role === 'admin' ? '/admin' : '/profile');
-
     } catch (err) {
       console.error('Error logging in:', err);
-      setError('An error occurred while logging in.');
+      setError(err.response?.data?.message || 'Login failed');
     }
   };
 
@@ -61,23 +53,13 @@ const Login = () => {
     setError('');
 
     try {
-      const res = await fetch('http://localhost:1990/mnb/api/request-password-reset', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail }),
-      });
+      const res = await api.post('/mnb/api/request-password-reset', { email: resetEmail });
 
-      const data = await res.json();
-
-      if (res.ok) {
-        setResetMessage(data.message || '✅ If this email is registered, a reset link has been sent.');
-        setResetEmail('');
-      } else {
-        setResetMessage(data.message || '❌ Failed to send reset link.');
-      }
+      setResetMessage(res.data.message || '✅ If this email is registered, a reset link has been sent.');
+      setResetEmail('');
     } catch (err) {
       console.error('Reset request failed:', err);
-      setResetMessage('❌ Something went wrong. Please try again.');
+      setResetMessage(err.response?.data?.message || '❌ Failed to send reset link.');
     }
   };
 

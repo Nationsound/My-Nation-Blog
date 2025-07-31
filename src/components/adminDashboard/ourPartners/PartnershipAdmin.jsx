@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './PartnershipAdmin.css'; // style separately if you want
+import api from '../../../utils/axios'
 
 const PartnershipAdmin = () => {
   const [partners, setPartners] = useState([]);
@@ -11,11 +12,12 @@ const PartnershipAdmin = () => {
   const [editData, setEditData] = useState({ name: '', email: '', message: '' });
 
   const fetchPartners = async () => {
+    const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:1990/mnb/api/partnerships');
-      if (!res.ok) throw new Error('Failed to fetch partners');
-      const data = await res.json();
-      setPartners(data);
+      const res = await api.get('/mnb/api/partnerships', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setPartners(res.data);
     } catch (error) {
       console.error(error);
       toast.error('Could not load partners');
@@ -30,11 +32,13 @@ const PartnershipAdmin = () => {
 
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this partner?')) return;
+    const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:1990/mnb/api/partnership/${id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('Delete failed');
+      await api.delete(`/mnb/api/partnership/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       toast.success('Partner deleted');
-      setPartners(partners.filter(p => p._id !== id));
+      setPartners(prev => prev.filter(p => p._id !== id));
     } catch (error) {
       console.error(error);
       toast.error('Failed to delete');
@@ -47,21 +51,23 @@ const PartnershipAdmin = () => {
   };
 
   const handleUpdate = async () => {
+    const token = localStorage.getItem('token');
     try {
-      const res = await fetch(`http://localhost:1990/mnb/api/partnership/${editingId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editData)
+      await api.put(`/mnb/api/partnership/${editingId}`, editData, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        }
       });
-      if (!res.ok) throw new Error('Update failed');
       toast.success('Partner updated');
       setEditingId(null);
-      fetchPartners();
+      fetchPartners(); // refresh list
     } catch (error) {
       console.error(error);
       toast.error('Failed to update');
     }
   };
+
 
   return (
     <div className="admin-container">
