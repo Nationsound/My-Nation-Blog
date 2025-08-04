@@ -175,37 +175,37 @@ const TeamDashboard = () => {
         />
       </div>
 
-      <h2>Team Members</h2>
-      {loading ? (
-        <p>Loading team members...</p>
-      ) : (
-        <div className="team-list">
-  {teamMembers.map((member) => {
-  const imageUrl = member.image?.startsWith('/uploads')
-    ? `${baseURL}${member.image}`
-    : member.image;
+     <h2>Team Members</h2>
+{loading ? (
+  <p>Loading team members...</p>
+) : (
+  <div className="team-list">
+    {teamMembers.map((member) => {
+      const normalizedPath = member.image?.startsWith('/uploads/')
+        ? member.image
+        : `/uploads/${member.image?.replace(/^\/+/, '')}`;
 
-  return (
-    <div key={member._id} className="team-item">
-      <img
-        src={imageUrl}
-        alt={member.name}
-        className="team-item-image"
-      />
-      <div className="team-item-info">
-        <h3>{member.name}</h3>
-        <p>{member.role}</p>
-        <small>{member.quote}</small>
-      </div>
-      <button onClick={() => startEdit(member)}>Edit</button>
-      <button onClick={() => handleDelete(member._id)} className="delete-btn">Delete</button>
-    </div>
-  );
-})}
+      const imageUrl = `${baseURL.replace(/\/$/, '')}${normalizedPath}`;
 
-</div>
-
-      )}
+      return (
+        <div key={member._id} className="team-item">
+          <img
+            src={imageUrl}
+            alt={member.name}
+            className="team-item-image"
+          />
+          <div className="team-item-info">
+            <h3>{member.name}</h3>
+            <p>{member.role}</p>
+            <small>{member.quote}</small>
+          </div>
+          <button onClick={() => startEdit(member)}>Edit</button>
+          <button onClick={() => handleDelete(member._id)} className="delete-btn">Delete</button>
+        </div>
+      );
+    })}
+  </div>
+)}
 
       <div className="pagination-controls">
         <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>

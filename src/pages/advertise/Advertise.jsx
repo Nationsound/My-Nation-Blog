@@ -17,13 +17,22 @@ const Advertise = () => {
   const fetchAdverts = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/mnb/api/getAdverts'); // ✅ correct endpoint
+      const res = await api.get('/mnb/api/getAdverts');
       setAdverts(res.data);
     } catch (error) {
       setMessage(error.response?.data?.message || 'Failed to load adverts');
     } finally {
       setLoading(false);
     }
+  };
+
+  // Utility function to get full image URL
+  const getImageUrl = (image) => {
+    if (!image) return '';
+    const normalizedPath = image.startsWith('/uploads/')
+      ? image
+      : `/uploads/${image.replace(/^\/+/, '')}`;
+    return `${baseURL.replace(/\/$/, '')}${normalizedPath}`;
   };
 
   return (
@@ -35,15 +44,15 @@ const Advertise = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
       >
-        {/* Background pattern (optional circles or waves) */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle at top left,rgba(255,255,255,0.15),transparent)]"></div>
-        
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Partner With Us & Advertise Your Brand</h1>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.15),transparent)]" />
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          Partner With Us & Advertise Your Brand
+        </h1>
         <p className="text-lg md:text-xl mb-6 max-w-2xl mx-auto">
           Show your products and services to thousands of daily visitors on My Nation Blog.
         </p>
         <motion.a
-          href="/contact" // change to your real advert booking page
+          href="/contact"
           className="inline-block bg-white text-[#959A4A] hover:bg-violet-600 hover:text-white font-semibold px-6 py-3 rounded transition"
           whileHover={{ scale: 1.05 }}
         >
@@ -65,39 +74,48 @@ const Advertise = () => {
         )}
 
         <div className="space-y-12">
-          {adverts.map((advert, index) => (
-            <motion.div
-              key={advert._id}
-              className="bg-white rounded-xl shadow-md overflow-hidden"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              {advert.imageUrl && (
-                <img
-                  src={`${baseURL}/uploads/${advert.imageUrl}`}
-                  alt={advert.title}
-                  className="w-full h-[500px] md:h-[600px] object-cover"
-                />
-              )}
-              <div className="p-6 md:p-8">
-                <h4 className="text-3xl md:text-4xl font-semibold text-[#333] mb-4">{advert.title}</h4>
-                <p className="text-lg text-gray-700 mb-6 leading-relaxed">{advert.description}</p>
+          {adverts.map((advert, index) => {
+            const fullImageUrl = getImageUrl(advert.imageUrl);
 
-                <div className="flex flex-wrap items-center gap-4">
-                  {advert.link && (
-                    <a
-                      href={advert.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block bg-[#959A4A] hover:bg-violet-600 text-white px-5 py-2 rounded transition-colors"
-                    >
-                      Visit Partner Site Here
-                    </a>
-                  )}
+            return (
+              <motion.div
+                key={advert._id}
+                className="bg-white rounded-xl shadow-md overflow-hidden"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                {fullImageUrl && (
+                  <img
+                    src={fullImageUrl}
+                    alt={advert.title}
+                    className="w-full h-[500px] md:h-[600px] object-cover"
+                  />
+                )}
 
-                  <div className="flex gap-4 text-[#959A4A] text-2xl">
+                <div className="p-6 md:p-8">
+                  <h4 className="text-3xl md:text-4xl font-semibold text-[#333] mb-4">
+                    {advert.title}
+                  </h4>
+                  <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+                    {advert.description}
+                  </p>
+
+                  <div className="flex flex-wrap items-center gap-4">
+                    {advert.link && (
+                      <a
+                        href={advert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-[#959A4A] hover:bg-violet-600 text-white px-5 py-2 rounded transition-colors"
+                      >
+                        Visit Partner Site Here
+                      </a>
+                    )}
+                  </div>
+
+                  <div className="flex gap-4 text-[#959A4A] text-2xl mt-6">
                     {advert.facebook && (
                       <a href={advert.facebook} target="_blank" rel="noopener noreferrer">
                         <FaFacebookF className="hover:text-violet-600 transition-colors" />
@@ -120,9 +138,9 @@ const Advertise = () => {
                     )}
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>

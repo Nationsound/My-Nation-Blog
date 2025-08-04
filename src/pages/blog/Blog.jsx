@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../utils/axios';
 import './Blog.css';
-import { blogPosts } from '../../dommyData/blogData';
 
-// Define baseURL once
+// Define baseURL from .env
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const Blog = () => {
@@ -24,7 +23,7 @@ const Blog = () => {
         setError('');
       } catch (err) {
         console.error(err);
-        setError('Failed to load posts. Showing dummy posts only.');
+        setError('Failed to load posts.');
       } finally {
         setLoading(false);
       }
@@ -32,16 +31,13 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
-  // merge backend + dummy posts (backend first)
-  const combinedPosts = [...posts, ...blogPosts];
-
   return (
     <div>
-      <div className='blog'>
-        <div className='blog-1'>
+      <div className="blog">
+        <div className="blog-1">
           <h1>Blog</h1>
         </div>
-        <div className='blog-2'>
+        <div className="blog-2">
           <Link to="/" className="blog-3">Home</Link>
           <h6>Blog</h6>
         </div>
@@ -51,20 +47,19 @@ const Blog = () => {
       {error && <p className="text-center text-red-500">{error}</p>}
 
       <div className="row">
-        {combinedPosts.map((post) => {
-          // Build imageSrc:
-          const imageSrc =
-            post._id && post.image                       // backend post
-              ? `${baseURL}/uploads/${post.image}`
-              : post.image || post.imageUrl;              // dummy data
+        {posts.map((post) => {
+          const normalizedPath = post.image?.replace(/\\/g, '/').replace(/^\//, '');
+          const imageSrc = normalizedPath
+            ? `${baseURL.replace(/\/$/, '')}/uploads/${normalizedPath.replace(/^uploads\//, '')}`
+            : post.image || post.imageUrl;
 
           const postDate = post.date || (post.createdAt && new Date(post.createdAt).toLocaleDateString());
           const categories = Array.isArray(post.categories)
-            ? post.categories.join(", ")
+            ? post.categories.join(', ')
             : post.categories;
 
           return (
-            <div key={post._id || post.id}>
+            <div key={post._id}>
               <div className="leftcolumn">
                 <div className="card">
                   <h2>{post.title}</h2>
@@ -75,7 +70,7 @@ const Blog = () => {
                   <h5>{categories}</h5>
                   <p>{truncateText(post.content, 75)}</p>
                   <Link
-                    to={`/post/${post._id || post.id}`}
+                    to={`/post/${post._id}`}
                     className="bg-[#4527a0] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2"
                   >
                     View Details

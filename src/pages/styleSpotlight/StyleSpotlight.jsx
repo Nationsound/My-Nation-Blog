@@ -26,6 +26,13 @@ const StyleSpotlight = () => {
     }
   };
 
+  // Normalize image URL directly (no reusable import)
+  const getImageUrl = (image) => {
+    if (!image) return '';
+    const normalizedPath = image.replace(/\\/g, '/'); // Fix for Windows-style slashes
+    return `${baseURL.replace(/\/$/, '')}/${normalizedPath.replace(/^\/+/, '')}`;
+  };
+
   const filtered = filter === 'All'
     ? spotlights
     : spotlights.filter(item => item.category.toLowerCase() === filter.toLowerCase());
@@ -58,7 +65,7 @@ const StyleSpotlight = () => {
             className="bg-white rounded-2xl shadow-md overflow-hidden"
           >
             <img
-              src={`${baseURL}/${artist.image}`}
+              src={getImageUrl(artist.image)}
               alt={artist.name}
               className="w-full h-96 object-cover"
             />
@@ -70,10 +77,11 @@ const StyleSpotlight = () => {
                   Weekly Spotlight
                 </span>
               )}
-              {/* Rating */}
               <div className="flex items-center mt-3">
                 <span className="text-yellow-500">⭐⭐⭐⭐</span>
-                <span className="ml-2 text-gray-600 text-sm">{artist.rating ? artist.rating.toFixed(1) : '4.0'}</span>
+                <span className="ml-2 text-gray-600 text-sm">
+                  {artist.rating ? artist.rating.toFixed(1) : '4.0'}
+                </span>
               </div>
             </div>
           </motion.div>
