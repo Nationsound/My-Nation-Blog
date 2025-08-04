@@ -66,7 +66,7 @@
     margin-top: 100px;
     margin-bottom: 100px;
     background: rgb(60, 49, 77);
-    height: 350px;
+    height: 380px;
   }
   .header h2{
     padding-top: 50px;
@@ -81,6 +81,7 @@
     letter-spacing: 0.5rem;
     padding-top: 50px;
   }
+
   .service {
     display: grid;
     grid-template-columns: 1fr;

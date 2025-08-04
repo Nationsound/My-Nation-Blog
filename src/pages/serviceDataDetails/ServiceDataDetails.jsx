@@ -121,7 +121,7 @@ const ServiceDataDetails = () => {
       {/* Header */}
       <div className="header">
         <h2>My Nation Blog: News, Style and Entertainment</h2>
-        <h6>News, style & Entertainment</h6>
+        <h6>News, style & Entertainment</h6> 
       </div>
 
       {/* Management team section */}

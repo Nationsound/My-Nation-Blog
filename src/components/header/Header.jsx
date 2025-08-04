@@ -24,7 +24,7 @@ const Header = ()=> {
 
         {/* Hamburger for Mobile */}
         <button
-          className="md:hidden text-2xl focus:outline-none bg-[#959A4A]"
+          className="md:hidden text-2xl focus:outline-none bg-[#959A4A] hover:bg-[#3B314C]" 
           onClick={toggleMenu}
         >
           ☰
@@ -47,7 +47,7 @@ const Header = ()=> {
           <li><Link to="/" onClick={toggleMenu}>Home</Link></li>
           <li><Link to="/about" onClick={toggleMenu}>About</Link></li>
           <li><Link to="/service" onClick={toggleMenu}>Service</Link></li>
-          <li><Link to="/contact" onClick={toggleMenu}>Contact</Link></li>
+          <li><Link to="/contact" onClick={toggleMenu}>Review</Link></li>
           <li><Link to="/signup" onClick={toggleMenu}>SignUp</Link></li>
           <li><Link to="/blog" onClick={toggleMenu}>Blog</Link></li>
         </ul>

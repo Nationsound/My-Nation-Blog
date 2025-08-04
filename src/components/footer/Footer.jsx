@@ -37,7 +37,7 @@ const Footer = ()=> {
               </a>
             </li>
             <li>
-              <a href="https://web.facebook.com/profile.php?id=61573798280662" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition duration-200">
+              <a href="https://web.facebook.com/profile.php?id=61575747841950" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition duration-200">
                 Facebook
               </a>
             </li>

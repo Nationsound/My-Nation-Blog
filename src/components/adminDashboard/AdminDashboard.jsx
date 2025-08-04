@@ -12,6 +12,7 @@ import AdminForm from "./adminForm/AdminForm";
 import AdminList from "./adminList/AdminList";
 import TeamDashboard from "./teamMembers/teamDashboard/TeamDashboard";
 import SubscribersList from "./subscribersList/SubscribersList";
+import AdminAdverts from "./adminAdverts/AdminAdverts";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -141,6 +142,19 @@ const AdminDashboard = () => {
           <h2 className="text-xl font-semibold text-[#959A4A]">Our Partners</h2>
         </div>
         <PartnershipAdmin />
+      </motion.div>
+
+      <motion.div 
+        className="mt-8 bg-white rounded-xl shadow p-6 max-w-7xl mx-auto hover:shadow-md transition"
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.35 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <FaCalendarCheck className="text-[#959A4A]" title="Our Partners" />
+          <h2 className="text-xl font-semibold text-[#959A4A]">Manage Adverts</h2>
+        </div>
+        <AdminAdverts />
       </motion.div>
 
       <motion.div 

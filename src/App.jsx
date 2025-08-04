@@ -37,6 +37,7 @@ import UploadedSongs from "./components/adminDashboard/UploadedSongs";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
+import Advertise from "./pages/advertise/Advertise";
 
 
 function App() {
@@ -85,6 +86,8 @@ function App() {
 
           <Route path="/admin-login" element={<AdminLogin />} />
           <Route path="/songs" element={<UploadedSongs />} />
+
+          <Route path="/advertise" element={<Advertise />} />
 
           <Route
             path="/admin-dashboard"

@@ -43,7 +43,7 @@ const About = ()=> {
         >
           <FaBullhorn size={32} color="#959A4A" />
           <h4>We Create Brand Awareness</h4>
-          <p>We help build brand awareness and create customer loyalty.</p>
+          <p>We help build brand awareness and create customer loyalty.</p> 
         </motion.div>
 
         <motion.div 

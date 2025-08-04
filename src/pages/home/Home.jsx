@@ -16,6 +16,7 @@ import SongsUpload from '../index/songsUpload/SongsUpload';
 import Partnership from '../index/partnership/Partnership';
 import Slideshow from '../index/slideshow/SlideShow';
 import SubscribeSection from '../index/subscribeSection/SubscribeSection';
+import AdvertiseSection from '../index/advertiseSection/AdvertiseSection';
 
 
 
@@ -76,6 +77,9 @@ const Home =()=> {
 
           <div>
             <SectionEleven />
+          </div>
+          <div>
+            <AdvertiseSection />
           </div>
           <div>
             <Partnership />
