@@ -93,7 +93,7 @@ const Advertise = () => {
                       rel="noopener noreferrer"
                       className="inline-block bg-[#959A4A] hover:bg-violet-600 text-white px-5 py-2 rounded transition-colors"
                     >
-                      Visit Partner Site
+                      Visit Partner Site Here
                     </a>
                   )}
 

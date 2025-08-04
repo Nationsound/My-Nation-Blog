@@ -85,7 +85,7 @@ const PreHome = () => {
           ease: 'easeInOut',
         }}
       >
-        <p>WE Are Excited To Have You Here!</p>
+        <p>You Are Welcome! WE Are Excited To Have You Here!</p>
       </motion.div>
 
       {/* Loading Percentage */}
