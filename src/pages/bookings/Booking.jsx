@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import api from '../../utils/axios';
+
+const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUD_NAME}/auto/upload`;
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const services = [
   { title: 'Music Production', originalPrice: '₦300,000', promoPrice: '₦150,000', description: 'Get custom music production tailored to your style.' },
@@ -16,7 +19,6 @@ const services = [
   { title: 'Partnership Deal', originalPrice: '₦600,000', promoPrice: '₦200,000', description: 'Collaborative business opportunities to expand your market reach.' },
 ];
 
-
 const Booking = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -26,58 +28,86 @@ const Booking = () => {
     email: '',
     message: '',
     date: '',
-    file: null
+    fileUrl: ''  // store Cloudinary URL here
   });
+
+  const handleFileUpload = async (file) => {
+    try {
+      const data = new FormData();
+      data.append('file', file);
+      data.append('upload_preset', UPLOAD_PRESET);
+
+      const res = await fetch(CLOUDINARY_URL, {
+        method: 'POST',
+        body: data
+      });
+
+      const cloudData = await res.json();
+      return cloudData.secure_url;
+    } catch (err) {
+      console.error('Cloudinary upload failed:', err);
+      toast.error('Failed to upload file. Please try again.');
+      return null;
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      const data = new FormData();
-      data.append('name', formData.name);
-      data.append('email', formData.email);
-      data.append('service', formData.service);
-      data.append('message', formData.message);
-      data.append('dateTime', formData.date);  // ensure backend matches this field
-      if (formData.file) data.append('file', formData.file);
 
-      console.log('Booking payload:', {
+    try {
+      const payload = {
         name: formData.name,
         email: formData.email,
         service: formData.service,
         message: formData.message,
         dateTime: formData.date,
-        file: formData.file
-      });
+        fileUrl: formData.fileUrl,
+      };
 
-      await axios.post('http://localhost:1990/mnb/api/bookings', data, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      await api.post('/mnb/api/bookings', payload);
 
-      toast.success('Booking submitted successfully!');
+      toast.success('✅ Booking submitted successfully!');
       setFormData({
         service: '',
         name: '',
         email: '',
         message: '',
         date: '',
-        file: null
+        fileUrl: ''
       });
-      navigate('/payment', { state: { service: services.find(s => s.title === formData.service) } });
+
+      const selectedService = services.find(s => s.title === payload.service);
+      navigate('/payment', { state: { service: selectedService } });
     } catch (error) {
       console.error('Booking failed:', error);
-      toast.error('Failed to submit booking. Please try again.');
+      toast.error('❌ Failed to submit booking. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Animation variants
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setLoading(true);
+      const uploadedUrl = await handleFileUpload(file);
+      if (uploadedUrl) {
+        setFormData({ ...formData, fileUrl: uploadedUrl });
+        toast.success('✅ File uploaded successfully');
+      }
+      setLoading(false);
+    }
+  };
+
   const cardVariants = {
     hidden: { opacity: 0, scale: 0.8, y: 50 },
     visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut', delay: 0.2 } },
   };
-  const staggeredContainer = { visible: { transition: { staggerChildren: 0.2, delayChildren: 0.3 } } };
+
+  const staggeredContainer = {
+    visible: { transition: { staggerChildren: 0.2, delayChildren: 0.3 } }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
@@ -125,14 +155,14 @@ const Booking = () => {
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
         />
-        <input type="file" className="w-full"
-          onChange={(e) => setFormData({ ...formData, file: e.target.files[0] })}
+        <input type="file" className="w-full" accept="image/*,audio/*"
+          onChange={handleFileChange}
         />
         <input type="datetime-local" className="w-full border p-2 rounded" required
           value={formData.date}
           onChange={(e) => setFormData({ ...formData, date: e.target.value })}
         />
-        <button type="submit" disabled={loading}
+        <button type="submit" disabled={loading || !formData.fileUrl}
           className={`w-full ${loading ? 'bg-gray-400' : 'bg-[#959A4A] hover:bg-violet-600'} text-white py-2 rounded transition`}
         >
           {loading ? 'Submitting...' : 'Submit Booking'}

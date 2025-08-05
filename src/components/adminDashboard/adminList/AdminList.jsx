@@ -4,13 +4,19 @@ import './AdminList.css';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
+const getImageUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const normalized = path.startsWith('uploads/') ? path : `uploads/${path}`;
+  return `${baseURL.replace(/\/$/, '')}/${normalized}`;
+};
+
 const AdminList = () => {
   const [admins, setAdmins] = useState([]);
   const [message, setMessage] = useState('');
   const [editAdmin, setEditAdmin] = useState(null);
   const [editForm, setEditForm] = useState({ name: '', email: '', image: null });
 
-  // Fetch admins
   useEffect(() => {
     const fetchAdmins = async () => {
       try {
@@ -24,12 +30,11 @@ const AdminList = () => {
     fetchAdmins();
   }, []);
 
-  // Delete admin
   const handleDelete = async (id) => {
     if (!window.confirm('Are you sure you want to delete this admin?')) return;
     try {
       await api.delete(`/mnb/api/admins/${id}`);
-      setAdmins(prev => prev.filter(admin => admin._id !== id));
+      setAdmins((prev) => prev.filter((admin) => admin._id !== id));
       setMessage('✅ Admin deleted successfully');
     } catch (error) {
       console.error('Delete failed', error);
@@ -37,22 +42,19 @@ const AdminList = () => {
     }
   };
 
-  // Open edit modal
   const openEditModal = (admin) => {
     setEditAdmin(admin);
     setEditForm({ name: admin.name, email: admin.email, image: null });
   };
 
-  // Handle edit form change
   const handleEditChange = (e) => {
     const { name, value, files } = e.target;
-    setEditForm(prev => ({
+    setEditForm((prev) => ({
       ...prev,
-      [name]: name === 'image' ? files[0] : value
+      [name]: name === 'image' ? files[0] : value,
     }));
   };
 
-  // Submit edit
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -62,11 +64,11 @@ const AdminList = () => {
       if (editForm.image) formData.append('image', editForm.image);
 
       const res = await api.put(`/mnb/api/admins/${editAdmin._id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      setAdmins(prev =>
-        prev.map(admin => (admin._id === editAdmin._id ? res.data : admin))
+      setAdmins((prev) =>
+        prev.map((admin) => (admin._id === editAdmin._id ? res.data : admin))
       );
       setMessage('✅ Admin updated successfully');
       setEditAdmin(null);
@@ -80,6 +82,7 @@ const AdminList = () => {
     <div className="admin-list-container mt-6">
       <h2 className="text-xl font-semibold text-[#959A4A] mb-4">All Admins</h2>
       {message && <p className="mb-4">{message}</p>}
+
       <table className="w-full border-collapse shadow rounded overflow-hidden">
         <thead>
           <tr className="bg-[#959A4A] text-white">
@@ -91,25 +94,28 @@ const AdminList = () => {
         </thead>
         <tbody>
           {admins.map((admin) => {
-           const imageUrl = admin.image
-  ? `${baseURL.replace(/\/$/, '')}/uploads/${admin.image}`
-  : '';
-
+            const imageUrl = getImageUrl(admin.image);
 
             return (
               <tr key={admin._id} className="text-center border-b">
                 <td className="p-2">{admin.name}</td>
                 <td className="p-2">{admin.email}</td>
                 <td className="p-2">
-                  {admin.image ? (
+                  {imageUrl ? (
                     <img
                       src={imageUrl}
                       alt={admin.name}
                       width="40"
                       height="40"
-                      className="rounded-full mx-auto"
+                      className="rounded-full mx-auto object-cover"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/default-profile.png'; // fallback image
+                      }}
                     />
-                  ) : 'No image'}
+                  ) : (
+                    'No image'
+                  )}
                 </td>
                 <td className="p-2 flex justify-center gap-2">
                   <button
@@ -131,9 +137,8 @@ const AdminList = () => {
         </tbody>
       </table>
 
-      {/* Edit modal */}
       {editAdmin && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40">
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
           <form
             onSubmit={handleEditSubmit}
             className="bg-white p-6 rounded shadow w-80"

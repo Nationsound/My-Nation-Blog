@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import api from '../../utils/axios';
 import './Blog.css';
 
-// Define baseURL from .env
 const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const Blog = () => {
@@ -31,6 +30,14 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
+  // Clean image URL handler (Cloudinary or fallback)
+  const getImageUrl = (imageUrl) => {
+    if (!imageUrl) return '';
+    if (imageUrl.startsWith('http')) return imageUrl; // Cloudinary
+    const cleaned = imageUrl.replace(/\\/g, '/').replace(/^\/+/, '');
+    return `${baseURL.replace(/\/$/, '')}/${cleaned}`;
+  };
+
   return (
     <div>
       <div className="blog">
@@ -48,11 +55,7 @@ const Blog = () => {
 
       <div className="row">
         {posts.map((post) => {
-          const normalizedPath = post.image?.replace(/\\/g, '/').replace(/^\//, '');
-          const imageSrc = normalizedPath
-            ? `${baseURL.replace(/\/$/, '')}/uploads/${normalizedPath.replace(/^uploads\//, '')}`
-            : post.image || post.imageUrl;
-
+          const imageSrc = getImageUrl(post.imageUrl); // ✅ Use imageUrl from Cloudinary
           const postDate = post.date || (post.createdAt && new Date(post.createdAt).toLocaleDateString());
           const categories = Array.isArray(post.categories)
             ? post.categories.join(', ')
@@ -60,6 +63,7 @@ const Blog = () => {
 
           return (
             <div key={post._id}>
+              {/* Left Column */}
               <div className="leftcolumn">
                 <div className="card">
                   <h2>{post.title}</h2>
@@ -71,13 +75,14 @@ const Blog = () => {
                   <p>{truncateText(post.content, 75)}</p>
                   <Link
                     to={`/post/${post._id}`}
-                    className="bg-[#4527a0] text-[#ffffff] w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2"
+                    className="bg-[#4527a0] text-white w-32 focus:outline-none font-large rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center hover:bg-violet-600 active:bg-violet-700 me-2 mb-2"
                   >
                     View Details
                   </Link>
                 </div>
               </div>
 
+              {/* Right Column */}
               <div className="rightcolumn">
                 <div className="card">
                   <h2>{post.title}</h2>

@@ -20,20 +20,16 @@ const Advertise = () => {
       const res = await api.get('/mnb/api/getAdverts');
       setAdverts(res.data);
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Failed to load adverts');
+      setMessage(error.response?.data?.message || 'Failed to load adverts'); 
     } finally {
       setLoading(false);
     }
   };
 
-  // Utility function to get full image URL
   const getImageUrl = (image) => {
-    if (!image) return '';
-    const normalizedPath = image.startsWith('/uploads/')
-      ? image
-      : `/uploads/${image.replace(/^\/+/, '')}`;
-    return `${baseURL.replace(/\/$/, '')}${normalizedPath}`;
-  };
+  if (!image) return '';
+  return image.startsWith('http') ? image : `${baseURL.replace(/\/$/, '')}/${image.replace(/^\/+/, '')}`;
+};
 
   return (
     <div className="bg-gradient-to-b from-[#f9fafb] to-[#fff] min-h-screen">

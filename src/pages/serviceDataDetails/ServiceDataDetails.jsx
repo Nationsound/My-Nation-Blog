@@ -123,54 +123,67 @@ const ServiceDataDetails = () => {
         <h2>My Nation Blog: News, Style and Entertainment</h2>
         <h6>News, style & Entertainment</h6> 
       </div>
+<section className="management-section">
+      <h2 className="management-title">Meet Our Management Team</h2>
+      <div className="team-grid">
+        {teamMembers.map((member, index) => {
+          // Normalize image path
+          const normalizedPath = member.image?.replace(/\\/g, '/').replace(/^\/+/, '');
+          const imageUrl = normalizedPath
+            ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
+            : '';
 
-      {/* Management team section */}
-      <section className="management-section">
-        <h2 className="management-title">Meet Our Management Team</h2>
-        <div className="team-grid">
-  {teamMembers.map((member, index) => {
-    // Normalize image path: replace backslashes & remove leading slash
-    const normalizedPath = member.image?.replace(/\\/g, '/').replace(/^\//, '');
-    const imageUrl = normalizedPath
-      ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
-      : '';
+          return (
+            <motion.div
+              className="team-card"
+              key={member._id || index}
+              variants={cardVariant}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              custom={index}
+            >
+              <img
+                src={imageUrl}
+                alt={member.name}
+                className="team-image"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/default-profile.png'; // ✅ fallback image
+                }}
+              />
 
-    return (
-      <motion.div
-        className="team-card"
-        key={member._id || index}
-        variants={cardVariant}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        custom={index}
-      >
-        <img src={imageUrl} alt={member.name} className="team-image" />
-        <h3 className="team-name">{member.name}</h3>
-        <p className="team-role">{member.role}</p>
-        <div className="social-links">
-          <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="social-icon" />
-          </a>
-          <a href={member.twitter} target="_blank" rel="noopener noreferrer">
-            <FaTwitter className="social-icon" />
-          </a>
-          <a href={member.instagram} target="_blank" rel="noopener noreferrer">
-            <FaInstagram className="social-icon" />
-          </a>
-        </div>
-        {/* Overlay content */}
-        <div className="card-overlay">
-          <p className="overlay-text">
-            {member.quote || "Leading with passion, driven by innovation."}
-          </p>
-        </div>
-      </motion.div>
-    );
-  })}
-</div>
+              <h3 className="team-name">{member.name}</h3>
+              <p className="team-role">{member.role}</p>
 
-      </section>
+              <div className="social-links">
+                {member.linkedin && (
+                  <a href={member.linkedin} target="_blank" rel="noopener noreferrer">
+                    <FaLinkedin className="social-icon" />
+                  </a>
+                )}
+                {member.twitter && (
+                  <a href={member.twitter} target="_blank" rel="noopener noreferrer">
+                    <FaTwitter className="social-icon" />
+                  </a>
+                )}
+                {member.instagram && (
+                  <a href={member.instagram} target="_blank" rel="noopener noreferrer">
+                    <FaInstagram className="social-icon" />
+                  </a>
+                )}
+              </div>
+
+              <div className="card-overlay">
+                <p className="overlay-text">
+                  {member.quote || 'Leading with passion, driven by innovation.'}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
     </div>
   );
 };

@@ -38,6 +38,8 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PrivacyPolicy from "./pages/privacyPolicy/PrivacyPolicy";
 import TermsAndConditions from "./pages/termsAndConditions/TermsAndConditions";
 import Advertise from "./pages/advertise/Advertise";
+import AdminPostManager from "./components/adminDashboard/postManager/AdminPostManager";
+import EditPost from "./pages/editPost/EditPost";
 
 
 function App() {
@@ -88,6 +90,10 @@ function App() {
           <Route path="/songs" element={<UploadedSongs />} />
 
           <Route path="/advertise" element={<Advertise />} />
+
+          <Route path="/admin/manage-posts" element={<AdminPostManager />} />
+          <Route path="/admin/edit-post/:id" element={<EditPost />} />
+
 
           <Route
             path="/admin-dashboard"

@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import api from '../../../../utils/axios';   // ✅ use your axios instance
+import api from '../../../../utils/axios';
 import TeamMemberForm from '../TeamMemberForm';
 import './TeamDashboard.css';
 
-const baseURL = import.meta.env.VITE_API_BASE_URL; // ✅ get from .env
+const baseURL = import.meta.env.VITE_API_BASE_URL;
+
+// ✅ Helper to normalize image URL
+const getImageUrl = (path) => {
+  if (!path) return '';
+  const isExternal = path.startsWith('http://') || path.startsWith('https://');
+  const normalized = path.replace(/\\/g, '/').replace(/^\/+/, '');
+  return isExternal ? path : `${baseURL.replace(/\/$/, '')}/${normalized}`;
+};
 
 const TeamDashboard = () => {
   const [teamMembers, setTeamMembers] = useState([]);
@@ -15,11 +23,15 @@ const TeamDashboard = () => {
   const [total, setTotal] = useState(0);
   const limit = 6;
 
+  useEffect(() => {
+    fetchTeam();
+  }, [page, search]);
+
   const fetchTeam = async () => {
     setLoading(true);
     try {
       const res = await api.get('/mnb/api/teamMembers', {
-        params: { page, limit, search }
+        params: { page, limit, search },
       });
       setTeamMembers(res.data.members || res.data);
       setTotal(res.data.total || 0);
@@ -31,10 +43,6 @@ const TeamDashboard = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTeam();
-  }, [page, search]);
-
   const startEdit = (member) => {
     setSelectedMember(member);
     setEditForm({
@@ -44,7 +52,7 @@ const TeamDashboard = () => {
       linkedin: member.linkedin,
       twitter: member.twitter,
       instagram: member.instagram,
-      image: null
+      image: null,
     });
   };
 
@@ -52,7 +60,7 @@ const TeamDashboard = () => {
     const { name, value, files } = e.target;
     setEditForm((prev) => ({
       ...prev,
-      [name]: name === 'image' ? files[0] : value
+      [name]: name === 'image' ? files[0] : value,
     }));
   };
 
@@ -67,16 +75,16 @@ const TeamDashboard = () => {
       });
 
       await api.put(`/mnb/api/teamMember/${selectedMember._id}`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
+        headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      alert('Team member updated successfully!');
+      alert('✅ Team member updated successfully!');
       fetchTeam();
       setSelectedMember(null);
       setEditForm(null);
     } catch (error) {
       console.error('Error updating team member:', error);
-      alert('Failed to update team member');
+      alert('❌ Failed to update team member');
     }
   };
 
@@ -84,11 +92,11 @@ const TeamDashboard = () => {
     if (!window.confirm('Are you sure you want to delete this team member?')) return;
     try {
       await api.delete(`/mnb/api/teamMember/${id}`);
-      alert('Team member deleted successfully!');
+      alert('✅ Team member deleted successfully!');
       fetchTeam();
     } catch (error) {
       console.error('Error deleting team member:', error);
-      alert('Failed to delete team member');
+      alert('❌ Failed to delete team member');
     }
   };
 
@@ -96,7 +104,7 @@ const TeamDashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <h1>Team Management Dashboard</h1>
+      <h1 className="dashboard-title">Team Management Dashboard</h1>
 
       <TeamMemberForm
         onSuccess={() => {
@@ -106,6 +114,7 @@ const TeamDashboard = () => {
         onCancel={() => setSelectedMember(null)}
       />
 
+      {/* Edit Form */}
       {selectedMember && editForm && (
         <form className="team-form" onSubmit={handleUpdateSubmit}>
           <h2>Edit Team Member</h2>
@@ -160,59 +169,72 @@ const TeamDashboard = () => {
           />
           <div className="form-buttons">
             <button type="submit">Update Member</button>
-            <button type="button" className="cancel-btn" onClick={() => setSelectedMember(null)}>Cancel</button>
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => setSelectedMember(null)}
+            >
+              Cancel
+            </button>
           </div>
         </form>
       )}
 
+      {/* Search */}
       <div className="search-pagination-container">
         <input
           type="text"
           placeholder="Search by name or role..."
           value={search}
-          onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            setPage(1);
+          }}
           className="search-input"
         />
       </div>
 
-     <h2>Team Members</h2>
-{loading ? (
-  <p>Loading team members...</p>
-) : (
-  <div className="team-list">
-    {teamMembers.map((member) => {
-      const normalizedPath = member.image?.startsWith('/uploads/')
-        ? member.image
-        : `/uploads/${member.image?.replace(/^\/+/, '')}`;
-
-      const imageUrl = `${baseURL.replace(/\/$/, '')}${normalizedPath}`;
-
-      return (
-        <div key={member._id} className="team-item">
-          <img
-            src={imageUrl}
-            alt={member.name}
-            className="team-item-image"
-          />
-          <div className="team-item-info">
-            <h3>{member.name}</h3>
-            <p>{member.role}</p>
-            <small>{member.quote}</small>
-          </div>
-          <button onClick={() => startEdit(member)}>Edit</button>
-          <button onClick={() => handleDelete(member._id)} className="delete-btn">Delete</button>
+      {/* Team List */}
+      <h2>Team Members</h2>
+      {loading ? (
+        <p>Loading team members...</p>
+      ) : (
+        <div className="team-list">
+          {teamMembers.map((member) => {
+            const imageUrl = getImageUrl(member.image);
+            return (
+              <div key={member._id} className="team-item">
+                <img src={imageUrl} alt={member.name} className="team-item-image" />
+                <div className="team-item-info">
+                  <h3>{member.name}</h3>
+                  <p>{member.role}</p>
+                  <small>{member.quote}</small>
+                </div>
+                <button onClick={() => startEdit(member)}>Edit</button>
+                <button onClick={() => handleDelete(member._id)} className="delete-btn">
+                  Delete
+                </button>
+              </div>
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-)}
+      )}
 
+      {/* Pagination Controls */}
       <div className="pagination-controls">
-        <button onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+        <button
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
           ◀ Previous
         </button>
-        <span>Page {page} of {totalPages || 1}</span>
-        <button onClick={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))} disabled={page >= totalPages}>
+        <span>
+          Page {page} of {totalPages || 1}
+        </span>
+        <button
+          onClick={() => setPage((prev) => (prev < totalPages ? prev + 1 : prev))}
+          disabled={page >= totalPages}
+        >
           Next ▶
         </button>
       </div>

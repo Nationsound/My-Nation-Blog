@@ -55,11 +55,14 @@ const SecondSection = () => {
   <div className="artist-carousel">
     {filteredArtists.map((artist) => {
       // Normalize backslashes to forward slashes
-      const normalizedPath = artist.imageUrl?.replace(/\\/g, '/');
-      // Build the final URL
-      const imageUrl = normalizedPath?.startsWith('uploads')
-        ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
-        : normalizedPath;
+      const getImageUrl = (path) => {
+  if (!path) return '';
+  const isCloudinary = path.startsWith('http://') || path.startsWith('https://');
+  const normalizedPath = path.replace(/\\/g, '/');
+  return isCloudinary
+    ? normalizedPath
+    : `${baseURL.replace(/\/$/, '')}/${normalizedPath}`;
+};
 
       return (
         <div
@@ -68,10 +71,10 @@ const SecondSection = () => {
           onClick={() => handleSelectArtist(artist)}
         >
           <img
-            src={imageUrl}
-            alt={artist.name}
-            className="artist-image"
-          />
+  src={getImageUrl(artist.imageUrl)}
+  alt={artist.name}
+  className="artist-image"
+/>
           <p className="artist-name">{artist.name}</p>
         </div>
       );
@@ -79,20 +82,24 @@ const SecondSection = () => {
   </div>
 
   {selectedArtist && (() => {
-    const normalizedPath = selectedArtist.imageUrl?.replace(/\\/g, '/');
-    const imageUrl = normalizedPath?.startsWith('uploads')
-      ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
-      : normalizedPath;
+    const getImageUrl = (path) => {
+  if (!path) return '';
+  const isCloudinary = path.startsWith('http://') || path.startsWith('https://');
+  const normalizedPath = path.replace(/\\/g, '/');
+  return isCloudinary
+    ? normalizedPath
+    : `${baseURL.replace(/\/$/, '')}/${normalizedPath}`;
+};
 
     return (
       <div className="artist-modal-overlay" onClick={closeModal}>
         <div className="artist-modal" onClick={(e) => e.stopPropagation()}>
           <button className="modal-close" onClick={closeModal}>×</button>
           <img
-            src={imageUrl}
-            alt={selectedArtist.name}
-            className="modal-image"
-          />
+  src={getImageUrl(artist.imageUrl)}
+  alt={artist.name}
+  className="artist-image"
+/>
           <h3>{selectedArtist.name}</h3>
           <p>Genre: {selectedArtist.genre}</p>
           <p>More details about this artist can go here.</p>

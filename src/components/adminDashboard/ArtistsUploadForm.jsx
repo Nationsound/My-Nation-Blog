@@ -136,10 +136,15 @@ const ArtistUploadForm = () => {
 <ul className="space-y-4">
   {artists.map((artist) => {
     // Normalize backslashes and build image URL
-    const normalizedPath = artist.imageUrl?.replace(/\\/g, '/');
-    const imageUrl = normalizedPath?.startsWith('uploads')
-      ? `${baseURL.replace(/\/$/, '')}/${normalizedPath}`
-      : normalizedPath;
+    const getImageUrl = (path) => {
+  if (!path) return '';
+  const isCloudinary = path.startsWith('http://') || path.startsWith('https://');
+  const normalizedPath = path.replace(/\\/g, '/');
+  return isCloudinary
+    ? normalizedPath
+    : `${baseURL.replace(/\/$/, '')}/${normalizedPath}`;
+};
+
 
     return (
       <li key={artist._id} className="border p-4 rounded">
@@ -190,10 +195,11 @@ const ArtistUploadForm = () => {
               <p className="text-sm text-gray-600">{artist.genre}</p>
               {artist.imageUrl && (
                 <img
-                  src={imageUrl}
-                  alt={artist.name}
-                  className="w-24 h-24 object-cover mt-2"
-                />
+  src={getImageUrl(artist.imageUrl)}
+  alt={artist.name}
+  className="w-24 h-24 object-cover mt-2"
+/>
+
               )}
             </div>
             <div className="space-x-2">

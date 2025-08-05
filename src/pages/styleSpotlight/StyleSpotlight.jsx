@@ -28,10 +28,10 @@ const StyleSpotlight = () => {
 
   // Normalize image URL directly (no reusable import)
   const getImageUrl = (image) => {
-    if (!image) return '';
-    const normalizedPath = image.replace(/\\/g, '/'); // Fix for Windows-style slashes
-    return `${baseURL.replace(/\/$/, '')}/${normalizedPath.replace(/^\/+/, '')}`;
-  };
+  if (!image) return '';
+  return image.startsWith('http') ? image : `${baseURL.replace(/\/$/, '')}/${image.replace(/^\/+/, '')}`;
+};
+
 
   const filtered = filter === 'All'
     ? spotlights

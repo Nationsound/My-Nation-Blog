@@ -13,6 +13,8 @@ import AdminList from "./adminList/AdminList";
 import TeamDashboard from "./teamMembers/teamDashboard/TeamDashboard";
 import SubscribersList from "./subscribersList/SubscribersList";
 import AdminAdverts from "./adminAdverts/AdminAdverts";
+import AdminSpotlightManager from "./spotlightManager/AdminSpotlightManager";
+import AdminPostManager from "./postManager/AdminPostManager";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -82,12 +84,28 @@ const AdminDashboard = () => {
       >
         <div className="flex items-center gap-2 mb-4">
           <FaUsers className="text-[#959A4A]" title="Manage Admins" />
+          <h2 className="text-xl font-semibold text-[#959A4A]">Manage Posts</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <AdminPostManager />
+        </div>
+      </motion.div>
+
+      <motion.div 
+        className="mt-8 bg-white rounded-xl shadow p-6 max-w-7xl mx-auto hover:shadow-md transition"
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.25 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <FaUsers className="text-[#959A4A]" title="Manage Admins" />
           <h2 className="text-xl font-semibold text-[#959A4A]">Manage Team Members</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <TeamDashboard />
         </div>
       </motion.div>
+
       <motion.div 
         className="mt-8 bg-white rounded-xl shadow p-6 max-w-7xl mx-auto hover:shadow-md transition"
         initial={{ opacity: 0, y: 30 }} 
@@ -165,9 +183,21 @@ const AdminDashboard = () => {
       >
         <div className="flex items-center gap-2 mb-4">
           <FaUsers className="text-[#959A4A]" title="Artist Spotlight" />
-          <h2 className="text-xl font-semibold text-[#959A4A]">Artist To Feature In Our Spotlight</h2>
+          <h2 className="text-xl font-semibold text-[#959A4A]">Celebrities To Feature In Our Spotlight</h2>
         </div>
         <NominateArtist />
+      </motion.div>
+      <motion.div 
+        className="mt-8 bg-white rounded-xl shadow p-6 max-w-4xl mx-auto hover:shadow-md transition"
+        initial={{ opacity: 0, y: 30 }} 
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <FaUsers className="text-[#959A4A]" title="Artist Spotlight" />
+          <h2 className="text-xl font-semibold text-[#959A4A]">Manage Spotlight</h2>
+        </div>
+        <AdminSpotlightManager />
       </motion.div>
 
       <motion.div 
