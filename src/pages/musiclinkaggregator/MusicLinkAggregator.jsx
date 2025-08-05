@@ -42,7 +42,7 @@ const MusicLinkAggregator = () => {
 
       if (res.data && res.data.id) {
         // ⚠️ Replace localhost:5173 with your actual frontend URL in production
-        setGeneratedLink(`http://mynationblog.fun/smartlink/${res.data.id}`);
+        setGeneratedLink(`http://www.mynationblog.fun/smartlink/${res.data.id}`);
         setCopied(false);
       } else {
         alert(res.data.message || "Failed to create smart link");

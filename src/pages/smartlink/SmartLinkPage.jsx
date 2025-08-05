@@ -21,7 +21,7 @@ const SmartLinkPage = () => {
   useEffect(() => {
     const fetchSmartLink = async () => {
       try {
-        const res = await api.get(`/mnb/api/getSmartLink/${id}`);
+        const res = await api.get(`/mnb/api/getSmartLink/${id}`); 
         setMusicLinks(res.data);
       } catch (error) {
         console.error("Error:", error.message);
