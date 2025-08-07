@@ -40,7 +40,7 @@ const SmartLinkPage = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
-  const coverImageUrl = musicLinks.coverImagePublicId
+  const coverImageUrl = musicLinks.coverImageUrl
   ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImageUrl}`
   : musicLinks.coverImage?.startsWith("http")
     ? musicLinks.coverImage
@@ -66,8 +66,8 @@ const SmartLinkPage = () => {
       <div className="smart-link-container mx-auto max-w-xl mt-10 p-4 bg-white shadow rounded text-center">
         {coverImageUrl && (
           <img
-            src={coverImageUrl}
-            alt="Cover artwork"
+            src={song.coverImageUrl}
+            alt={song.title}
             className="w-48 h-48 object-cover mx-auto rounded mb-4 shadow"
           />
         )}
