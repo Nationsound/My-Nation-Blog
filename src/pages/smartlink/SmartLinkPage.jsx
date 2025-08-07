@@ -66,8 +66,8 @@ const SmartLinkPage = () => {
       <div className="smart-link-container mx-auto max-w-xl mt-10 p-4 bg-white shadow rounded text-center">
         {coverImageUrl && (
           <img
-            src={song.coverImageUrl}
-            alt={song.title}
+            src={musicLinks.coverImageUrl}
+            alt={musicLinks.title}
             className="w-48 h-48 object-cover mx-auto rounded mb-4 shadow"
           />
         )}
