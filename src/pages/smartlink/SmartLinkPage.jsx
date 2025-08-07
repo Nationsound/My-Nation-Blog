@@ -34,17 +34,15 @@ const SmartLinkPage = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
-  // Ensure image URL is absolute
-  const coverImageUrl = musicLinks.coverImage?.startsWith("http")
-    ? musicLinks.coverImage
-    : `https://www.mynationblog.fun/${musicLinks.coverImage}`;
+ const coverImageUrl = `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`;
+
 
   return (
     <>
       {/* Open Graph Meta Tags */}
       <Helmet>
-        <title>{musicLinks.title} | My Nation Blog</title>
-        <meta property="og:title" content={`${musicLinks.title} by ${musicLinks.artist || "Unknown Artist"}`} />
+        <title>{musicLinks.songTitle} | My Nation Blog</title>
+        <meta property="og:title" content={`${musicLinks.songTitle} by ${musicLinks.artistName || "Unknown Artist"}`} />
         <meta property="og:description" content="Listen now on My Nation Blog SmartLink!" />
         <meta property="og:image" content={coverImageUrl} />
         <meta property="og:url" content={`https://www.mynationblog.fun/smartlink/${slug}`} />
