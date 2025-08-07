@@ -77,7 +77,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
 
           <Route path="/music-links" element={<MusicLinkAggregator />} />
-          <Route path="/smartlink/:id" element={<SmartLinkPage />} />
+          <Route path="/smartlink/:slug" element={<SmartLinkPage />} />
 
           <Route path="/style-spotlight" element={<StyleSpotlight />} />
 

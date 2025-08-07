@@ -3,17 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import {
   SiYoutube,
   SiSpotify,
-  SiApplemusic,
   SiAudiomack,
 } from "react-icons/si";
-import { FaMusic } from "react-icons/fa";
+import { FaApple, FaMusic } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 import api from "../../utils/axios";
 import "./SmartLinkPage.css";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL;
-
 const SmartLinkPage = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
   const [musicLinks, setMusicLinks] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,95 +19,112 @@ const SmartLinkPage = () => {
   useEffect(() => {
     const fetchSmartLink = async () => {
       try {
-        const res = await api.get(`/mnb/api/getSmartLink/${id}`); 
+        const res = await api.get(`/mnb/api/getSmartLink/${slug}`);
         setMusicLinks(res.data);
       } catch (error) {
-        console.error("Error:", error.message);
+        console.error("Error fetching smart link:", error.message);
         navigate("/404");
       } finally {
         setLoading(false);
       }
     };
     fetchSmartLink();
-  }, [id, navigate]);
-
-  const getImageUrl = (url) => {
-    if (!url) return "";
-    return url.startsWith("http") ? url : `${baseURL}/${url.replace(/^\/+/, "")}`;
-  };
+  }, [slug, navigate]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
+  // Ensure image URL is absolute
+  const coverImageUrl = musicLinks.coverImage?.startsWith("http")
+    ? musicLinks.coverImage
+    : `https://www.mynationblog.fun/${musicLinks.coverImage}`;
+
   return (
-    <div className="smart-link-container mx-auto max-w-xl mt-10 p-4 bg-white shadow rounded text-center">
-      {musicLinks.coverImage && (
-        <img
-          src={getImageUrl(musicLinks.coverImage)}
-          alt="Cover artwork"
-          className="w-48 h-48 object-cover mx-auto rounded mb-4 shadow"
-        />
-      )}
+    <>
+      {/* Open Graph Meta Tags */}
+      <Helmet>
+        <title>{musicLinks.title} | My Nation Blog</title>
+        <meta property="og:title" content={`${musicLinks.title} by ${musicLinks.artist || "Unknown Artist"}`} />
+        <meta property="og:description" content="Listen now on My Nation Blog SmartLink!" />
+        <meta property="og:image" content={coverImageUrl} />
+        <meta property="og:url" content={`https://www.mynationblog.fun/smartlink/${slug}`} />
+        <meta property="og:type" content="music.song" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
 
-      {musicLinks.title && (
-        <h2 className="text-2xl font-bold mb-2">{musicLinks.title}</h2>
-      )}
+      <div className="smart-link-container mx-auto max-w-xl mt-10 p-4 bg-white shadow rounded text-center">
+        {coverImageUrl && (
+          <img
+            src={coverImageUrl}
+            alt="Cover artwork"
+            className="w-48 h-48 object-cover mx-auto rounded mb-4 shadow"
+          />
+        )}
 
-      <p className="mb-6">Listen to the song on your favorite platform:</p>
+        {musicLinks.title && (
+          <h2 className="text-2xl font-bold mb-2">{musicLinks.title}</h2>
+        )}
 
-      <div className="platform-buttons grid grid-cols-1 gap-4">
-        {musicLinks.youtube && (
-          <a
-            href={musicLinks.youtube}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded hover:bg-red-700 transition"
-          >
-            <SiYoutube className="text-2xl" /> YouTube
-          </a>
+        {musicLinks.artist && (
+          <p className="text-gray-600 italic mb-4">By {musicLinks.artist}</p>
         )}
-        {musicLinks.spotify && (
-          <a
-            href={musicLinks.spotify}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 p-3 bg-green-600 text-white rounded hover:bg-green-700 transition"
-          >
-            <SiSpotify className="text-2xl" /> Spotify
-          </a>
-        )}
-        {musicLinks.boomplay && (
-          <a
-            href={musicLinks.boomplay}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 p-3 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
-          >
-            <FaMusic className="text-2xl" /> Boomplay
-          </a>
-        )}
-        {musicLinks.appleMusic && (
-          <a
-            href={musicLinks.appleMusic}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 p-3 bg-black text-white rounded hover:bg-gray-800 transition"
-          >
-            <SiApplemusic className="text-2xl" /> Apple Music
-          </a>
-        )}
-        {musicLinks.audiomack && (
-          <a
-            href={musicLinks.audiomack}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 p-3 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
-          >
-            <SiAudiomack className="text-2xl" /> Audiomack
-          </a>
-        )}
+
+        <p className="mb-6">Listen to the song on your favorite platform:</p>
+
+        <div className="platform-buttons grid grid-cols-1 gap-4">
+          {musicLinks.youtube && (
+            <a
+              href={musicLinks.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-red-600 text-white rounded hover:bg-red-700 transition"
+            >
+              <SiYoutube className="text-2xl" /> YouTube
+            </a>
+          )}
+          {musicLinks.spotify && (
+            <a
+              href={musicLinks.spotify}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-green-600 text-white rounded hover:bg-green-700 transition"
+            >
+              <SiSpotify className="text-2xl" /> Spotify
+            </a>
+          )}
+          {musicLinks.boomplay && (
+            <a
+              href={musicLinks.boomplay}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition"
+            >
+              <FaMusic className="text-2xl" /> Boomplay
+            </a>
+          )}
+          {musicLinks.appleMusic && (
+            <a
+              href={musicLinks.appleMusic}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            >
+              <FaApple className="text-2xl" /> Apple Music
+            </a>
+          )}
+          {musicLinks.audiomack && (
+            <a
+              href={musicLinks.audiomack}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-3 bg-orange-500 text-white rounded hover:bg-orange-600 transition"
+            >
+              <SiAudiomack className="text-2xl" /> Audiomack
+            </a>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

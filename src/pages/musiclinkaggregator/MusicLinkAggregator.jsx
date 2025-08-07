@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./MusicLinks.css"; // External CSS
+import "./MusicLinks.css";
 import { SiYoutube, SiSpotify, SiAudiomack } from "react-icons/si";
 import { FaApple, FaMusic } from "react-icons/fa";
-import api from "../../utils/axios"; // ✅ import configured axios instance
+import api from "../../utils/axios";
 
 const MusicLinkAggregator = () => {
   const [links, setLinks] = useState({
@@ -12,7 +12,9 @@ const MusicLinkAggregator = () => {
     appleMusic: "",
     audiomack: "",
   });
-  const [title, setTitle] = useState("");
+
+  const [songTitle, setSongTitle] = useState("");
+  const [artistName, setArtistName] = useState("");
   const [coverImage, setCoverImage] = useState(null);
   const [generatedLink, setGeneratedLink] = useState("");
   const [copied, setCopied] = useState(false);
@@ -23,26 +25,25 @@ const MusicLinkAggregator = () => {
   };
 
   const handleGenerateLink = async () => {
-    if (!title || !coverImage) {
-      alert("Please enter a title and select a cover image");
+    if (!songTitle || !artistName || !coverImage) {
+      alert("Please enter song title, artist name, and select a cover image");
       return;
     }
 
     setLoading(true);
     try {
       const formData = new FormData();
-      formData.append("title", title);
+      formData.append("songTitle", songTitle);
+      formData.append("artistName", artistName);
       formData.append("coverImage", coverImage);
       Object.entries(links).forEach(([key, value]) => {
         formData.append(key, value);
       });
 
-      // ✅ use api.post instead of fetch
       const res = await api.post("/mnb/api/smart-link", formData);
 
-      if (res.data && res.data.id) {
-        // ⚠️ Replace localhost:5173 with your actual frontend URL in production
-        setGeneratedLink(`http://www.mynationblog.fun/smartlink/${res.data.id}`);
+      if (res.data?.slug) {
+        setGeneratedLink(`https://www.mynationblog.fun/smartlink/${res.data.slug}`);
         setCopied(false);
       } else {
         alert(res.data.message || "Failed to create smart link");
@@ -72,11 +73,22 @@ const MusicLinkAggregator = () => {
           <input
             type="text"
             placeholder="Enter Song Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={songTitle}
+            onChange={(e) => setSongTitle(e.target.value)}
             className="music-input"
           />
         </div>
+
+        <div className="input-group">
+          <input
+            type="text"
+            placeholder="Enter Artist Name"
+            value={artistName}
+            onChange={(e) => setArtistName(e.target.value)}
+            className="music-input"
+          />
+        </div>
+
         <div className="input-group">
           <input
             type="file"
