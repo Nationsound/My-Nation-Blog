@@ -21,6 +21,8 @@ const SmartLinkPage = () => {
       try {
         const res = await api.get(`/mnb/api/getSmartLink/${slug}`);
         setMusicLinks(res.data);
+        console.log("✅ API Response:", res.data);
+
       } catch (error) {
         console.error("Error fetching smart link:", error.message);
         navigate("/404");
@@ -34,7 +36,18 @@ const SmartLinkPage = () => {
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
- const coverImageUrl = `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`;
+  const normalizedLinks = {
+  ...res.data,
+  title: res.data.songTitle,
+  artist: res.data.artistName,
+};
+setMusicLinks(normalizedLinks);
+
+
+ const coverImageUrl = musicLinks.coverImagePublicId
+  ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`
+  : "/default-cover.jpg"; // fallback image
+
 
 
   return (
@@ -59,12 +72,12 @@ const SmartLinkPage = () => {
           />
         )}
 
-        {musicLinks.title && (
-          <h2 className="text-2xl font-bold mb-2">{musicLinks.title}</h2>
+        {musicLinks.songTitle && (
+          <h2 className="text-2xl font-bold mb-2">{musicLinks.songTitle}</h2>
         )}
 
-        {musicLinks.artist && (
-          <p className="text-gray-600 italic mb-4">By {musicLinks.artist}</p>
+        {musicLinks.artistName && (
+          <p className="text-gray-600 italic mb-4">By {musicLinks.artistName}</p>
         )}
 
         <p className="mb-6">Listen to the song on your favorite platform:</p>
