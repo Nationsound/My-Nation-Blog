@@ -41,8 +41,11 @@ const SmartLinkPage = () => {
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
   const coverImageUrl = musicLinks.coverImagePublicId
-    ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`
-    : "/default-cover.jpg";
+  ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImageUrl}`
+  : musicLinks.coverImage?.startsWith("http")
+    ? musicLinks.coverImage
+    : `https://www.mynationblog.fun/${musicLinks.coverImage}`;
+
 
   return (
     <>
