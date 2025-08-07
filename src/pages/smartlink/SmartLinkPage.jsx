@@ -20,9 +20,8 @@ const SmartLinkPage = () => {
     const fetchSmartLink = async () => {
       try {
         const res = await api.get(`/mnb/api/getSmartLink/${slug}`);
-        setMusicLinks(res.data);
         console.log("✅ API Response:", res.data);
-
+        setMusicLinks(res.data);
       } catch (error) {
         console.error("Error fetching smart link:", error.message);
         navigate("/404");
