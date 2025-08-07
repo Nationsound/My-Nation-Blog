@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-  SiYoutube,
-  SiSpotify,
-  SiAudiomack,
-} from "react-icons/si";
+import { SiYoutube, SiSpotify, SiAudiomack } from "react-icons/si";
 import { FaApple, FaMusic } from "react-icons/fa";
 import { Helmet } from "react-helmet-async";
 import api from "../../utils/axios";
@@ -21,7 +17,15 @@ const SmartLinkPage = () => {
       try {
         const res = await api.get(`/mnb/api/getSmartLink/${slug}`);
         console.log("✅ API Response:", res.data);
-        setMusicLinks(res.data);
+
+        // Normalize the response
+        const normalizedLinks = {
+          ...res.data,
+          title: res.data.songTitle,
+          artist: res.data.artistName,
+        };
+
+        setMusicLinks(normalizedLinks);
       } catch (error) {
         console.error("Error fetching smart link:", error.message);
         navigate("/404");
@@ -29,32 +33,26 @@ const SmartLinkPage = () => {
         setLoading(false);
       }
     };
+
     fetchSmartLink();
   }, [slug, navigate]);
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
   if (!musicLinks) return <p className="text-center mt-10">Smart link not found.</p>;
 
-  const normalizedLinks = {
-  ...res.data,
-  title: res.data.songTitle,
-  artist: res.data.artistName,
-};
-setMusicLinks(normalizedLinks);
-
-
- const coverImageUrl = musicLinks.coverImagePublicId
-  ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`
-  : "/default-cover.jpg"; // fallback image
-
-
+  const coverImageUrl = musicLinks.coverImagePublicId
+    ? `https://res.cloudinary.com/mynationblog/image/upload/${musicLinks.coverImagePublicId}`
+    : "/default-cover.jpg";
 
   return (
     <>
       {/* Open Graph Meta Tags */}
       <Helmet>
-        <title>{musicLinks.songTitle} | My Nation Blog</title>
-        <meta property="og:title" content={`${musicLinks.songTitle} by ${musicLinks.artistName || "Unknown Artist"}`} />
+        <title>{musicLinks.title} | My Nation Blog</title>
+        <meta
+          property="og:title"
+          content={`${musicLinks.title} by ${musicLinks.artist || "Unknown Artist"}`}
+        />
         <meta property="og:description" content="Listen now on My Nation Blog SmartLink!" />
         <meta property="og:image" content={coverImageUrl} />
         <meta property="og:url" content={`https://www.mynationblog.fun/smartlink/${slug}`} />
@@ -71,12 +69,12 @@ setMusicLinks(normalizedLinks);
           />
         )}
 
-        {musicLinks.songTitle && (
-          <h2 className="text-2xl font-bold mb-2">{musicLinks.songTitle}</h2>
+        {musicLinks.title && (
+          <h2 className="text-2xl font-bold mb-2">{musicLinks.title}</h2>
         )}
 
-        {musicLinks.artistName && (
-          <p className="text-gray-600 italic mb-4">By {musicLinks.artistName}</p>
+        {musicLinks.artist && (
+          <p className="text-gray-600 italic mb-4">By {musicLinks.artist}</p>
         )}
 
         <p className="mb-6">Listen to the song on your favorite platform:</p>
