@@ -8,7 +8,7 @@ const baseURL = import.meta.env.VITE_API_BASE_URL;
 
 const getFileUrl = (path) => {
   if (!path) return "";
-  if (path.startsWith("http")) return path; // Cloudinary (or any absolute URL)
+  if (path.startsWith("http")) return path;
   const normalized = path.replace(/\\/g, "/").replace(/^\/+/, "");
   return `${baseURL.replace(/\/$/, "")}/${normalized}`;
 };
@@ -20,34 +20,39 @@ const UploadedSongs = () => {
   const [newUsername, setNewUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const songsPerPage = 10;
 
-  const fetchSongs = async () => {
+  const fetchSongs = async (page = 1) => {
     try {
       setLoading(true);
-      const res = await api.get("/mnb/api/getAllSongs");
-      const songsWithDefaults = (res.data || []).map((song) => ({
-        ...song,
-        comments: song.comments || [],
-        likes: song.likes || 0,
-      }));
-      setSongs(songsWithDefaults);
+      const res = await api.get(`/mnb/api/getAllSongs?page=${page}&limit=${songsPerPage}`);
+      const { songs: fetchedSongs, totalPages } = res.data;
+      setSongs(
+        (fetchedSongs || []).map((song) => ({
+          ...song,
+          comments: song.comments || [],
+          likes: song.likes || 0,
+        }))
+      );
+      setTotalPages(totalPages || 1);
     } catch (err) {
       console.error("Failed to fetch songs:", err);
+      toast.error("Could not load songs.");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSongs();
-  }, []);
+    fetchSongs(currentPage);
+  }, [currentPage]);
 
   const handleLike = async (song) => {
     try {
-      await api.patch(`/mnb/api/likeSong/${song._id}`);
+      await api.patch(`/mnb/api/likeSong/${song.slug}`);
       toast.success("Liked!");
-      fetchSongs();
+      fetchSongs(currentPage);
     } catch (err) {
       console.error("Failed to like:", err);
       toast.error("Failed to like the song.");
@@ -57,17 +62,18 @@ const UploadedSongs = () => {
   const handleAddComment = async () => {
     if (!newComment.trim()) return;
     try {
-      const res = await api.post(`/mnb/api/addComment/${selectedSong._id}`, {
+      const res = await api.post(`/mnb/api/addComment/${selectedSong.slug}`, {
         text: newComment,
         username: newUsername.trim() || "Anonymous",
       });
       toast.success("Comment added!");
       setNewComment("");
       setNewUsername("");
-
       setSongs((prev) =>
         prev.map((s) =>
-          s._id === selectedSong._id ? { ...s, comments: [...s.comments, res.data] } : s
+          s.slug === selectedSong.slug
+            ? { ...s, comments: [...s.comments, res.data] }
+            : s
         )
       );
       setSelectedSong((prev) =>
@@ -82,7 +88,9 @@ const UploadedSongs = () => {
   const handleDeleteComment = (idx) => {
     setSongs((prev) =>
       prev.map((s) =>
-        s._id === selectedSong._id ? { ...s, comments: s.comments.filter((_, i) => i !== idx) } : s
+        s.slug === selectedSong.slug
+          ? { ...s, comments: s.comments.filter((_, i) => i !== idx) }
+          : s
       )
     );
     setSelectedSong((prev) =>
@@ -90,12 +98,6 @@ const UploadedSongs = () => {
     );
     toast.success("Comment deleted!");
   };
-
-  // Pagination
-  const indexOfLastSong = currentPage * songsPerPage;
-  const indexOfFirstSong = indexOfLastSong - songsPerPage;
-  const paginatedSongs = songs.slice(indexOfFirstSong, indexOfLastSong);
-  const totalPages = Math.ceil(songs.length / songsPerPage);
 
   return (
     <div className="max-w-4xl mx-auto p-4 space-y-6">
@@ -109,14 +111,13 @@ const UploadedSongs = () => {
       ) : (
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {paginatedSongs.map((song) => {
-              // Prefer new Cloudinary fields; fall back to old ones
+            {songs.map((song) => {
               const coverImagePath = song.coverImageUrl || song.coverImage;
               const coverImageUrl = getFileUrl(coverImagePath);
               const audioUrl = getFileUrl(song.audioUrl);
 
               return (
-                <div key={song._id} className="border rounded shadow bg-white p-3 space-y-2">
+                <div key={song.slug} className="border rounded shadow bg-white p-3 space-y-2">
                   {coverImageUrl ? (
                     <img
                       src={coverImageUrl}
@@ -131,6 +132,8 @@ const UploadedSongs = () => {
 
                   <h3 className="text-lg font-semibold">{song.title}</h3>
                   <p className="text-gray-600">Artist: {song.artist}</p>
+                  {song.albumName && <p className="text-gray-500">Album: {song.albumName}</p>}
+                  {song.genre && <p className="text-gray-500">Genre: {song.genre}</p>}
                   {song.description && <p className="text-gray-700">{song.description}</p>}
                   <p className="text-xs text-gray-400">
                     Uploaded on {new Date(song.releaseDate).toLocaleDateString()}
@@ -142,9 +145,15 @@ const UploadedSongs = () => {
                         <source src={audioUrl} type="audio/mpeg" />
                         Your browser does not support the audio element.
                       </audio>
-                      <a href={audioUrl} download className="text-blue-600 underline text-sm">
-                        Download
-                      </a>
+                      <a
+  href={audioUrl}
+  download={`${song.slug || song.title || 'song'}.mp3`}
+  className="text-blue-600 underline text-sm"
+>
+  Download
+</a>
+
+
                     </div>
                   ) : (
                     <p className="text-gray-500 text-sm">Audio not available.</p>

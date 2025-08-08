@@ -1,10 +1,34 @@
 import React, { useState, useRef } from "react";
 import api from "../../utils/axios";
 
+// ✅ Utility to create slug from title
+const generateSlug = (text) =>
+  text
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+
+// ✅ Predefined genre options
+const GENRE_OPTIONS = [
+  "Afrobeats",
+  "Hip-Hop",
+  "Pop",
+  "R&B",
+  "Jazz",
+  "Gospel",
+  "Classical",
+  "Rock",
+  "Electronic"
+];
+
 const SongUploadForm = () => {
-  const [title, setTitle] = useState('');
-  const [artist, setArtist] = useState('');
-  const [description, setDescription] = useState('');
+  const [title, setTitle] = useState("");
+  const [artist, setArtist] = useState("");
+  const [albumName, setAlbumName] = useState("");
+  const [genre, setGenre] = useState("");
+  const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
   const [audio, setAudio] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -15,37 +39,43 @@ const SongUploadForm = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    if (!title || !artist || !audio) {
-      alert('Please provide title, artist and audio file.');
+    if (!title || !artist || !audio || !genre) {
+      alert("Please provide title, artist, genre, and audio file.");
       return;
     }
     try {
       setLoading(true);
+
+      const slug = generateSlug(title); // ✅ auto-generate slug
+
       const formData = new FormData();
-      formData.append('title', title);
-      formData.append('artist', artist);
-      formData.append('description', description);
-      formData.append('audio', audio);
-      if (image) formData.append('coverImage', image);
+      formData.append("title", title);
+      formData.append("artist", artist);
+      formData.append("albumName", albumName);
+      formData.append("genre", genre);
+      formData.append("description", description);
+      formData.append("slug", slug);
+      formData.append("audio", audio);
+      if (image) formData.append("coverImage", image);
 
-      const res = await api.post('/mnb/api/createSong', formData);
+      const res = await api.post("/mnb/api/createSong", formData);
 
-      console.log('Song uploaded:', res.data);
-      alert('✅ Song uploaded successfully!');
+      console.log("Song uploaded:", res.data);
+      alert("✅ Song uploaded successfully!");
 
       // ✅ Clear form fields
-      setTitle('');
-      setArtist('');
-      setDescription('');
+      setTitle("");
+      setArtist("");
+      setAlbumName("");
+      setGenre("");
+      setDescription("");
       setImage(null);
       setAudio(null);
 
-      // ✅ Clear file input values
       if (audioInputRef.current) audioInputRef.current.value = null;
       if (imageInputRef.current) imageInputRef.current.value = null;
-
     } catch (err) {
-      console.error('Failed to upload song:', err);
+      console.error("Failed to upload song:", err);
       alert(`❌ Failed to upload song: ${err.response?.data?.message || err.message}`);
     } finally {
       setLoading(false);
@@ -57,6 +87,7 @@ const SongUploadForm = () => {
       <h2 className="text-2xl font-bold text-center text-gray-700">Upload New Song</h2>
 
       <form onSubmit={handleUpload} className="space-y-4">
+        {/* Title */}
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Song Title*</label>
           <input
@@ -69,6 +100,7 @@ const SongUploadForm = () => {
           />
         </div>
 
+        {/* Artist */}
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Artist*</label>
           <input
@@ -81,6 +113,37 @@ const SongUploadForm = () => {
           />
         </div>
 
+        {/* Album */}
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-1">Album Name</label>
+          <input
+            type="text"
+            placeholder="e.g. The Golden Hour"
+            className="border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#959A4A]"
+            value={albumName}
+            onChange={(e) => setAlbumName(e.target.value)}
+          />
+        </div>
+
+        {/* Genre */}
+        <div>
+          <label className="block text-sm font-medium text-gray-600 mb-1">Genre*</label>
+          <select
+            className="border rounded w-full p-2 focus:outline-none focus:ring-2 focus:ring-[#959A4A]"
+            value={genre}
+            onChange={(e) => setGenre(e.target.value)}
+            required
+          >
+            <option value="">Select a Genre</option>
+            {GENRE_OPTIONS.map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Description */}
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Description</label>
           <textarea
@@ -92,29 +155,32 @@ const SongUploadForm = () => {
           ></textarea>
         </div>
 
+        {/* Audio */}
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Audio File*</label>
           <input
             type="file"
             accept="audio/*"
-            ref={audioInputRef}   // ✅ attach ref
+            ref={audioInputRef}
             className="border rounded w-full p-2 file:mr-2 file:py-1 file:px-3 file:border-none file:bg-[#959A4A] file:text-white file:cursor-pointer"
             onChange={(e) => setAudio(e.target.files[0])}
             required
           />
         </div>
 
+        {/* Image */}
         <div>
           <label className="block text-sm font-medium text-gray-600 mb-1">Cover Image</label>
           <input
             type="file"
             accept="image/*"
-            ref={imageInputRef}   // ✅ attach ref
+            ref={imageInputRef}
             className="border rounded w-full p-2 file:mr-2 file:py-1 file:px-3 file:border-none file:bg-[#959A4A] file:text-white file:cursor-pointer"
             onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
 
+        {/* Preview */}
         {image && (
           <div className="mt-2">
             <img
@@ -125,12 +191,13 @@ const SongUploadForm = () => {
           </div>
         )}
 
+        {/* Submit */}
         <button
           type="submit"
           className="w-full bg-[#959A4A] text-white py-2 rounded hover:bg-violet-600 transition duration-200"
           disabled={loading}
         >
-          {loading ? 'Uploading...' : 'Upload Song'}
+          {loading ? "Uploading..." : "Upload Song"}
         </button>
       </form>
     </div>
