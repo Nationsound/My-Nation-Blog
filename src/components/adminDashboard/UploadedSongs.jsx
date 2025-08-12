@@ -44,6 +44,16 @@ const UploadedSongs = () => {
     }
   };
 
+  const fetchSongBySlug = async (slug) => {
+    try {
+      const res = await api.get(`/mnb/api/songs/${slug}`);
+      setSelectedSong(res.data);
+    } catch (err) {
+      console.error("Failed to fetch song by slug:", err);
+      toast.error("Could not load song details.");
+    }
+  };
+
   useEffect(() => {
     fetchSongs(currentPage);
   }, [currentPage]);
@@ -69,15 +79,15 @@ const UploadedSongs = () => {
       toast.success("Comment added!");
       setNewComment("");
       setNewUsername("");
+      setSelectedSong((prev) =>
+        prev ? { ...prev, comments: [...prev.comments, res.data] } : prev
+      );
       setSongs((prev) =>
         prev.map((s) =>
           s.slug === selectedSong.slug
             ? { ...s, comments: [...s.comments, res.data] }
             : s
         )
-      );
-      setSelectedSong((prev) =>
-        prev ? { ...prev, comments: [...prev.comments, res.data] } : prev
       );
     } catch (err) {
       console.error("Failed to add comment:", err);
@@ -86,15 +96,15 @@ const UploadedSongs = () => {
   };
 
   const handleDeleteComment = (idx) => {
+    setSelectedSong((prev) =>
+      prev ? { ...prev, comments: prev.comments.filter((_, i) => i !== idx) } : prev
+    );
     setSongs((prev) =>
       prev.map((s) =>
         s.slug === selectedSong.slug
           ? { ...s, comments: s.comments.filter((_, i) => i !== idx) }
           : s
       )
-    );
-    setSelectedSong((prev) =>
-      prev ? { ...prev, comments: prev.comments.filter((_, i) => i !== idx) } : prev
     );
     toast.success("Comment deleted!");
   };
@@ -112,8 +122,7 @@ const UploadedSongs = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {songs.map((song) => {
-              const coverImagePath = song.coverImageUrl || song.coverImage;
-              const coverImageUrl = getFileUrl(coverImagePath);
+              const coverImageUrl = getFileUrl(song.coverImageUrl || song.coverImage);
               const audioUrl = getFileUrl(song.audioUrl);
 
               return (
@@ -146,14 +155,12 @@ const UploadedSongs = () => {
                         Your browser does not support the audio element.
                       </audio>
                       <a
-  href={audioUrl}
-  download={`${song.slug || song.title || 'song'}.mp3`}
-  className="text-blue-600 underline text-sm"
->
-  Download
-</a>
-
-
+                        href={audioUrl}
+                        download={`${song.slug || song.title || "song"}.mp3`}
+                        className="text-blue-600 underline text-sm"
+                      >
+                        Download
+                      </a>
                     </div>
                   ) : (
                     <p className="text-gray-500 text-sm">Audio not available.</p>
@@ -171,7 +178,7 @@ const UploadedSongs = () => {
                       <FaRegThumbsUp /> Like
                     </button>
                     <button
-                      onClick={() => setSelectedSong(song)}
+                      onClick={() => fetchSongBySlug(song.slug)}
                       className="flex items-center gap-1 px-2 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
                     >
                       <FaRegCommentDots /> View Comments

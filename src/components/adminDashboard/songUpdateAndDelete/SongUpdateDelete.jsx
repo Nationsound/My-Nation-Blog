@@ -2,206 +2,227 @@ import React, { useState, useEffect } from "react";
 import api from "../../../utils/axios";
 import { toast } from "react-toastify";
 
-const GENRE_OPTIONS = [
-  "Afrobeats",
-  "Hip-Hop",
-  "Pop",
-  "R&B",
-  "Jazz",
-  "Gospel",
-  "Classical",
-  "Rock",
-  "Electronic"
-];
+const baseURL = import.meta.env.VITE_API_BASE_URL;
 
-const SongUpdateDelete = ({ slug, onSongUpdated, onSongDeleted }) => {
-  const [song, setSong] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
-  const [deleting, setDeleting] = useState(false);
-
-  // ✅ Pagination state
+const SongUpdateDelete = () => {
   const [songs, setSongs] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const limit = 5;
+  const [loading, setLoading] = useState(true);
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [formData, setFormData] = useState({
+    title: "",
+    artist: "",
+    album: "",
+    genre: "",
+    audioFile: null,
+    coverImageFile: null,
+  });
 
-  // ✅ Fetch paginated songs
-  const fetchSongs = async (page = 1) => {
-    try {
-      const res = await api.get(`/mnb/api/getAllSongs?page=${page}&limit=${limit}`);
-      setSongs(res.data.songs);
-      setTotalPages(res.data.totalPages);
-    } catch {
-      toast.error("Failed to fetch songs list");
-    }
-  };
+  const genreOptions = [
+    "Afrobeat",
+    "Hip-Hop",
+    "R&B",
+    "Pop",
+    "Jazz",
+    "Gospel",
+    "Reggae",
+    "Country",
+    "Rock",
+    "Classical",
+    "Electronic",
+  ];
 
-  // ✅ Fetch song by slug
-  const fetchSongBySlug = async () => {
+  // Fetch all songs
+  const fetchSongs = async () => {
+    setLoading(true);
     try {
-      const res = await api.get(`/mnb/api/getSongBySlug/${slug}`);
-      setSong(res.data);
-    } catch {
-      toast.error("Failed to fetch song details");
+      const res = await api.get(`${baseURL}/mnb/api/getAllSongs`);
+      const fetchedSongs = Array.isArray(res.data)
+        ? res.data
+        : res.data?.songs || [];
+      setSongs(fetchedSongs);
+    } catch (err) {
+      if (err.response?.status === 404) {
+        toast.error("No songs found (404)");
+      } else {
+        toast.error("Failed to load songs");
+      }
+      setSongs([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchSongs(currentPage);
-  }, [currentPage]);
+    fetchSongs();
+  }, []);
 
-  useEffect(() => {
-    if (slug) fetchSongBySlug();
-  }, [slug]);
+  // Handle selecting a song for editing
+  const handleSelectSong = (song) => {
+    setSelectedSong(song);
+    setFormData({
+      title: song.title || "",
+      artist: song.artist || "",
+      album: song.album || "",
+      genre: song.genre || "",
+      audioFile: null,       // reset file inputs on select
+      coverImageFile: null,
+    });
+  };
 
+  // Handle input change for text/select fields
   const handleChange = (e) => {
-    setSong({ ...song, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    setUpdating(true);
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    if (files.length > 0) {
+      setFormData((prev) => ({
+        ...prev,
+        [`${name}File`]: files[0],
+      }));
+    }
+  };
+
+  // Handle update with FormData (for files)
+  const handleUpdate = async () => {
+    if (!selectedSong) return toast.error("No song selected");
+
     try {
-      const res = await api.put(`/mnb/api/updateSong/${slug}`, song);
+      const data = new FormData();
+
+      // Append all non-file fields
+      data.append("title", formData.title);
+      data.append("artist", formData.artist);
+      data.append("albumName", formData.album);
+      data.append("genre", formData.genre);
+
+      // Append files if selected
+      if (formData.audioFile) {
+        data.append("audio", formData.audioFile);
+      }
+      if (formData.coverImageFile) {
+        data.append("coverImage", formData.coverImageFile);
+      }
+
+      await api.put(`${baseURL}/mnb/api/updateSong/${selectedSong.slug}`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       toast.success("Song updated successfully");
-      onSongUpdated?.(res.data);
-      fetchSongs(currentPage);
-    } catch {
-      toast.error("Failed to update song");
-    } finally {
-      setUpdating(false);
+      setSelectedSong(null);
+      fetchSongs();
+    } catch (err) {
+      if (err.response?.status === 404) {
+        toast.error("Song not found (404)");
+      } else {
+        toast.error("Failed to update song");
+      }
     }
   };
 
-  const handleDelete = async () => {
+  // Handle delete
+  const handleDelete = async (slug) => {
     if (!window.confirm("Are you sure you want to delete this song?")) return;
-    setDeleting(true);
     try {
-      await api.delete(`/mnb/api/deleteSong/${slug}`);
+      await api.delete(`${baseURL}/mnb/api/deleteSong/${slug}`);
       toast.success("Song deleted successfully");
-      onSongDeleted?.(slug);
-      fetchSongs(currentPage);
-    } catch {
-      toast.error("Failed to delete song");
-    } finally {
-      setDeleting(false);
+      fetchSongs();
+      if (selectedSong?.slug === slug) setSelectedSong(null);
+    } catch (err) {
+      if (err.response?.status === 404) {
+        toast.error("Song not found (404)");
+      } else {
+        toast.error("Failed to delete song");
+      }
     }
   };
-
-  if (loading) return <p>Loading song details...</p>;
 
   return (
     <div>
-      {/* Pagination */}
-      <div className="mb-6">
-        <h2 className="text-xl font-bold mb-3">Song List</h2>
-        <ul className="space-y-1">
-          {songs.map((s) => (
-            <li key={s._id} className="border p-2 rounded">
-              {s.title} — {s.artist}
-            </li>
-          ))}
-        </ul>
-        <div className="flex gap-2 mt-3">
-          <button
-            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-            disabled={currentPage === 1}
-            className="px-3 py-1 bg-gray-300 rounded"
-          >
-            Prev
-          </button>
-          <span>
-            Page {currentPage} of {totalPages}
-          </span>
-          <button
-            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-            disabled={currentPage === totalPages}
-            className="px-3 py-1 bg-gray-300 rounded"
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <h2>Update / Delete Songs</h2>
 
-      {/* Update/Delete */}
-      {song ? (
-        <div className="p-4 border rounded shadow">
-          <h2 className="text-lg font-bold mb-4">Update Song</h2>
-          <form onSubmit={handleUpdate} className="space-y-3">
-            <input
-              type="text"
-              name="title"
-              value={song.title || ""}
-              onChange={handleChange}
-              placeholder="Song Title"
-              className="border p-2 w-full rounded"
-            />
-            <input
-              type="text"
-              name="artist"
-              value={song.artist || ""}
-              onChange={handleChange}
-              placeholder="Artist"
-              className="border p-2 w-full rounded"
-            />
-            <input
-              type="text"
-              name="albumName"
-              value={song.albumName || ""}
-              onChange={handleChange}
-              placeholder="Album Name"
-              className="border p-2 w-full rounded"
-            />
-            <select
-              name="genre"
-              value={song.genre || ""}
-              onChange={handleChange}
-              className="border p-2 w-full rounded"
-            >
-              <option value="">Select Genre</option>
-              {GENRE_OPTIONS.map((g) => (
-                <option key={g} value={g}>
-                  {g}
-                </option>
-              ))}
-            </select>
-            <textarea
-              name="description"
-              value={song.description || ""}
-              onChange={handleChange}
-              placeholder="Description"
-              className="border p-2 w-full rounded"
-            />
-            <input
-              type="date"
-              name="releaseDate"
-              value={song.releaseDate ? song.releaseDate.split("T")[0] : ""}
-              onChange={handleChange}
-              className="border p-2 w-full rounded"
-            />
+      {loading && <p>Loading songs...</p>}
 
-            <button
-              type="submit"
-              disabled={updating}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-            >
-              {updating ? "Updating..." : "Update Song"}
-            </button>
-          </form>
-
-          <button
-            onClick={handleDelete}
-            disabled={deleting}
-            className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-          >
-            {deleting ? "Deleting..." : "Delete Song"}
-          </button>
-        </div>
+      {!loading && Array.isArray(songs) && songs.length > 0 ? (
+        songs.map((song) => (
+          <div key={song._id} style={{ marginBottom: "10px" }}>
+            <span>
+              {song.title} - {song.artist}
+            </span>{" "}
+            <button onClick={() => handleSelectSong(song)}>Edit</button>{" "}
+            <button onClick={() => handleDelete(song.slug)}>Delete</button>
+          </div>
+        ))
       ) : (
-        <p>No song found for this slug</p>
+        !loading && <p>No songs found.</p>
+      )}
+
+      {selectedSong && (
+        <div style={{ marginTop: "20px" }}>
+          <h3>Edit Song</h3>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="artist"
+            placeholder="Artist"
+            value={formData.artist}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            name="album"
+            placeholder="Album"
+            value={formData.album}
+            onChange={handleChange}
+          />
+          <select name="genre" value={formData.genre} onChange={handleChange}>
+            <option value="">Select Genre</option>
+            {genreOptions.map((genre, i) => (
+              <option key={i} value={genre}>
+                {genre}
+              </option>
+            ))}
+          </select>
+
+          {/* Audio upload */}
+          <div>
+            <label>Audio File (optional)</label>
+            <input
+              type="file"
+              name="audio"
+              accept="audio/*"
+              onChange={handleFileChange}
+            />
+          </div>
+
+          {/* Cover image upload */}
+          <div>
+            <label>Cover Image (optional)</label>
+            <input
+              type="file"
+              name="coverImage"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
+          </div>
+
+          <button onClick={handleUpdate}>Update</button>
+          <button onClick={() => setSelectedSong(null)}>Cancel</button>
+        </div>
       )}
     </div>
   );
