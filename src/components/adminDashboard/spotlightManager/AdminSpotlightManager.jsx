@@ -17,7 +17,7 @@ const AdminSpotlightManager = () => {
 
   const fetchSpotlights = async () => {
     try {
-      const res = await api.get('/mnb/api/getAllSpotlights');
+      const res = await api.get('/mnb/api/getAllSpotlights'); 
       setSpotlights(res.data);
     } catch (err) {
       console.error(err);

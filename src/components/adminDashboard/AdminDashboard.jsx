@@ -18,6 +18,7 @@ import AdminPostManager from "./postManager/AdminPostManager";
 import SongUpdateDelete from "./songUpdateAndDelete/SongUpdateDelete";
 import WorkerList from "./workers/WorkerList";
 import WorkersForm from "./workers/WorkersForm";
+import DeleteSpotlightComment from "./spotlightManager/DeleteSpotlightComment";
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -232,6 +233,7 @@ const AdminDashboard = () => {
           <h2 className="text-xl font-semibold text-[#959A4A]">Manage Spotlight</h2>
         </div>
         <AdminSpotlightManager />
+        <DeleteSpotlightComment />
       </motion.div>
 
       <motion.div 

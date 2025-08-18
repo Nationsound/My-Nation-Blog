@@ -35,7 +35,7 @@ const SongUpdateDelete = () => {
   const fetchSongs = async () => {
     setLoading(true);
     try {
-      const res = await api.get(`${baseURL}/mnb/api/getAllSongs`);
+      const res = await api.get(`${baseURL}/mnb/api/getAllSongs`); 
       const fetchedSongs = Array.isArray(res.data)
         ? res.data
         : res.data?.songs || [];
